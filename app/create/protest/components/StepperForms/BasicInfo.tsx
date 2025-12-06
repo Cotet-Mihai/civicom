@@ -39,11 +39,11 @@ export default function BasicInfo({titleState, descriptionState, dateState, from
             <div className="flex items-center gap-2">
                 <p>Ce tip de protest este ?</p>
                 <ToggleGroup type="single" className={'border'} value={typeState.type} onValueChange={typeState.setType}>
-                    <ToggleGroupItem value="march" aria-label="Toggle march" className={'data-[state=on]:bg-yellow-300 data-[state=on]:text-green-900'}>
-                        <p>Marș</p>
-                    </ToggleGroupItem>
                     <ToggleGroupItem value="gathering" aria-label="Toggle gathering" className={'data-[state=on]:bg-yellow-300 data-[state=on]:text-green-900'}>
                         <p>Adunare</p>
+                    </ToggleGroupItem>
+                    <ToggleGroupItem value="march" aria-label="Toggle march" className={'data-[state=on]:bg-yellow-300 data-[state=on]:text-green-900'}>
+                        <p>Marș</p>
                     </ToggleGroupItem>
                     <ToggleGroupItem value="picket" aria-label="Toggle picket" className={'data-[state=on]:bg-yellow-300 data-[state=on]:text-green-900'}>
                         <p>Pichet</p>

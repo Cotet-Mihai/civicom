@@ -1,3 +1,5 @@
+import MarchLocation from "@/app/create/protest/components/StepperForms/LocationInfoForms/marchLocation";
+import GatheringLocation from "@/app/create/protest/components/StepperForms/LocationInfoForms/gatheringLocation";
 
 
 type LocationInfoProps = {
@@ -5,12 +7,20 @@ type LocationInfoProps = {
 }
 
 export default function LocationInfo({ typeProtest }: LocationInfoProps) {
+    const marchLocation = (
+        <MarchLocation/>
+    )
+
+    const gatheringLocation = (
+        <GatheringLocation/>
+    )
+
     return (
         <div>
             {typeProtest === 'march' ? (
-                <div>Traseu pentru Marș</div>
+                marchLocation
             ) : typeProtest === 'gathering' ? (
-                <div>Locație fixă pentru Adunare</div>
+                gatheringLocation
             ) : typeProtest === 'picket' ? (
                 <div>Locație fixă pentru Pichet</div>
             ) : typeProtest === 'boycott' ? (
