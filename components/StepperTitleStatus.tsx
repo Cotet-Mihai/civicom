@@ -58,6 +58,7 @@ export default function StepperTitleStatus({children, steps, stepsState, onValid
                                     <StepperTitle
                                         className="text-start text-base font-semibold group-data-[state=inactive]/step:text-muted-foreground">
                                         {step.title}
+
                                     </StepperTitle>
                                     <div>
                                         <Badge
@@ -101,7 +102,8 @@ export default function StepperTitleStatus({children, steps, stepsState, onValid
             <StepperPanel className="text-sm">
                 {steps.map((step, index) => (
                     <StepperContent key={index} value={index + 1} className="flex items-start justify-center flex-col">
-                        <h3 className={'font-semibold mb-8 text-2xl'}>{step.title}</h3>
+                        <h3 className={'font-semibold text-2xl'}>{step.title}</h3>
+                        <p className={'mb-8 text-gray-400'}>Completați toate informațiile pentru a continua.</p>
                         <div className={'w-full'}>
                             {children}
                         </div>
