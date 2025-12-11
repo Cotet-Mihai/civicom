@@ -1,4 +1,4 @@
-import MarchLocation from "@/app/create/protest/components/StepperForms/LocationInfoForms/marchLocation";
+import {MarchLocation} from "@/app/create/protest/components/StepperForms/LocationInfoForms/marchLocation";
 import GatheringLocation from "@/app/create/protest/components/StepperForms/LocationInfoForms/gatheringLocation";
 
 

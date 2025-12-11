@@ -42,7 +42,7 @@ import type {
 import "leaflet-draw/dist/leaflet.draw.css"
 import "leaflet/dist/leaflet.css"
 import {
-    CircleIcon,
+    CircleIcon, Flag, FlagOff, Goal,
     LayersIcon,
     LoaderCircleIcon,
     MapPinIcon,
@@ -790,7 +790,7 @@ function MapLocateControl({
     )
 }
 
-type MapDrawShape = "marker" | "polyline" | "circle" | "rectangle" | "polygon"
+type MapDrawShape = "marker" | "polyline" | "circle" | "rectangle" | "polygon" | "start" | "inter" | "finish"
 type MapDrawAction = "edit" | "delete"
 type MapDrawMode = MapDrawShape | MapDrawAction | null
 interface MapDrawContextType {
@@ -942,6 +942,63 @@ function MapDrawMarker({ ...props }: DrawOptions.MarkerOptions) {
                 })
             }>
             <MapPinIcon />
+        </MapDrawShapeButton>
+    )
+}
+
+function MapDrawMarkerStart({ ...props }: DrawOptions.MarkerOptions) {
+    return (
+        <MapDrawShapeButton
+            drawMode="start"
+            createDrawTool={(L, map) =>
+                new L.Draw.Marker(map, {
+                    icon: L.divIcon({
+                        className: "start",
+                        iconAnchor: [12, 12],
+                        html: renderToString(<Flag className="size-6" />),
+                    }),
+                    ...props,
+                })
+            }>
+            <Flag />
+        </MapDrawShapeButton>
+    )
+}
+
+function MapDrawMarkerInter({ ...props }: DrawOptions.MarkerOptions) {
+    return (
+        <MapDrawShapeButton
+            drawMode="inter"
+            createDrawTool={(L, map) =>
+                new L.Draw.Marker(map, {
+                    icon: L.divIcon({
+                        className: "inter",
+                        iconAnchor: [12, 12],
+                        html: renderToString(<Goal className="size-6" />),
+                    }),
+                    ...props,
+                })
+            }>
+            <Goal />
+        </MapDrawShapeButton>
+    )
+}
+
+function MapDrawMarkerFinish({ ...props }: DrawOptions.MarkerOptions) {
+    return (
+        <MapDrawShapeButton
+            drawMode="finish"
+            createDrawTool={(L, map) =>
+                new L.Draw.Marker(map, {
+                    icon: L.divIcon({
+                        className: "finish",
+                        iconAnchor: [12, 12],
+                        html: renderToString(<FlagOff className="size-6" />),
+                    }),
+                    ...props,
+                })
+            }>
+            <FlagOff />
         </MapDrawShapeButton>
     )
 }
@@ -1307,6 +1364,9 @@ export {
     MapDrawDelete,
     MapDrawEdit,
     MapDrawMarker,
+    MapDrawMarkerStart,
+    MapDrawMarkerInter,
+    MapDrawMarkerFinish,
     MapDrawPolygon,
     MapDrawPolyline,
     MapDrawRectangle,
