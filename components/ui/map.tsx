@@ -955,7 +955,7 @@ function MapDrawMarkerStart({ ...props }: DrawOptions.MarkerOptions) {
                     icon: L.divIcon({
                         className: "start",
                         iconAnchor: [12, 12],
-                        html: renderToString(<Flag className="size-6" />),
+                        html: renderToString(<Flag color={'#34C759'} className="size-6" />),
                     }),
                     ...props,
                 })
@@ -974,7 +974,7 @@ function MapDrawMarkerInter({ ...props }: DrawOptions.MarkerOptions) {
                     icon: L.divIcon({
                         className: "inter",
                         iconAnchor: [12, 12],
-                        html: renderToString(<Goal className="size-6" />),
+                        html: renderToString(<Goal color={'#2b7fff'} className="size-6" />),
                     }),
                     ...props,
                 })
@@ -993,7 +993,7 @@ function MapDrawMarkerFinish({ ...props }: DrawOptions.MarkerOptions) {
                     icon: L.divIcon({
                         className: "finish",
                         iconAnchor: [12, 12],
-                        html: renderToString(<FlagOff className="size-6" />),
+                        html: renderToString(<FlagOff color={'#FF3B30'} className="size-6" />),
                     }),
                     ...props,
                 })

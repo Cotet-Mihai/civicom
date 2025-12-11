@@ -32,7 +32,7 @@ export function MarchLocation() {
 
     type Shape = MarkerShape | PolylineShape;
 
-    const TORONTO_COORDINATES = [43.6532, -79.3832] satisfies LatLngExpression
+    const OLD_TOWN_BUCHAREST_COORDINATES = [44.4358196, 26.1021932] satisfies LatLngExpression;
 
     const {L} = useLeaflet()
 
@@ -94,7 +94,7 @@ export function MarchLocation() {
 
 
     return L ? (
-        <Map center={TORONTO_COORDINATES}>
+        <Map center={OLD_TOWN_BUCHAREST_COORDINATES}>
             <MapTileLayer/>
             <MapDrawControl
                 onLayersChange={(layers) => {
