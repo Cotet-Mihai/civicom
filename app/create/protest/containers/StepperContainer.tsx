@@ -2,16 +2,11 @@
 
 import {Camera, Info, ListTodo, MapPin} from "lucide-react";
 import StepperTitleStatus from "@/components/StepperTitleStatus";
-import {IconType} from "react-icons";
 import BasicInfo from "@/app/create/protest/components/StepperForms/BasicInfo";
 import {JSX, useState} from "react";
 import {validateBasicInfo} from "@/lib/createValidation/protest"
 import LocationInfo from "@/app/create/protest/components/StepperForms/LocationInfo";
-
-export type StepperSteps = {
-    title: string;
-    icon: IconType;
-}
+import {StepperSteps} from "@/types/stepper";
 
 const stepperSteps: StepperSteps[] = [
     {title: 'Informații de bază', icon: Info}, //titlu, descriere, data si ora, tipul protestului

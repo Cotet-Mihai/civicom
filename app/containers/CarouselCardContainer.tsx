@@ -2,18 +2,7 @@ import CarouselCard from "@/app/components/CarouselCard";
 import { trustedOngs } from "@/lib/trustedOng";
 import Image from "next/image";
 import React, {JSX} from "react";
-
-type Items = {
-    id: number;
-    title: string;
-    description: string;
-    link: string;
-    icon: JSX.Element;
-};
-
-type CarouselCardContainerProps = {
-    width: number;
-};
+import {CarouselCardContainerProps, Items} from "@/types/carouselCard";
 
 const ongExtras: Record<number, { width: number; height: number }> = {
     1: { width: 500, height: 500 },

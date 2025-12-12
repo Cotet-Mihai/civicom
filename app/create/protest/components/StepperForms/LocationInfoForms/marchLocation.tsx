@@ -15,22 +15,9 @@ import {
     useLeaflet,
 } from "@/components/ui/map"
 import L, {LatLngExpression} from "leaflet"
+import type { Shape } from "@/types/marchLocation"
 
 export function MarchLocation() {
-    type MarkerShape = {
-        id: number;
-        type: string | undefined;
-        lat: number;
-        lng: number;
-    };
-
-    type PolylineShape = {
-        id: number;
-        type: "polyline";
-        points: L.LatLng[] | L.LatLng[][] | L.LatLng[][][];
-    };
-
-    type Shape = MarkerShape | PolylineShape;
 
     const OLD_TOWN_BUCHAREST_COORDINATES = [44.4358196, 26.1021932] satisfies LatLngExpression;
 
@@ -75,7 +62,6 @@ export function MarchLocation() {
         ["start", "finish"].forEach((type) => {
             const markersOfType = shapes.filter(s => s.type === type);
             if (markersOfType.length > 1) {
-                // ștergem primul marker de acest tip
                 const firstId = markersOfType[0].id;
                 const layerToRemove = layers.getLayer(firstId);
                 if (layerToRemove) {

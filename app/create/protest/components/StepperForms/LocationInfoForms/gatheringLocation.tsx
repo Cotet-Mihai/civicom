@@ -14,12 +14,7 @@ import React, { useRef, useState, useEffect } from "react";
 import L from "leaflet";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { SearchIcon } from "lucide-react";
-
-type Suggestion = {
-    display_name: string;
-    lat: string;
-    lon: string;
-};
+import {Suggestion} from "@/types/gatheringLocation";
 
 function MapSearch({
                        onSelect,

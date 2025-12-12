@@ -1,7 +1,7 @@
 import HeroSection from "@/app/components/HeroSection";
 import BannerTrusted from "@/app/components/BannerTrusted";
 import QaSection from "@/app/components/QaSection";
-import LogoLogoContainer from "@/app/containers/LogoLogoContainer";
+import LogoLoopContainer from "@/app/containers/LogoLoopContainer";
 
 export default function Home() {
     return (
@@ -10,7 +10,7 @@ export default function Home() {
             <div className={'md:h-screen bg-white flex flex-col pt-12'}>
                 <BannerTrusted/>
                 <QaSection/>
-                <LogoLogoContainer/>
+                <LogoLoopContainer/>
             </div>
         </div>
 

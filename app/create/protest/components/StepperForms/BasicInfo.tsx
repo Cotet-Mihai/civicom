@@ -3,33 +3,7 @@ import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import CalendarWithStartStopTime from "@/components/calendarWithStartStopTime";
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
-
-type Props = {
-    titleState: {
-        title: string;
-        setTitle: (title: string) => void;
-    },
-    descriptionState: {
-        description: string;
-        setDescription: (description: string) => void;
-    },
-    dateState: {
-        date: Date | undefined,
-        setDate: (date: Date | undefined) => void
-    },
-    fromTimeState: {
-        fromTime: string,
-        setFromTime: (fromTime: string) => void
-    },
-    toTimeState: {
-        toTime: string,
-        setToTime: (toTime: string) => void
-    },
-    typeState: {
-        type: string | undefined,
-        setType: (type: string | undefined) => void
-    }
-}
+import {Props} from "@/types/basicInfo";
 
 export default function BasicInfo({titleState, descriptionState, dateState, fromTimeState, toTimeState, typeState}: Props) {
 

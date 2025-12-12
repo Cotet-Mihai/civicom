@@ -1,12 +1,8 @@
 import React from "react";
 import LogoLoop from "@/components/LogoLoop";
 import {trustedOngs, TrustedOng} from '@/lib/trustedOng'
+import {LogosProps} from "@/types/logoLoop";
 
-type LogosProps = {
-    src: string,
-    alt: string,
-    href: string
-}
 
 const logos: LogosProps[] = trustedOngs.map((ong: TrustedOng): LogosProps => ({
     src: ong.image,
@@ -15,7 +11,7 @@ const logos: LogosProps[] = trustedOngs.map((ong: TrustedOng): LogosProps => ({
 }));
 
 
-export default function LogoLogoContainer() {
+export default function LogoLoopContainer() {
     return (
         <div className="bg-green-500 pt-4">
             <LogoLoop

@@ -1,10 +1,4 @@
-export type TrustedOng = {
-    id: number,
-    name: string,
-    description: string,
-    image: string,
-    link: string,
-}
+import {TrustedOng} from "@/types/ongs";
 
 export const trustedOngs: TrustedOng[] = [
     {
