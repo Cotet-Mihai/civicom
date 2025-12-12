@@ -16,10 +16,14 @@ import {
 } from "@/components/ui/map"
 import L, {LatLngExpression} from "leaflet"
 import type { Shape } from "@/types/marchLocation"
+import {MapSearch} from "@/components/MapSeach";
+import {useRef, useState} from "react";
 
 export function MarchLocation() {
 
     const OLD_TOWN_BUCHAREST_COORDINATES = [44.4358196, 26.1021932] satisfies LatLngExpression;
+    const [searchCoords, setSearchCoords] = useState<[number, number] | null>(null);
+    const mapRef = useRef<L.Map | null>(null);
 
     const {L} = useLeaflet()
 
@@ -78,25 +82,27 @@ export function MarchLocation() {
         console.log(shapes);
     }
 
-
     return L ? (
-        <Map center={OLD_TOWN_BUCHAREST_COORDINATES}>
-            <MapTileLayer/>
-            <MapDrawControl
-                onLayersChange={(layers) => {
-                    handleOnLayersChange(layers)
-                }
-            }
-            >
-                <MapDrawMarkerStart/>
-                <MapDrawMarkerInter/>
-                <MapDrawMarkerFinish/>
-                <MapDrawPolyline />
-                <MapDrawEdit />
-                <MapDrawDelete />
-                <MapDrawUndo />
-            </MapDrawControl>
-            <MapLocateControl/>
-        </Map>
+        <>
+            <MapSearch mapRef={mapRef} onSelect={setSearchCoords}/>
+            <Map center={searchCoords ?? OLD_TOWN_BUCHAREST_COORDINATES} ref={mapRef} zoom={13}>
+                <MapTileLayer/>
+                <MapDrawControl
+                    onLayersChange={(layers) => {
+                        handleOnLayersChange(layers)
+                    }
+                    }
+                >
+                    <MapDrawMarkerStart/>
+                    <MapDrawMarkerInter/>
+                    <MapDrawMarkerFinish/>
+                    <MapDrawPolyline />
+                    <MapDrawEdit />
+                    <MapDrawDelete />
+                    <MapDrawUndo />
+                </MapDrawControl>
+                <MapLocateControl/>
+            </Map>
+        </>
     ) : null
 }
