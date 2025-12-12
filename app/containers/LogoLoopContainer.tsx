@@ -1,7 +1,8 @@
 import React from "react";
 import LogoLoop from "@/components/LogoLoop";
-import {trustedOngs, TrustedOng} from '@/lib/trustedOng'
+import {trustedOngs} from '@/lib/trustedOng'
 import {LogosProps} from "@/types/logoLoop";
+import {TrustedOng} from "@/types/ongs";
 
 
 const logos: LogosProps[] = trustedOngs.map((ong: TrustedOng): LogosProps => ({

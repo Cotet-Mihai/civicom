@@ -1,9 +1,8 @@
 import {
     Map,
-    MapDrawCircle,
     MapDrawControl,
     MapDrawDelete,
-    MapDrawEdit,
+    MapDrawEdit, MapDrawMarker,
     MapDrawUndo,
     MapLocateControl,
     MapTileLayer
@@ -175,7 +174,7 @@ export default function GatheringLocation() {
                 <MapTileLayer />
                 <MapLocateControl />
                 <MapDrawControl>
-                    <MapDrawCircle />
+                    <MapDrawMarker />
                     <MapDrawEdit />
                     <MapDrawDelete />
                     <MapDrawUndo />

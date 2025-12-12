@@ -216,7 +216,7 @@ export default function PrivateNavBar() {
 
                                     {/* Card 2 */}
                                     <DialogTrigger asChild>
-                                        <Link href={'/create/protest'}>
+                                        <Link href={'/creaza/protest'}>
                                             <div
                                                 className="relative w-full aspect-square bg-cover bg-center rounded-xl shadow-lg cursor-pointer group"
                                                 style={{backgroundImage: "url('/jpg/protest.jpg')"}}
@@ -234,7 +234,7 @@ export default function PrivateNavBar() {
 
                                     {/* Card 3 */}
                                     <DialogTrigger asChild>
-                                        <Link href={'/create/community-activity'}>
+                                        <Link href={'/creaza/community-activity'}>
                                             <div
                                                 className="relative w-full aspect-square bg-cover bg-center rounded-xl shadow-lg cursor-pointer group"
                                                 style={{backgroundImage: "url('/jpg/activitate-comunitara.jpg')"}}
@@ -252,7 +252,7 @@ export default function PrivateNavBar() {
 
                                     {/* Card 4 */}
                                     <DialogTrigger asChild>
-                                        <Link href={'/create/charity-event'}>
+                                        <Link href={'/creaza/charity-event'}>
                                             <div
                                                 className="relative w-full aspect-square bg-cover bg-center rounded-xl shadow-lg cursor-pointer group"
                                                 style={{backgroundImage: "url('/jpg/eveniment-caritabil.jpg')"}}
