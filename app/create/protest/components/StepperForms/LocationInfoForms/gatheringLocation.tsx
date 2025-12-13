@@ -8,7 +8,7 @@ import {
     MapTileLayer
 } from "@/components/ui/map";
 import type { LatLngExpression } from "leaflet";
-import { H4 } from "@/components/shared/Typography";
+import { H4 } from "@/components/Typography";
 import React, { useRef, useState } from "react";
 import L from "leaflet";
 import {MapSearch} from "@/components/MapSeach";

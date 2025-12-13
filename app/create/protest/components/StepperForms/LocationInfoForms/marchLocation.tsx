@@ -18,8 +18,9 @@ import L, {LatLngExpression} from "leaflet"
 import type { Shape } from "@/types/marchLocation"
 import {MapSearch} from "@/components/MapSeach";
 import {useRef, useState} from "react";
+import type {MarchLocationProps} from '@/types/marchLocation'
 
-export function MarchLocation() {
+export function MarchLocation(locationDataState : MarchLocationProps) {
 
     const OLD_TOWN_BUCHAREST_COORDINATES = [44.4358196, 26.1021932] satisfies LatLngExpression;
     const [searchCoords, setSearchCoords] = useState<[number, number] | null>(null);
@@ -56,7 +57,6 @@ export function MarchLocation() {
 
 
         });
-
         return shapes;
     }
 
@@ -79,7 +79,8 @@ export function MarchLocation() {
         if (!L) return;
         removeDuplicateMarkers(layers);
         const shapes = extractShapes(layers);
-        console.log(shapes);
+        locationDataState.locationDataState.setLocationData(shapes);
+        console.log(shapes)
     }
 
     return L ? (

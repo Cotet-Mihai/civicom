@@ -2,9 +2,11 @@ import {MarchLocation} from "@/app/create/protest/components/StepperForms/Locati
 import GatheringLocation from "@/app/create/protest/components/StepperForms/LocationInfoForms/gatheringLocation";
 import {LocationInfoProps} from "@/types/locationInfo";
 
-export default function LocationInfo({ typeProtest }: LocationInfoProps) {
+export default function LocationInfo({ typeProtest, locationDataState }: LocationInfoProps) {
     const marchLocation = (
-        <MarchLocation/>
+        <MarchLocation
+            locationDataState={locationDataState}
+        />
     )
 
     const gatheringLocation = (

@@ -1,5 +1,5 @@
 import CarouselCard from "@/app/components/CarouselCard";
-import { trustedOngs } from "@/lib/trustedOng";
+import { trustedOngs } from "@/data/trustedOng";
 import Image from "next/image";
 import React from "react";
 import {CarouselCardContainerProps, Items} from "@/types/carouselCard";

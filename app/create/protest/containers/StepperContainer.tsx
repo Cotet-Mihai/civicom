@@ -4,9 +4,10 @@ import {Camera, Info, ListTodo, MapPin} from "lucide-react";
 import StepperTitleStatus from "@/components/StepperTitleStatus";
 import BasicInfo from "@/app/create/protest/components/StepperForms/BasicInfo";
 import {JSX, useState} from "react";
-import {validateBasicInfo} from "@/lib/createValidation/protest"
+import {validateBasicInfo, validateLocationData} from "@/lib/createValidation/protest"
 import LocationInfo from "@/app/create/protest/components/StepperForms/LocationInfo";
 import {StepperSteps} from "@/types/stepper";
+import type {Shape} from "@/types/marchLocation";
 
 const stepperSteps: StepperSteps[] = [
     {title: 'Informații de bază', icon: Info}, //titlu, descriere, data si ora, tipul protestului
@@ -27,8 +28,10 @@ export default function StepperContainer() {
     const [toTime, setToTime] = useState('12:30:00');
     // Tipul de protest
     const [typeProtest, setTypeProtest] = useState<string | undefined>(undefined);
-    //Step of Stepper
+    // Step of Stepper
     const [currentStep, setCurrentStep] = useState(1);
+    // Location Data
+    const [locationData, setLocationData] = useState<Shape[] | undefined>(undefined)
 
     const basicInfoContainer = (
         <BasicInfo
@@ -42,7 +45,10 @@ export default function StepperContainer() {
     )
 
     const locationInfoContainer = (
-        <LocationInfo typeProtest={typeProtest}/>
+        <LocationInfo
+            typeProtest={typeProtest}
+            locationDataState={{locationData, setLocationData}}
+        />
     )
 
     const formSteps: JSX.Element[] = [
@@ -60,7 +66,11 @@ export default function StepperContainer() {
                 toTime,
                 type: typeProtest,
             });
-        } return true
+        }
+        if (currentStep === 2) {
+            return validateLocationData(locationData);
+        }
+        return true
     }
 
     return (

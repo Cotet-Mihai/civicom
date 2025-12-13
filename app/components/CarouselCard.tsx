@@ -4,7 +4,7 @@ import React, {JSX, useEffect, useRef, useState} from 'react';
 import {motion, PanInfo, useMotionValue, useTransform} from 'motion/react';
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {ButtonDonate} from "@/components/shared/ButtonDonate";
+import {ButtonDonate} from "@/components/server/ButtonDonate";
 
 export interface CarouselItem {
   title: string;

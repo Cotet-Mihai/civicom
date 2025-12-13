@@ -9,7 +9,7 @@ import {
     FieldSeparator,
     FieldSet
 } from "@/components/ui/field";
-import PasswordInput from "@/components/shared/PasswordInput";
+import PasswordInput from "@/components/PasswordInput";
 import {Button} from "@/components/ui/button";
 import React, {useState} from "react";
 import {toast} from "sonner";

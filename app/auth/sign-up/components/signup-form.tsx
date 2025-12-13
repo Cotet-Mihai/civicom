@@ -8,7 +8,7 @@ import React from "react";
 import {signupAction} from "@/lib/supabase/actions/signUp";
 import {toast} from "sonner";
 import Link from "next/link";
-import PasswordInput from "@/components/shared/PasswordInput";
+import PasswordInput from "@/components/PasswordInput";
 import {
     AlertDialog,
     AlertDialogCancel,

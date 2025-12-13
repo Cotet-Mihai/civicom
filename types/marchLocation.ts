@@ -1,4 +1,9 @@
 import L from "leaflet";
+import type {LocationDataState} from "@/types/locationInfo";
+
+export type MarchLocationProps = {
+    locationDataState: LocationDataState;
+}
 
 type MarkerShape = {
     id: number;
@@ -14,3 +19,4 @@ type PolylineShape = {
 };
 
 export type Shape = MarkerShape | PolylineShape;
+
