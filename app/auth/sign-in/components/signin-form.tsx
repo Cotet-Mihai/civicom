@@ -7,7 +7,6 @@ import {Input} from "@/components/ui/input"
 import Link from "next/link";
 import React, {useState} from "react";
 import {toast} from "sonner";
-import {signInWithEmailAction} from "@/lib/supabase/actions/signIn";
 import {
     Dialog,
     DialogContent,
@@ -18,63 +17,81 @@ import {
     DialogTrigger,
 } from '@/components/animate-ui/components/radix/dialog';
 import {Label} from "@/components/ui/label";
-import {resetPasswordAction} from "@/lib/supabase/actions/resetPassword";
+import {resetPassword, signInHandler} from "@/utils/authHandlers";
 
-export function SigninForm({
-                               className,
-                               ...props
-                           }: React.ComponentProps<"form">) {
+/**
+ * SigninForm component handles user authentication UI
+ * and actions like sign-in and password reset.
+ */
+export function SigninForm({ className, ...props } : React.ComponentProps<"form">) {
 
+    // Local state to store user's email input
     const [email, setEmail] = useState("");
 
-    async function handleSignIn(e: React.FormEvent<HTMLFormElement>) {
+    /**
+     * Handles form submission for signing in
+     * Calls the reusable signInHandler helper function
+     * and displays success/error toasts
+     */
+    async function handleSignIn(e: React.FormEvent<HTMLFormElement>) : Promise<void> {
         e.preventDefault();
 
-        const formData = new FormData(e.currentTarget);
-        const result = await signInWithEmailAction(formData);
+        const response = await signInHandler(e);
 
-        if (result?.error) {
-            toast.error(result.error)
+        // Show error toast if sign-in failed
+        if (!response.success) {
+            toast.error(response.message);
         }
     }
 
-    async function handleForgetPassword(e: React.MouseEvent<HTMLSpanElement>) {
-        if (!email) {
-            return toast.error("Te rog introdu email-ul.");
-        }
+    /**
+     * Handles password reset when user clicks "Forgot Password"
+     * Calls the reusable resetPassword helper function
+     * Displays appropriate toast messages based on response
+     */
+    async function handleForgetPassword(e: React.MouseEvent<HTMLButtonElement>) : Promise<void> {
+        e.preventDefault();
 
-        const result = await resetPasswordAction(email);
+        const response = await resetPassword(email);
 
-        if (result?.error) {
-            console.error(result.error);
-            toast.error("A apărut o eroare.");
+        if (response.success) {
+            toast.success(response.message);
         } else {
-            toast.success("Email trimis!");
+            toast.error(response.message);
         }
     }
 
     return (
         <form className={cn("flex flex-col gap-6", className)} {...props} onSubmit={handleSignIn}>
             <FieldGroup>
+                {/* Header section */}
                 <div className="flex flex-col items-center gap-1 text-center">
                     <h1 className="text-2xl font-bold">Autentifică-te</h1>
                     <p className="text-muted-foreground text-sm text-balance">
                         Să facem o lume mai bună pentru toți!
                     </p>
                 </div>
+
+                {/* Email input */}
                 <Field>
                     <FieldLabel htmlFor="email">Email</FieldLabel>
                     <Input name="email" type="email" placeholder="m@example.com" required/>
                 </Field>
+
+                {/* Password input with "Forgot Password" dialog */}
                 <Field>
                     <div className="flex items-center">
                         <FieldLabel htmlFor="password" className={'mr-auto'}>Parolă</FieldLabel>
+
+                        {/* Dialog trigger for password reset */}
                         <Dialog>
                             <DialogTrigger>
                                 <span className="text-sm underline-offset-4 hover:underline cursor-pointer">
                                   Ați uitat parola?
                                 </span>
                             </DialogTrigger>
+
+                            {/* Dialog content */}
                             <DialogContent className="max-w-md p-6">
                                 <DialogHeader>
                                     <DialogTitle>Resetează Parola</DialogTitle>
@@ -84,16 +101,18 @@ export function SigninForm({
                                     </DialogDescription>
                                 </DialogHeader>
 
+                                {/* Input for email within dialog */}
                                 <div className="grid gap-3">
                                     <Label htmlFor="email">Email</Label>
                                     <Input name="email" placeholder="m@exemple.com" onChange={(e) => setEmail(e.target.value)}/>
                                 </div>
 
+                                {/* Footer with reset button */}
                                 <DialogFooter className="mt-4 flex justify-end gap-2">
                                     <Button
                                         type="submit"
                                         className="py-2"
-                                        onClick={handleForgetPassword}
+                                        onClick={handleForgetPassword} // calls helper function
                                     >
                                         Trimite link resetare
                                     </Button>
@@ -101,12 +120,20 @@ export function SigninForm({
                             </DialogContent>
                         </Dialog>
                     </div>
+
+                    {/* Password input field */}
                     <Input name="password" type="password" required/>
                 </Field>
+
+                {/* Sign-in button */}
                 <Field>
                     <Button type="submit">Conectează-te</Button>
                 </Field>
+
+                {/* Divider */}
                 <FieldSeparator>Sau continuați cu</FieldSeparator>
+
+                {/* Alternative login (e.g., GitHub) */}
                 <Field>
                     <Button variant="outline" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -117,6 +144,8 @@ export function SigninForm({
                         </svg>
                         Autentificare cu GitHub
                     </Button>
+
+                    {/* Link to sign-up page */}
                     <FieldDescription className="text-center">
                         Nu aveți un cont?{" "}
                         <Link href="/auth/sign-up" className="underline underline-offset-4">
