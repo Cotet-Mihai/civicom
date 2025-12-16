@@ -53,3 +53,19 @@ export const trustedOngs: TrustedOng[] = [
         link: 'https://motivation.ro/'
     }
 ];
+
+/**
+ * Extra visual configuration for ONG logos.
+ *
+ * Maps ONG `id` to image dimensions used by UI components
+ * (e.g. Next.js <Image />).
+ *
+ */
+export const ongExtras: Record<number, { width: number; height: number }> = {
+    1: { width: 500, height: 500 },
+    2: { width: 400, height: 400 },
+    3: { width: 400, height: 400 },
+    4: { width: 280, height: 280 },
+    5: { width: 350, height: 350 },
+    6: { width: 300, height: 300 },
+};

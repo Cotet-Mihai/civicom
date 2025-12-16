@@ -1,19 +1,11 @@
-import CarouselCard from "@/app/components/CarouselCard";
-import { trustedOngs } from "@/data/trustedOng";
+import CarouselCard from "@/components/CarouselCard";
+import {ongExtras, trustedOngs} from "@/data/trustedOng";
 import Image from "next/image";
 import React from "react";
 import {CarouselCardContainerProps, Items} from "@/types/carouselCard";
 
-const ongExtras: Record<number, { width: number; height: number }> = {
-    1: { width: 500, height: 500 },
-    2: { width: 400, height: 400 },
-    3: { width: 400, height: 400 },
-    4: { width: 280, height: 280 },
-    5: { width: 350, height: 350 },
-    6: { width: 300, height: 300 },
-};
-
 export default function CarouselCardContainer({ width }: CarouselCardContainerProps) {
+
     const items: Items[] = trustedOngs
         .filter((ong) => ong.id !== 6)
         .map((ong): Items => ({
