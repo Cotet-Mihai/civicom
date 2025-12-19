@@ -1,4 +1,4 @@
-import { TrustedOng } from "@/types/ongs";
+import { TrustedONG } from "@/types/ong";
 import { LogosProps } from "@/types/logoLoop";
 
 /**
@@ -7,5 +7,5 @@ import { LogosProps } from "@/types/logoLoop";
  * @param ongs - Array of trusted organizations
  * @returns Array of LogosProps for LogoLoop
  */
-export const getLogos = (ongs: TrustedOng[]): LogosProps[] =>
+export const getLogos = (ongs: TrustedONG[]): LogosProps[] =>
     ongs.map(ong => ({ src: ong.image, alt: ong.name, href: ong.link }));

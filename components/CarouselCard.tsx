@@ -4,7 +4,7 @@ import React, {JSX, useEffect, useRef, useState} from 'react';
 import {motion, PanInfo, useMotionValue, useTransform} from 'motion/react';
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {ButtonDonate} from "@/components/server/ButtonDonate";
+import {ButtonDonate} from "@/components/ButtonDonate";
 
 export interface CarouselItem {
     title: string;
@@ -172,7 +172,7 @@ export default function CarouselCard({
                                 <span className="flex items-center justify-center">
                                   {item.icon}
                                 </span>
-                                <Button asChild className={'block md:hidden mt-4 md:mt-0'}>
+                                <Button asChild className={'block md:hidden mt-4 md:mt-0'} variant={'mainButton'}>
                                     <Link href={item.link}>
                                         Află Mai Mult
                                     </Link>
@@ -182,7 +182,7 @@ export default function CarouselCard({
                                 <div className="mb-1 font-black text-lg text-white">{item.title}</div>
                                 <p className="text-sm text-white">{item.description}</p>
                                 <div className={'flex flex-col md:flex-row mt-2 justify-center md:justify-between'}>
-                                    <Button asChild className={'hidden md:block mt-4 md:mt-0'}>
+                                    <Button asChild className={'hidden md:block mt-4 md:mt-0'} variant={'mainButton'}>
                                         <Link href={item.link}>
                                             Află Mai Mult
                                         </Link>

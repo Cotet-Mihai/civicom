@@ -6,6 +6,8 @@ export async function updateSession(request: NextRequest) {
         request,
     })
 
+    // With Fluid compute, don't put this client in a global environment
+    // variable. Always create a new one on each request.
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -19,33 +21,34 @@ export async function updateSession(request: NextRequest) {
                     supabaseResponse = NextResponse.next({
                         request,
                     })
-                    cookiesToSet.forEach(({ name, value }) => supabaseResponse.cookies.set(name, value))
+                    cookiesToSet.forEach(({ name, value, options }) => supabaseResponse.cookies.set(name, value, options))
                 },
             },
         }
     )
 
-    // IMPORTANT: Avoid writing any logic between createServerClient and
+    // Do not run code between createServerClient and
     // supabase.auth.getClaims(). A simple mistake could make it very hard to debug
     // issues with users being randomly logged out.
 
-    // IMPORTANT: Don't remove getClaims()
+    // IMPORTANT: If you remove getClaims() and you use server-side rendering
+    // with the Supabase client, your users may be randomly logged out.
     const { data } = await supabase.auth.getClaims()
 
     const user = data?.claims
 
-    const publicPaths = [
-        '/',
-        '/auth',
-    ]
+    const pathname = request.nextUrl.pathname
 
-    const isPublic = publicPaths.some(
-        path => path === request.nextUrl.pathname || request.nextUrl.pathname.startsWith(path + '/')
-    );
+    const isPublic =
+        pathname === '/' ||
+        pathname.startsWith('/sign-in') ||
+        pathname.startsWith('/sign-up') ||
+        pathname.startsWith('/error')
+
 
     if (!user && !isPublic) {
         const url = request.nextUrl.clone()
-        url.pathname = '/auth/sign-in'
+        url.pathname = '/sign-in'
         return NextResponse.redirect(url)
     }
 

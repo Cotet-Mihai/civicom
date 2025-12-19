@@ -1,6 +1,6 @@
 import {JSX} from "react";
 
-export type Items = {
+export type CarouselItems = {
     id: number;
     title: string;
     description: string;
