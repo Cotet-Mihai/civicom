@@ -10,12 +10,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import {counties} from "@/data/counties";
+import {counties} from '@/lib/counties'
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {Menu, UserRoundIcon} from "lucide-react";
 import {Drawer} from 'vaul';
-import {ButtonDonate} from "@/components/ButtonDonate";
+import {ButtonDonate} from "@/components/server/ButtonDonate";
+import {usePathname} from "next/navigation";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -34,7 +35,12 @@ import {
     DialogTrigger,
 } from '@/components/animate-ui/components/radix/dialog';
 
-export default function NavBarPrivate() {
+export default function PrivateNavBar() {
+    const pathname = usePathname();
+    const hidePaths = ["/auth", "/account/update-password"];
+    const showNavbar = !hidePaths.some(path => pathname.startsWith(path));
+
+    if (!showNavbar) return null;
 
     return (
         <nav className="fixed top-0 left-0 w-full bg-white border-b border-gray-200 z-50">
@@ -93,7 +99,7 @@ export default function NavBarPrivate() {
                                         {/* Buttons */}
                                         <div className="flex flex-col gap-3 mt-2">
                                             <Button size="sm" asChild>
-                                                <Link href="/sign-up">Mai vedem</Link>
+                                                <Link href="/auth/sign-up">Mai vedem</Link>
                                             </Button>
                                             <ButtonDonate link="#" className="mr-2"/>
                                         </div>
@@ -104,7 +110,7 @@ export default function NavBarPrivate() {
                     </Drawer.Root>
                 </div>
 
-                <Link href="/">
+                <Link href="/public">
                     <h1 className="text-xl font-extrabold text-green-800">CIVICOM✨</h1>
                 </Link>
 
@@ -175,7 +181,7 @@ export default function NavBarPrivate() {
 
                         <Dialog>
                             <DialogTrigger asChild>
-                                <Button variant={"mainButton"}>
+                                <Button>
                                     Creează Eveniment
                                 </Button>
                             </DialogTrigger>

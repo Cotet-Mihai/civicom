@@ -114,6 +114,7 @@ export function SigninForm({ className, ...props } : React.ComponentProps<"form"
                                         type="submit"
                                         className="py-2"
                                         onClick={handleForgetPassword} // calls helper function
+                                        variant={"mainButton"}
                                     >
                                         Trimite link resetare
                                     </Button>

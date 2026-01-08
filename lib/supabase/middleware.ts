@@ -43,7 +43,8 @@ export async function updateSession(request: NextRequest) {
         pathname === '/' ||
         pathname.startsWith('/sign-in') ||
         pathname.startsWith('/sign-up') ||
-        pathname.startsWith('/error')
+        pathname.startsWith('/error') ||
+        pathname.startsWith('/confirm')
 
 
     if (!user && !isPublic) {
