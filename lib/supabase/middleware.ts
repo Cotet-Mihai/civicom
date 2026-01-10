@@ -44,7 +44,8 @@ export async function updateSession(request: NextRequest) {
         pathname.startsWith('/sign-in') ||
         pathname.startsWith('/sign-up') ||
         pathname.startsWith('/error') ||
-        pathname.startsWith('/confirm')
+        pathname.startsWith('/api/confirm-sign-up') ||
+        pathname.startsWith('/api/confirm-reset-password')
 
 
     if (!user && !isPublic) {

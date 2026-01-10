@@ -23,7 +23,7 @@ export async function signupAction(formData: FormData) {
         email: email,
         password: password,
         options: {
-            emailRedirectTo: 'http://localhost:3000/confirm-sign-in',
+            emailRedirectTo: 'http://localhost:3000/dashboard',
             data: {
                 display_name: username
             }
