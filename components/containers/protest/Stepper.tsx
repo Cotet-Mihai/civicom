@@ -7,12 +7,42 @@ import BasicInfo from "@/components/containers/protest/BaiscInfo";
 import LocationInfo from "@/components/containers/protest/LocationInfo";
 import {validateBasicInfo} from "@/utils/createEventValidation/protest"
 import {StepperSteps} from "@/types/stepper";
+import {WaypointsIcon, Flag, FlagOff, Goal, MapPinIcon} from 'lucide-react'
 
 const stepperSteps: StepperSteps[] = [
-    {title: 'Informații de bază', icon: Info}, //titlu, descriere, data si ora, tipul protestului
-    {title: 'Locație', icon: MapPin}, // locatie, punct de intalnire, optional finish
-    {title: 'Media vizuală', icon: Camera}, //imagine principala, galerie de iamgini, optional video, (sa ai optiunea de al descarca din browser)
-    {title: 'Logistică', icon: ListTodo}, // Ce sa aduca participantii(pancarte, steaguri, vuvuzele, bannere), restirctii, reguli de siguranta
+    {title: 'Informații de bază', icon: Info, description:'Completați toate informațiile pentru a continua.'}, //titlu, descriere, data si ora, tipul protestului
+    {
+        title: 'Locație',
+        icon: MapPin,
+        description: {
+            gathering: [
+                {
+                    icon: <MapPinIcon size={16}/>,
+                    description: '- Unde este adunarea'
+                }
+            ],
+            march: [
+                {
+                    icon: <Flag size={16}/>,
+                    description: '- Unde începe marșul'
+                },
+                {
+                    icon: <Goal size={16}/>,
+                    description: '-  Unde sunt punctele intermediare'
+                },
+                {
+                    icon: <FlagOff size={16}/>,
+                    description: '-  Unde este finalul marșului'
+                },
+                {
+                    icon: <WaypointsIcon size={16}/>,
+                    description: '-  Trasează traseul exact pe hartă'
+                }
+            ]
+        }
+    }, // locatie, punct de intalnire, optional finish
+    {title: 'Media vizuală', icon: Camera, description: 'test'}, //imagine principala, galerie de iamgini, optional video, (sa ai optiunea de al descarca din browser)
+    {title: 'Logistică', icon: ListTodo, description: 'test'}, // Ce sa aduca participantii(pancarte, steaguri, vuvuzele, bannere), restirctii, reguli de siguranta
 ];
 
 export default function StepperContainer() {
@@ -68,6 +98,7 @@ export default function StepperContainer() {
             steps={stepperSteps}
             stepsState={{currentStep, setCurrentStep}}
             onValidateNext={handleNextStep}
+            typeProtest={typeProtest}
         >
             {formSteps[currentStep - 1]}
         </StepperTitleStatus>

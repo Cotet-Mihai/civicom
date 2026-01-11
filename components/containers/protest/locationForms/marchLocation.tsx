@@ -1,6 +1,6 @@
 "use client"
 
-import {useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import L, {LatLngExpression} from "leaflet"
 import {
     Map,
@@ -11,13 +11,12 @@ import {
     MapDrawMarkerInter,
     MapDrawMarkerStart,
     MapDrawPolyline,
-    MapDrawUndo,
     MapLocateControl,
     MapTileLayer,
     useLeaflet,
 } from "@/components/ui/map"
-import {MapSearch} from "@/components/MapSearch";
-import type { Shape } from "@/types/protestStepper"
+import type {Shape} from "@/types/protestStepper"
+import MapSearchControlWrapper from '@/utils/MapSearch'
 
 
 export function MarchLocation() {
@@ -85,9 +84,9 @@ export function MarchLocation() {
 
     return L ? (
         <>
-            <MapSearch mapRef={mapRef} onSelect={setSearchCoords}/>
             <Map center={searchCoords ?? OLD_TOWN_BUCHAREST_COORDINATES} ref={mapRef} zoom={13}>
                 <MapTileLayer/>
+                <MapSearchControlWrapper/>
                 <MapDrawControl
                     onLayersChange={(layers) => {
                         handleOnLayersChange(layers)
@@ -100,7 +99,6 @@ export function MarchLocation() {
                     <MapDrawPolyline />
                     <MapDrawEdit />
                     <MapDrawDelete />
-                    <MapDrawUndo />
                 </MapDrawControl>
                 <MapLocateControl/>
             </Map>

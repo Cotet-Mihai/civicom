@@ -12,31 +12,39 @@ import {
     StepperTitle,
     StepperTrigger,
 } from '@/components/ui/stepper';
-import {Check, LoaderCircleIcon} from 'lucide-react';
-import {IconType} from "react-icons";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+import {Check, LoaderCircleIcon, HelpCircle } from 'lucide-react';
 import {toast} from "sonner";
-import {H2, H3, H4} from "@/components/Typography";
+import {H3} from "@/components/Typography";
+import Link from "next/link";
+import {MarchStep, StepperSteps} from "@/types/stepper";
 
-type Step = {
-    title: string;
-    icon: IconType;
-}
 
 type Props = {
     children?: React.ReactNode;
-    steps: Step[];
+    steps: StepperSteps[];
     stepsState: {
         currentStep: number;
         setCurrentStep: (currentStep: number) => void;
     },
-    onValidateNext: () => boolean | undefined
+    onValidateNext: () => boolean | undefined;
+    typeProtest: string | undefined;
 }
 
-export default function StepperTitleStatus({children, steps, stepsState, onValidateNext}: Props) {
+export default function StepperTitleStatus({children, steps, stepsState, onValidateNext, typeProtest}: Props) {
 
     return (
         <>
-            <H3 className={'pb-5'}>Creează Protest</H3>
+            <div className={'flex justify-center items-center pb-7'}>
+                <H3 className={'mr-auto'}>Creează Protest</H3>
+                <Link href="/">
+                    <h1 className="text-xl font-extrabold text-green-800">CIVICOM✨</h1>
+                </Link>
+            </div>
             <Stepper
                 value={stepsState.currentStep}
                 onValueChange={stepsState.setCurrentStep}
@@ -106,7 +114,64 @@ export default function StepperTitleStatus({children, steps, stepsState, onValid
                     {steps.map((step, index) => (
                         <StepperContent key={index} value={index + 1} className="flex items-start justify-center flex-col">
                             <h3 className={'font-semibold text-2xl'}>{step.title}</h3>
-                            <p className={'mb-8 text-gray-400'}>Completați toate informațiile pentru a continua.</p>
+                            <div className="text-gray-400">
+                                <p>Vă rugăm să completați toate informațiile.</p>
+                                {typeProtest === 'gathering' && typeof step.description !== 'string'
+                                    ? step.description.gathering && (
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <div className="flex cursor-help items-center gap-2 text-sm text-gray-400 mt-5 mb-1">
+                                                <span className={''}>Cum folosesc harta?</span>
+                                                <HelpCircle className="size-4" />
+                                            </div>
+                                        </TooltipTrigger>
+
+                                        <TooltipContent
+                                            side="top"
+                                            align="start"
+                                            className="max-w-xs p-4 rounded-lg bg-white border border-gray-200 shadow-md"
+                                        >
+                                            <ul className="space-y-2 text-sm text-foreground">
+                                                {step.description.gathering.map((item: MarchStep, idx) => (
+                                                    <li key={idx} className="flex items-start gap-2">
+                                                        <span className="mt-0.5 shrink-0">{item.icon}</span>
+                                                        <span className="leading-snug">{item.description}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                )
+                                    : null}
+
+                                {typeProtest === "march" &&
+                                    typeof step.description !== "string" &&
+                                    step.description.march && (
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <div className="flex cursor-help items-center gap-2 text-sm text-gray-400 mt-5 mb-1">
+                                                    <span className={''}>Cum folosesc harta?</span>
+                                                    <HelpCircle className="size-4" />
+                                                </div>
+                                            </TooltipTrigger>
+
+                                            <TooltipContent
+                                                side="top"
+                                                align="start"
+                                                className="max-w-xs p-4 rounded-lg bg-white border border-gray-200 shadow-md"
+                                            >
+                                                <ul className="space-y-2 text-sm text-foreground">
+                                                    {step.description.march.map((item: MarchStep, idx) => (
+                                                        <li key={idx} className="flex items-start gap-2">
+                                                            <span className="mt-0.5 shrink-0">{item.icon}</span>
+                                                            <span className="leading-snug">{item.description}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    )}
+                            </div>
                             <div className={'w-full'}>
                                 {children}
                             </div>

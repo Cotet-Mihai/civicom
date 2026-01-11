@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/map";
 import { H4 } from "@/components/Typography";
 import {MapSearch} from "@/components/MapSearch";
+import MapSearchControlWrapper from "@/utils/MapSearch";
 
 export default function GatheringLocation() {
     const OLD_TOWN_BUCHAREST_COORDINATES = [44.4358196, 26.1021932] satisfies LatLngExpression;
@@ -20,13 +21,6 @@ export default function GatheringLocation() {
 
     return (
         <>
-            <H4>Unde ne găsim ?</H4>
-            <p className="mb-4 text-gray-400">
-                Vă rugăm să utilizați cercul din panoul de control pentru a selecta locația.
-            </p>
-
-            <MapSearch mapRef={mapRef} onSelect={setSearchCoords} />
-
             <Map
                 center={searchCoords ?? OLD_TOWN_BUCHAREST_COORDINATES}
                 zoom={13}
@@ -34,12 +28,12 @@ export default function GatheringLocation() {
                 className="h-[500px]"
             >
                 <MapTileLayer />
+                <MapSearchControlWrapper/>
                 <MapLocateControl />
                 <MapDrawControl>
                     <MapDrawMarker />
                     <MapDrawEdit />
                     <MapDrawDelete />
-                    <MapDrawUndo />
                 </MapDrawControl>
             </Map>
         </>
