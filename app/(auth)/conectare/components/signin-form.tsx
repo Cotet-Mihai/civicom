@@ -32,14 +32,14 @@ export function SigninForm({ className, ...props } : React.ComponentProps<"form"
     /**
      * Handles form submission for signing in
      * Calls the reusable signInHandler helper function
-     * and displays success/error toasts
+     * and displays success/eroare toasts
      */
     async function handleSignIn(e: React.FormEvent<HTMLFormElement>) : Promise<void> {
         e.preventDefault();
 
         const response = await signInHandler(e);
 
-        // Show error toast if sign-in failed
+        // Show eroare toast if sign-in failed
         if (!response.success) {
             toast.error(response.message);
         }
@@ -150,7 +150,7 @@ export function SigninForm({ className, ...props } : React.ComponentProps<"form"
                     {/* Link to sign-up page */}
                     <FieldDescription className="text-center">
                         Nu aveți un cont?{" "}
-                        <Link tabIndex={5} href="/sign-up" className="underline underline-offset-4">
+                        <Link tabIndex={5} href="/inscriere" className="underline underline-offset-4">
                             Înscrie-te
                         </Link>
                     </FieldDescription>

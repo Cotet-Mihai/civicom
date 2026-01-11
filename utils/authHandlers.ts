@@ -8,7 +8,7 @@ import {signupAction} from "@/lib/supabase/actions/signUp";
  */
 interface ActionResult {
     success: boolean;        // Indicates if the action succeeded
-    message?: string;        // Optional message to show (e.g., error or success info)
+    message?: string;        // Optional message to show (e.g., eroare or success info)
 }
 
 /**

@@ -44,7 +44,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"form">
         const result = await signUpHandler(e)
 
         if (!result.success) {
-            // Show error toast if signup failed
+            // Show eroare toast if signup failed
             toast.error(result.message)
         } else {
             // Open confirmation dialog if signup succeeded
@@ -119,7 +119,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"form">
 
                         {/* Sign-in link */}
                         <FieldDescription className="px-6 text-center">
-                            Ai deja un cont? <Link href="/sign-in">Autentifică-te</Link>
+                            Ai deja un cont? <Link href="/conectare">Autentifică-te</Link>
                         </FieldDescription>
                     </Field>
                 </FieldGroup>
@@ -135,7 +135,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"form">
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel onClick={() => redirect('/sign-in')}>OK</AlertDialogCancel>
+                        <AlertDialogCancel onClick={() => redirect('/conectare')}>OK</AlertDialogCancel>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

@@ -1,4 +1,4 @@
-import { SigninForm } from "@/app/(auth)/sign-in/components/signin-form"
+import { SigninForm } from "@/app/(auth)/conectare/components/signin-form"
 import Link from "next/link";
 import Image from "next/image";
 import {JSX} from "react";
@@ -9,6 +9,7 @@ import {JSX} from "react";
  *
  * @returns {JSX.Element} The login page layout
  */
+
 export default function LoginPage(): JSX.Element {
     return (
         <div className="grid min-h-svh lg:grid-cols-2">

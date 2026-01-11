@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
         }
     }
 
-    // return the user to an error page with some instructions
-    redirectTo.pathname = '/error'
+    // return the user to an eroare page with some instructions
+    redirectTo.pathname = '/eroare'
     return NextResponse.redirect(redirectTo)
 }

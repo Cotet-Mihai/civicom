@@ -41,16 +41,16 @@ export async function updateSession(request: NextRequest) {
 
     const isPublic =
         pathname === '/' ||
-        pathname.startsWith('/sign-in') ||
-        pathname.startsWith('/sign-up') ||
-        pathname.startsWith('/error') ||
+        pathname.startsWith('/conectare') ||
+        pathname.startsWith('/inscriere') ||
+        pathname.startsWith('/eroare') ||
         pathname.startsWith('/api/confirm-sign-up') ||
         pathname.startsWith('/api/confirm-reset-password')
 
 
     if (!user && !isPublic) {
         const url = request.nextUrl.clone()
-        url.pathname = '/sign-in'
+        url.pathname = '/conectare'
         return NextResponse.redirect(url)
     }
 

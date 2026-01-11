@@ -40,7 +40,7 @@ export default function UpdatePassword(): JSX.Element {
      * and redirects on success.
      *
      * @param e - Form submission event
-     * @returns {Promise<string | undefined | number>} Optional return for error handling
+     * @returns {Promise<string | undefined | number>} Optional return for eroare handling
      */
     const handleSubmit = async (e: React.FormEvent): Promise<string | undefined | number> => {
         e.preventDefault();
@@ -60,7 +60,7 @@ export default function UpdatePassword(): JSX.Element {
         }
 
         // Redirect user to sign-in page after successful password update
-        redirect('/sign-in');
+        redirect('/conectare');
     }
 
     return (

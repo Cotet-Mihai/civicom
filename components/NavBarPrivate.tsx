@@ -93,7 +93,7 @@ export default function NavBarPrivate() {
                                         {/* Buttons */}
                                         <div className="flex flex-col gap-3 mt-2">
                                             <Button size="sm" asChild>
-                                                <Link href="/sign-up">Mai vedem</Link>
+                                                <Link href="/inscriere">Mai vedem</Link>
                                             </Button>
                                             <ButtonDonate link="#" className="mr-2"/>
                                         </div>
@@ -192,7 +192,7 @@ export default function NavBarPrivate() {
                                 <div className="grid grid-cols-2 gap-4 w-full max-w-md mx-auto">
                                     {/* Card 1 */}
                                     <DialogTrigger asChild>
-                                        <Link href={'create/petition'}>
+                                        <Link href={'/creeaza/petitie'}>
                                             <div
                                                 className="relative w-full aspect-square bg-cover bg-center rounded-xl shadow-lg cursor-pointer group"
                                                 style={{backgroundImage: "url('/jpg/petitie.jpg')"}}
@@ -210,7 +210,7 @@ export default function NavBarPrivate() {
 
                                     {/* Card 2 */}
                                     <DialogTrigger asChild>
-                                        <Link href={'/create/protest'}>
+                                        <Link href={'/creeaza/protest'}>
                                             <div
                                                 className="relative w-full aspect-square bg-cover bg-center rounded-xl shadow-lg cursor-pointer group"
                                                 style={{backgroundImage: "url('/jpg/protest.jpg')"}}
@@ -228,7 +228,7 @@ export default function NavBarPrivate() {
 
                                     {/* Card 3 */}
                                     <DialogTrigger asChild>
-                                        <Link href={'/create/community-activity'}>
+                                        <Link href={'/creeaza/activitate-comunitara'}>
                                             <div
                                                 className="relative w-full aspect-square bg-cover bg-center rounded-xl shadow-lg cursor-pointer group"
                                                 style={{backgroundImage: "url('/jpg/activitate-comunitara.jpg')"}}
@@ -246,7 +246,7 @@ export default function NavBarPrivate() {
 
                                     {/* Card 4 */}
                                     <DialogTrigger asChild>
-                                        <Link href={'/create/charity-event'}>
+                                        <Link href={'/creeaza/eveniment-caritabil'}>
                                             <div
                                                 className="relative w-full aspect-square bg-cover bg-center rounded-xl shadow-lg cursor-pointer group"
                                                 style={{backgroundImage: "url('/jpg/eveniment-caritabil.jpg')"}}

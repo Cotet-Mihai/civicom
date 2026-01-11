@@ -67,11 +67,11 @@ export default function NavBarPublic() {
                                         {/* Buttons */}
                                         <div className="flex flex-col gap-3 mt-2">
                                             <Button size="sm" asChild variant={'mainButton'}>
-                                                <Link href="/sign-up">Creează cont</Link>
+                                                <Link href="/inscriere">Creează cont</Link>
                                             </Button>
 
                                             <Button size="sm" asChild variant={'mainButton'}>
-                                                <Link href="/sign-in">Autentifică-te</Link>
+                                                <Link href="/conectare">Autentifică-te</Link>
                                             </Button>
 
                                             <ButtonDonate link="#" className="mr-2"/>
@@ -115,11 +115,11 @@ export default function NavBarPublic() {
                     {/* RIGHT SIDE: Buttons */}
                     <div className="flex items-center gap-2">
                         <Button size="sm" asChild variant={'mainButton'}>
-                            <Link href="/sign-up">Creează cont</Link>
+                            <Link href="/inscriere">Creează cont</Link>
                         </Button>
 
                         <Button size="sm" asChild variant={'mainButton'}>
-                            <Link href="/sign-in">Autentifică-te</Link>
+                            <Link href="/conectare">Autentifică-te</Link>
                         </Button>
 
                         <FlipButton>

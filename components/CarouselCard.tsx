@@ -142,7 +142,7 @@ export default function CarouselCard({
                 }}
                 onDragEnd={handleDragEnd}
                 animate={{x: -(currentIndex * trackItemOffset)}}
-                // @ts-expect-error-ignore
+                // @ts-expect-eroare-ignore
                 transition={effectiveTransition}
                 onAnimationComplete={handleAnimationComplete}
             >
@@ -165,7 +165,7 @@ export default function CarouselCard({
                                 rotateY: rotateY,
                                 ...(round && {borderRadius: '50%'})
                             }}
-                            // @ts-expect-error-ignore
+                            // @ts-expect-eroare-ignore
                             transition={effectiveTransition}
                         >
                             <div className={`${round ? 'p-0 m-0' : 'pl-5'}`}>
