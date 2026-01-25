@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import StepperContainer from "@/components/containers/protest/Stepper";
-import {H2} from "@/components/Typography";
+import ProtestFlow from "@/components/containers/protest/ProtestFlow";
 
 export default function Protest() {
 
@@ -19,7 +18,7 @@ export default function Protest() {
             </div>
 
             <div className="relative order-1 lg:order-2 px-15 pt-10">
-                <StepperContainer/>
+                <ProtestFlow />
             </div>
 
         </div>

@@ -9,23 +9,12 @@ import {Calendar} from "@/components/ui/calendar"
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
 import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
+import {FormDataBasicInfo} from "@/types/protestStepper";
+import {CalendarWithStartStopTimeProps} from "@/types/calendar";
 
-type Props = {
-    dateState: {
-        date: Date | undefined,
-        setDate: (date: Date | undefined) => void
-    }
-    fromTimeState: {
-        fromTime: string,
-        setFromTime: (fromTime: string) => void
-    }
-    toTimeState: {
-        toTime: string,
-        setToTime: (toTime: string) => void
-    }
-}
 
-export default function CalendarWithStartStopTime({dateState, fromTimeState, toTimeState}: Props) {
+
+export default function CalendarWithStartStopTime({date, time, onChange}: CalendarWithStartStopTimeProps) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -41,17 +30,17 @@ export default function CalendarWithStartStopTime({dateState, fromTimeState, toT
                             id="date"
                             className="w-full justify-between font-normal"
                         >
-                            {dateState.date ? dateState.date.toLocaleDateString() : "Selectează data"}
+                            {date ? date.toLocaleDateString() : "Selectează data"}
                             <ChevronDownIcon/>
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto overflow-hidden p-0" align="start">
                         <Calendar
                             mode="single"
-                            selected={dateState.date}
+                            selected={date}
                             captionLayout="dropdown"
-                            onSelect={(date) => {
-                                dateState.setDate(date)
+                            onSelect={(e) => {
+                                onChange({date: e})
                                 setOpen(false)
                             }}
                         />
@@ -67,8 +56,15 @@ export default function CalendarWithStartStopTime({dateState, fromTimeState, toT
                         type="time"
                         id="time-from"
                         step="1"
-                        value={fromTimeState.fromTime}
-                        onChange={(e) => fromTimeState.setFromTime(e.target.value)}
+                        value={time.from}
+                        onChange={(e) =>
+                            onChange({
+                                time: {
+                                    ...time,
+                                    from: e.target.value,
+                                },
+                            })
+                        }
                         className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                     />
                 </div>
@@ -80,8 +76,15 @@ export default function CalendarWithStartStopTime({dateState, fromTimeState, toT
                         type="time"
                         id="time-to"
                         step="1"
-                        value={toTimeState.toTime}
-                        onChange={(e) => toTimeState.setToTime(e.target.value)}
+                        value={time.to}
+                        onChange={(e) =>
+                            onChange({
+                                time: {
+                                    ...time,
+                                    to: e.target.value,
+                                },
+                            })
+                        }
                         className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                     />
                 </div>

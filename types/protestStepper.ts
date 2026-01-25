@@ -1,32 +1,80 @@
 import L from "leaflet";
+import {JSX, ReactNode} from "react";
+import {LucideIcon} from 'lucide-react'
 
-
-export type BaiscInfo = {
-    titleState: {
-        title: string;
-        setTitle: (title: string) => void;
-    },
-    descriptionState: {
-        description: string;
-        setDescription: (description: string) => void;
-    },
-    dateState: {
-        date: Date | undefined,
-        setDate: (date: Date | undefined) => void
-    },
-    fromTimeState: {
-        fromTime: string,
-        setFromTime: (fromTime: string) => void
-    },
-    toTimeState: {
-        toTime: string,
-        setToTime: (toTime: string) => void
-    },
-    typeState: {
-        type: string | undefined,
-        setType: (type: string | undefined) => void
-    }
+// ProtestFlow types
+export interface FormDataBasicInfo {
+    title: string;
+    description: string;
+    date?: Date;
+    time: {
+        from: string;
+        to: string;
+    };
+    typeProtest?: string;
 }
+
+export interface FormDataLocation {
+    city?: string;
+    meetingPoint?: string;
+    finishPoint?: string;
+}
+
+export interface FormDataVisualMedia {
+    coverImage?: File;
+    gallery?: File[];
+    videoUrl?: string;
+}
+
+export interface FormDataLogistics {
+    items?: string[];
+    restrictions?: string;
+    safetyRules?: string;
+}
+
+/**
+ * Global form state for the entire protest flow
+ */
+export interface ProtestFormState {
+    basicInfo: FormDataBasicInfo;
+    location: FormDataLocation;
+    media: FormDataVisualMedia;
+    logistics: FormDataLogistics;
+}
+
+
+export type ProtestChildComponentArgs = {
+    data:FormDataBasicInfo;
+    onChange: (partial: Partial<FormDataBasicInfo>) => void;
+}
+
+export type Step = {
+    key: string,
+    title: string,
+    icon: LucideIcon
+    component: ({data, onChange}: ProtestChildComponentArgs) => JSX.Element
+}
+
+export type StepConfig = {
+    key: string,
+    title: string,
+    icon: LucideIcon
+    component: ({data, onChange}: ProtestChildComponentArgs) => JSX.Element
+}
+
+export type StepperFlowUIProps = {
+    children: ReactNode;
+    currentStep: number;
+    setCurrentStep: (step: number) => void;
+    steps: Step[];
+    handleNavigation: {
+        handleNext: () => void,
+        handlePrev: () => void
+    }
+};
+
+// ================================================
+// BasicInfo types
 
 type MarkerShape = {
     id: number;
