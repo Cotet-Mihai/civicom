@@ -17,11 +17,23 @@ export default function ProtestFlow() {
     const StepComponent = steps[currentStep - 1].component;
 
     async function handleNext() {
-        if (!validateCurrentStep()) {
-            toast.error("Completează câmpurile obligatorii!");
+        const result = validateCurrentStep();
+
+        if (!result.valid) {
+            toast.error(
+                <span>
+                    <span className={'font-bold'}>Câmpuri lipsă:</span>
+                    <ol>
+                      {result.message
+                          .split(", ")
+                          .map((field, index) => (
+                              <li key={index}>• {field}</li>
+                          ))}
+                    </ol>
+                  </span>
+            );
             return;
         }
-
         if (currentStep < steps.length) {
             setCurrentStep(prev => prev + 1);
         } else {

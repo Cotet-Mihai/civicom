@@ -1,23 +1,31 @@
 import L from "leaflet";
-import {JSX, ReactNode} from "react";
-import {LucideIcon} from 'lucide-react'
+import { JSX, ReactNode } from "react";
+import { LucideIcon } from "lucide-react";
 
-// ProtestFlow types
-export interface FormDataBasicInfo {
+// ================================================
+// ProtestFlow: Form Data Types
+// ================================================
+
+export type FormDataBasicInfo = {
     title: string;
     description: string;
     date?: Date;
     time: {
-        from: string;
-        to: string;
+        from: string | undefined;
+        to: string | undefined;
     };
     typeProtest?: string;
 }
 
-export interface FormDataLocation {
-    city?: string;
-    meetingPoint?: string;
-    finishPoint?: string;
+export type FormDataLocation = {
+    title: string;
+    description: string;
+    date?: Date;
+    time: {
+        from: string | undefined;
+        to: string | undefined;
+    };
+    typeProtest?: string;
 }
 
 export interface FormDataVisualMedia {
@@ -32,65 +40,76 @@ export interface FormDataLogistics {
     safetyRules?: string;
 }
 
-/**
- * Global form state for the entire protest flow
- */
-export interface ProtestFormState {
-    basicInfo: FormDataBasicInfo;
-    location: FormDataLocation;
-    media: FormDataVisualMedia;
-    logistics: FormDataLogistics;
-}
+// ================================================
+// ProtestFlow: Step & Validation Types
+// ================================================
 
-
+/** Props passed to each step component */
 export type ProtestChildComponentArgs = {
-    data:FormDataBasicInfo;
+    data: FormDataBasicInfo;
     onChange: (partial: Partial<FormDataBasicInfo>) => void;
-}
+};
 
+/** Single step in the protest flow */
 export type Step = {
-    key: string,
-    title: string,
-    icon: LucideIcon
-    component: ({data, onChange}: ProtestChildComponentArgs) => JSX.Element
-}
+    title: string;
+    icon: LucideIcon;
+    component: (props: ProtestChildComponentArgs) => JSX.Element;
+    validator?: () => boolean | string;
+};
 
-export type StepConfig = {
-    key: string,
-    title: string,
-    icon: LucideIcon
-    component: ({data, onChange}: ProtestChildComponentArgs) => JSX.Element
-}
-
+/** Props for a stepper UI wrapper */
 export type StepperFlowUIProps = {
     children: ReactNode;
     currentStep: number;
     setCurrentStep: (step: number) => void;
     steps: Step[];
     handleNavigation: {
-        handleNext: () => void,
-        handlePrev: () => void
-    }
+        handleNext: () => void;
+        handlePrev: () => void;
+    };
 };
 
 // ================================================
-// BasicInfo types
+// BasicInfo Validators
+// ================================================
+export type TimeField = {
+    from: string;
+    to: string
+} | undefined;
 
-type MarkerShape = {
+export type CheckField = {
+    field: string | Date | undefined,
+    name: string,
+    missingFields: string[]
+}
+
+export type CheckTimeField= {
+    time: TimeField,
+    missingFields: string[]
+}
+
+// ================================================
+// Location: Map / Shape Types
+// ================================================
+
+export type MarkerShape = {
     id: number;
-    type: string | undefined;
+    type?: string;
     lat: number;
     lng: number;
 };
 
-type PolylineShape = {
+export type PolylineShape = {
     id: number;
     type: "polyline";
     points: L.LatLng[] | L.LatLng[][] | L.LatLng[][][];
 };
 
+/** Either a marker or a polyline */
 export type Shape = MarkerShape | PolylineShape;
 
+/** Props for location step / component */
 export type LocationInfoProps = {
     typeProtest?: string;
-}
+};
