@@ -1,10 +1,17 @@
 import L from "leaflet";
-import { JSX, ReactNode } from "react";
+import {ComponentType, JSX, ReactNode} from "react";
 import { LucideIcon } from "lucide-react";
 
 // ================================================
 // ProtestFlow: Form Data Types
 // ================================================
+
+export type ProtestFlowData = {
+    basicInfo: FormDataBasicInfo;
+    location: FormDataLocation;
+    visualMedia: FormDataVisualMedia;
+    logistics: FormDataLogistics;
+}
 
 export type FormDataBasicInfo = {
     title: string;
@@ -17,32 +24,20 @@ export type FormDataBasicInfo = {
     typeProtest?: string;
 }
 
-export type FormDataLocation = {
-    title: string;
-    description: string;
-    date?: Date;
-    time: {
-        from: string | undefined;
-        to: string | undefined;
-    };
-    typeProtest?: string;
-}
+export type FormDataLocation = unknown
 
-export interface FormDataVisualMedia {
-    coverImage?: File;
-    gallery?: File[];
-    videoUrl?: string;
-}
+export type FormDataVisualMedia = unknown
 
-export interface FormDataLogistics {
-    items?: string[];
-    restrictions?: string;
-    safetyRules?: string;
-}
+export type FormDataLogistics = unknown
 
 // ================================================
 // ProtestFlow: Step & Validation Types
 // ================================================
+
+export type StepComponentsProps<T> = {
+    data: T;
+    onChange: (patch: Partial<T>) => void;
+}
 
 /** Props passed to each step component */
 export type ProtestChildComponentArgs = {
@@ -50,13 +45,28 @@ export type ProtestChildComponentArgs = {
     onChange: (partial: Partial<FormDataBasicInfo>) => void;
 };
 
-/** Single step in the protest flow */
-export type Step = {
-    title: string;
-    icon: LucideIcon;
-    component: (props: ProtestChildComponentArgs) => JSX.Element;
-    validator?: () => boolean | string;
-};
+// /** Single step in the protest flow */
+// export type Step = {
+//     title: string;
+//     icon: LucideIcon;
+//     component: (props: ProtestChildComponentArgs) => JSX.Element;
+//     validator?: () => boolean | string;
+// };
+
+// Union Type for all Steps
+export type AllSteps =
+    | Step<FormDataBasicInfo>
+    | Step<FormDataLocation>
+    | Step<FormDataVisualMedia>
+    | Step<FormDataLogistics>;
+
+export type Step<T> = {
+    id: keyof ProtestFlowData
+    title: string
+    icon: LucideIcon
+    component: ComponentType<StepComponentsProps<T>>
+    validate?: (data: T) => true | string
+}
 
 /** Props for a stepper UI wrapper */
 export type StepperFlowUIProps = {
