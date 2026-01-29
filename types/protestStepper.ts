@@ -11,8 +11,8 @@ export type FormDataBasicInfo = {
     description: string;
     date?: Date;
     time: {
-        from: string | undefined;
-        to: string | undefined;
+        from: string;
+        to: string;
     };
     typeProtest?: string;
 }
