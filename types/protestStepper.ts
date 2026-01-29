@@ -8,7 +8,7 @@ import { LucideIcon } from "lucide-react";
 /** Centralized state for all steps in the protest flow */
 export type ProtestFlowData = {
     basicInfo: FormDataBasicInfo;
-    location: FormDataLocation;
+    location?: FormDataLocation;
     visualMedia: FormDataVisualMedia;
     logistics: FormDataLogistics;
 };
@@ -22,11 +22,32 @@ export type FormDataBasicInfo = {
         from: string;
         to: string;
     };
-    typeProtest?: string;
+    typeProtest?: "gathering" | "march";
 };
 
 /** Data for the Location step */
-export type FormDataLocation = unknown; // TODO: to be defined later
+export type FormDataLocation = undefined | {
+    kind: "gathering";
+    gatheringPoint: {
+        lat: number;
+        lng: number;
+        };
+    } | {
+    kind: "march";
+    startPoint: {
+        lat: number;
+        lng: number;
+    };
+    waypoints: Array<{
+        lat: number;
+        lng: number;
+    }>;
+    finishPoint: {
+        lat: number;
+        lng: number;
+    };
+    routeGeoJson?: unknown;
+};
 
 /** Data for the Visual Media step (to be defined later) */
 export type FormDataVisualMedia = unknown; // TODO: to be defined later
@@ -40,12 +61,15 @@ export type FormDataLogistics = unknown; // TODO: to be defined later
 
 /** Generic props passed to any step component */
 export type StepComponentsProps<T> = {
+    typeProtest?: "gathering" | "march";
     data: T;
     onChange: (patch: Partial<T>) => void;
 };
 
 /** Props for the Basic Info step component (legacy / specific) */
-export type ProtestChildComponentArgs = StepComponentsProps<FormDataBasicInfo>;
+export type BasicInfoComponentProps = StepComponentsProps<FormDataBasicInfo>;
+/** Props for the Basic Info step component (legacy / specific) */
+export type LocationComponentProps = StepComponentsProps<FormDataLocation>;
 
 /** Generic type for a single step in the protest flow */
 export type Step<T> = {

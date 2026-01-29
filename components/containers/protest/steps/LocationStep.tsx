@@ -1,5 +1,11 @@
-import {ProtestChildComponentArgs} from "@/types/protestStepper";
+import {LocationComponentProps} from "@/types/protestStepper";
 
-export default function LocationStep({data, onChange}: ProtestChildComponentArgs) {
-    return(<div>LocationStep</div>)
+export default function LocationStep({typeProtest, data, onChange}: LocationComponentProps) {
+
+    console.log(typeProtest);
+    return(
+        <>
+            <div>LocationStep</div>
+        </>
+    )
 }

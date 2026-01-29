@@ -6,12 +6,9 @@ import {
     MapDrawControl,
     MapDrawDelete,
     MapDrawEdit, MapDrawMarker,
-    MapDrawUndo,
     MapLocateControl,
     MapTileLayer
 } from "@/components/ui/map";
-import { H4 } from "@/components/Typography";
-import {MapSearch} from "@/components/MapSearch";
 import MapSearchControlWrapper from "@/utils/MapSearch";
 
 export default function GatheringLocation() {

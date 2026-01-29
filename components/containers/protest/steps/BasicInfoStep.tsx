@@ -3,9 +3,9 @@ import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import CalendarWithStartStopTime from "@/components/calendarWithStartStopTime";
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
-import {ProtestChildComponentArgs} from "@/types/protestStepper";
+import {BasicInfoComponentProps} from "@/types/protestStepper";
 
-export default function BasicInfoStep({data, onChange}: ProtestChildComponentArgs) {
+export default function BasicInfoStep({data, onChange}: BasicInfoComponentProps) {
 
     return (
         <div className="flex flex-col gap-5">
