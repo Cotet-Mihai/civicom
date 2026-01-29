@@ -20,7 +20,7 @@ export function useProtestFlow() {
         title: "",
         description: "",
         date: undefined,
-        time: { from: undefined, to: undefined },
+        time: { from: '10:30', to: '12:30' },
         typeProtest: undefined,
     })
 
