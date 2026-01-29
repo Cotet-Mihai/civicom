@@ -15,7 +15,7 @@ import {
     MapTileLayer,
     useLeaflet,
 } from "@/components/ui/map"
-import type {Shape} from "@/types/protestStepper"
+import type {Shape} from "@/types/map"
 import MapSearchControlWrapper from '@/utils/MapSearch'
 
 

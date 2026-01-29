@@ -1,18 +1,19 @@
-import L from "leaflet";
-import {ComponentType, JSX, ReactNode} from "react";
+import { ComponentType, ReactNode } from "react";
 import { LucideIcon } from "lucide-react";
 
 // ================================================
-// ProtestFlow: Form Data Types
+//  ProtestFlow: Form Data Types
 // ================================================
 
+/** Centralized state for all steps in the protest flow */
 export type ProtestFlowData = {
     basicInfo: FormDataBasicInfo;
     location: FormDataLocation;
     visualMedia: FormDataVisualMedia;
     logistics: FormDataLogistics;
-}
+};
 
+/** Data for the Basic Info step */
 export type FormDataBasicInfo = {
     title: string;
     description: string;
@@ -22,104 +23,81 @@ export type FormDataBasicInfo = {
         to: string;
     };
     typeProtest?: string;
-}
+};
 
-export type FormDataLocation = unknown
+/** Data for the Location step */
+export type FormDataLocation = unknown; // TODO: to be defined later
 
-export type FormDataVisualMedia = unknown
+/** Data for the Visual Media step (to be defined later) */
+export type FormDataVisualMedia = unknown; // TODO: to be defined later
 
-export type FormDataLogistics = unknown
+/** Data for the Logistics step (to be defined later) */
+export type FormDataLogistics = unknown; // TODO: to be defined later
 
 // ================================================
-// ProtestFlow: Step & Validation Types
+//  Step & Step Components Types
 // ================================================
 
+/** Generic props passed to any step component */
 export type StepComponentsProps<T> = {
     data: T;
     onChange: (patch: Partial<T>) => void;
-}
-
-/** Props passed to each step component */
-export type ProtestChildComponentArgs = {
-    data: FormDataBasicInfo;
-    onChange: (partial: Partial<FormDataBasicInfo>) => void;
 };
 
-// /** Single step in the protest flow */
-// export type Step = {
-//     title: string;
-//     icon: LucideIcon;
-//     component: (props: ProtestChildComponentArgs) => JSX.Element;
-//     validator?: () => boolean | string;
-// };
+/** Props for the Basic Info step component (legacy / specific) */
+export type ProtestChildComponentArgs = StepComponentsProps<FormDataBasicInfo>;
 
-// Union Type for all Steps
+/** Generic type for a single step in the protest flow */
+export type Step<T> = {
+    id: keyof ProtestFlowData;            // key to access step's data in flowData
+    title: string;                        // step title shown in the stepper
+    icon: LucideIcon;                     // icon for the step
+    component: ComponentType<StepComponentsProps<T>>; // React component for the step
+    validate?: (data: T) => true | string;           // optional validator function
+};
+
+/** Union type of all steps for the stepper */
 export type AllSteps =
     | Step<FormDataBasicInfo>
     | Step<FormDataLocation>
     | Step<FormDataVisualMedia>
     | Step<FormDataLogistics>;
 
-export type Step<T> = {
-    id: keyof ProtestFlowData
-    title: string
-    icon: LucideIcon
-    component: ComponentType<StepComponentsProps<T>>
-    validate?: (data: T) => true | string
-}
+// ================================================
+//  Stepper UI Props
+// ================================================
 
-/** Props for a stepper UI wrapper */
+/** Props for a stepper wrapper UI component */
 export type StepperFlowUIProps = {
-    children: ReactNode;
-    currentStep: number;
-    setCurrentStep: (step: number) => void;
-    steps: Step[];
+    children: ReactNode;                  // rendered current step component
+    currentStep: number;                  // index of the current active step (1-based)
+    setCurrentStep: (step: number) => void; // function to change current step
+    steps: AllSteps[];                    // array of all steps
     handleNavigation: {
-        handleNext: () => void;
-        handlePrev: () => void;
+        handleNext: () => void;           // called when Next button is clicked
+        handlePrev: () => void;           // called when Prev button is clicked
     };
 };
 
 // ================================================
-// BasicInfo Validators
+//  Validators & Helper Types
 // ================================================
+
+/** Time field type */
 export type TimeField = {
     from: string;
-    to: string
+    to: string;
 } | undefined;
 
+/** Helper type to track missing fields */
 export type CheckField = {
-    field: string | Date | undefined,
-    name: string,
-    missingFields: string[]
-}
-
-export type CheckTimeField= {
-    time: TimeField,
-    missingFields: string[]
-}
-
-// ================================================
-// Location: Map / Shape Types
-// ================================================
-
-export type MarkerShape = {
-    id: number;
-    type?: string;
-    lat: number;
-    lng: number;
+    field: string | Date | undefined;
+    name: string;
+    missingFields: string[];
 };
 
-export type PolylineShape = {
-    id: number;
-    type: "polyline";
-    points: L.LatLng[] | L.LatLng[][] | L.LatLng[][][];
-};
-
-/** Either a marker or a polyline */
-export type Shape = MarkerShape | PolylineShape;
-
-/** Props for location step / component */
-export type LocationInfoProps = {
-    typeProtest?: string;
+/** Helper type for time validation */
+export type CheckTimeField = {
+    time: TimeField;
+    missingFields: string[];
 };
