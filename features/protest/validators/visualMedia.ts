@@ -1,3 +1,3 @@
-export function validateVisualMedia() {
+export default function validateVisualMedia() {
     return true
 }

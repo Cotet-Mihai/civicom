@@ -849,7 +849,7 @@ function MapSearchControl({ className, ...props }: PlaceAutocompleteProps) {
     )
 }
 
-type MapDrawShape = "marker" | "Traseu" | "circle" | "rectangle" | "polygon" | "Începutul" | "Punct intermediar" | "Finalul"
+type MapDrawShape = "marker" | "Traseu" | "circle" | "rectangle" | "polygon" | "Începutul" | "Punct intermediar" | "Finalul" | "Setează start-ul"
 type MapDrawAction = "edit" | "delete"
 type MapDrawMode = MapDrawShape | MapDrawAction | null
 interface MapDrawContextType {
@@ -997,11 +997,11 @@ function MapDrawMarker({ ...props }: DrawOptions.MarkerOptions) {
 
     return (
         <MapDrawShapeButton
-            drawMode="marker"
+            drawMode="Setează start-ul"
             createDrawTool={(L, map) =>
                 new L.Draw.Marker(map, {
                     icon: L.divIcon({
-                        className: "", // For fixing the moving bug when going in and out the edit mode
+                        className: "marker", // For fixing the moving bug when going in and out the edit mode
                         iconAnchor: [12, 12],
                         html: renderToString(<MapPinIcon className="size-6" />),
                     }),

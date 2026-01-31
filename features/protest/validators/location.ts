@@ -1,3 +1,3 @@
-export function validateLocation() {
+export default function validateLocation() {
     return true
 }

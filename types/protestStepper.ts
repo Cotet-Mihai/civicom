@@ -1,11 +1,15 @@
 import { ComponentType, ReactNode } from "react";
 import { LucideIcon } from "lucide-react";
+import {GatheringData, MarchData} from "@/types/map";
+
+
+export type typeProtest = "gathering" | "march" | "picket" | "boycott";
 
 // ================================================
 //  ProtestFlow: Form Data Types
 // ================================================
 
-/** Centralized state for all steps in the protest flow */
+/** Centralized state for all steps in the protest hooks */
 export type ProtestFlowData = {
     basicInfo: FormDataBasicInfo;
     location?: FormDataLocation;
@@ -22,32 +26,23 @@ export type FormDataBasicInfo = {
         from: string;
         to: string;
     };
-    typeProtest?: "gathering" | "march";
+    typeProtest?: typeProtest | undefined;
 };
 
 /** Data for the Location step */
-export type FormDataLocation = undefined | {
+export type FormDataLocation = {
     kind: "gathering";
-    gatheringPoint: {
-        lat: number;
-        lng: number;
-        };
+    gatheringPoint: GatheringData | undefined;
     } | {
     kind: "march";
-    startPoint: {
-        lat: number;
-        lng: number;
+    marchPoints: MarchData | undefined;
+    } | {
+    kind: "picket";
+    picketPoints: unknown | undefined;
+    } | {
+    kind: "boycott";
+    boycottPoints: unknown | undefined;
     };
-    waypoints: Array<{
-        lat: number;
-        lng: number;
-    }>;
-    finishPoint: {
-        lat: number;
-        lng: number;
-    };
-    routeGeoJson?: unknown;
-};
 
 /** Data for the Visual Media step (to be defined later) */
 export type FormDataVisualMedia = unknown; // TODO: to be defined later
@@ -61,7 +56,7 @@ export type FormDataLogistics = unknown; // TODO: to be defined later
 
 /** Generic props passed to any step component */
 export type StepComponentsProps<T> = {
-    typeProtest?: "gathering" | "march";
+    typeProtest?: typeProtest;
     data: T;
     onChange: (patch: Partial<T>) => void;
 };
@@ -71,7 +66,7 @@ export type BasicInfoComponentProps = StepComponentsProps<FormDataBasicInfo>;
 /** Props for the Basic Info step component (legacy / specific) */
 export type LocationComponentProps = StepComponentsProps<FormDataLocation>;
 
-/** Generic type for a single step in the protest flow */
+/** Generic type for a single step in the protest hooks */
 export type Step<T> = {
     id: keyof ProtestFlowData;            // key to access step's data in flowData
     title: string;                        // step title shown in the stepper

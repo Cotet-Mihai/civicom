@@ -1,16 +1,16 @@
-import {CheckField, CheckTimeField, FormDataBasicInfo} from "@/types/protestStepper";
+import {BasicInfo, CheckFieldParams, CheckTimeFieldParams} from "@/features/protest/types";
 
-function checkField({field, name, missingFields}: CheckField) {
+function checkField({field, name, missingFields}: CheckFieldParams) {
     if (!field) missingFields.push(name);
 }
 
-function checkTimeField({time, missingFields}: CheckTimeField) {
+function checkTimeField({time, name, missingFields}: CheckTimeFieldParams) {
     if (!time || !time.from || !time.to) {
-        missingFields.push("Ora");
+        missingFields.push(name);
     }
 }
 
-export default function validateBasicInfo(data: FormDataBasicInfo): true | string {
+export default function validateBasicInfo(data: BasicInfo): true | string {
     const missingFields: string[] = [];
 
     checkField({
@@ -20,7 +20,7 @@ export default function validateBasicInfo(data: FormDataBasicInfo): true | strin
     });
     checkField({
         field: data.title,
-        name: 'Titlu',
+        name: 'Titlul',
         missingFields: missingFields
     });
     checkField({
@@ -35,6 +35,7 @@ export default function validateBasicInfo(data: FormDataBasicInfo): true | strin
     });
     checkTimeField({
         time: data.time,
+        name: "Ora",
         missingFields: missingFields
     });
 

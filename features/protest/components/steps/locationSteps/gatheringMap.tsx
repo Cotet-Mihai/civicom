@@ -1,25 +1,31 @@
-import React, { useRef, useState } from "react";
-import type { LatLngExpression } from "leaflet";
+import React, { useRef } from "react";
 import L from "leaflet";
+
 import {
     Map,
     MapDrawControl,
     MapDrawDelete,
     MapDrawEdit, MapDrawMarker,
     MapLocateControl,
-    MapTileLayer
+    MapTileLayer, useLeaflet
 } from "@/components/ui/map";
-import MapSearchControlWrapper from "@/utils/MapSearch";
 
-export default function GatheringLocation() {
-    const OLD_TOWN_BUCHAREST_COORDINATES = [44.4358196, 26.1021932] satisfies LatLngExpression;
-    const [searchCoords, setSearchCoords] = useState<[number, number] | null>(null);
+import {Gathering, MapsProps} from "@/features/protest/types";
+
+import MapSearchControlWrapper from "@/utils/MapSearch";
+import {removeDuplicateMarkers} from "@/utils/mapHelper";
+
+export default function GatheringMap({dataState, defaultLocation}: MapsProps<Gathering>) {
+    const {value: data, set: onChange} = dataState;
+
     const mapRef = useRef<L.Map | null>(null);
+
+    const {L} = useLeaflet()
 
     return (
         <>
             <Map
-                center={searchCoords ?? OLD_TOWN_BUCHAREST_COORDINATES}
+                center={defaultLocation}
                 zoom={13}
                 ref={mapRef}
                 className="h-[500px]"
@@ -27,7 +33,13 @@ export default function GatheringLocation() {
                 <MapTileLayer />
                 <MapSearchControlWrapper/>
                 <MapLocateControl />
-                <MapDrawControl>
+                <MapDrawControl
+                    onLayersChange={
+                        (layers) => {
+                            removeDuplicateMarkers({layers, L})
+                        }
+                    }
+                >
                     <MapDrawMarker />
                     <MapDrawEdit />
                     <MapDrawDelete />

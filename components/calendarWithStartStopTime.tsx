@@ -1,21 +1,20 @@
 "use client"
 
-import * as React from "react"
-import {useState} from "react"
-import {ChevronDownIcon} from "lucide-react"
+import * as React from "react";
+import {useState} from "react";
+import {ChevronDownIcon} from "lucide-react";
 
-import {Button} from "@/components/ui/button"
-import {Calendar} from "@/components/ui/calendar"
-import {Input} from "@/components/ui/input"
-import {Label} from "@/components/ui/label"
-import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
-import {FormDataBasicInfo} from "@/types/protestStepper";
-import {CalendarWithStartStopTimeProps} from "@/types/calendar";
+import {Button} from "@/components/ui/button";
+import {Calendar} from "@/components/ui/calendar";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover";
+import {CalendarWithStartStopTimeProps} from "@/types/components/calendar";
+import {BasicInfo} from "@/features2/protest/types";
 
-
-
-export default function CalendarWithStartStopTime({date, time, onChange}: CalendarWithStartStopTimeProps) {
+export default function CalendarWithStartStopTime({dataState}: CalendarWithStartStopTimeProps<BasicInfo>) {
     const [open, setOpen] = useState(false);
+    const {value, set} = dataState
 
     return (
         <div className="flex gap-6">
@@ -30,17 +29,17 @@ export default function CalendarWithStartStopTime({date, time, onChange}: Calend
                             id="date"
                             className="w-full justify-between font-normal"
                         >
-                            {date ? date.toLocaleDateString() : "Selectează data"}
+                            {value.date ? value.date.toLocaleDateString() : "Selectează data"}
                             <ChevronDownIcon/>
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto overflow-hidden p-0" align="start">
                         <Calendar
                             mode="single"
-                            selected={date}
+                            selected={value.date}
                             captionLayout="dropdown"
                             onSelect={(e) => {
-                                onChange({date: e})
+                                set({...value, date: e})
                                 setOpen(false)
                             }}
                         />
@@ -56,13 +55,14 @@ export default function CalendarWithStartStopTime({date, time, onChange}: Calend
                         type="time"
                         id="time-from"
                         step="1"
-                        value={time.from}
+                        value={value.time.from}
                         onChange={(e) =>
-                            onChange({
+                            set({
+                                ...value,
                                 time: {
-                                    ...time,
-                                    from: e.target.value,
-                                },
+                                    ...value.time,
+                                    from: e.target.value
+                                }
                             })
                         }
                         className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
@@ -76,13 +76,14 @@ export default function CalendarWithStartStopTime({date, time, onChange}: Calend
                         type="time"
                         id="time-to"
                         step="1"
-                        value={time.to}
+                        value={value.time.to}
                         onChange={(e) =>
-                            onChange({
+                            set({
+                                ...value,
                                 time: {
-                                    ...time,
-                                    to: e.target.value,
-                                },
+                                    ...value.time,
+                                    to: e.target.value
+                                }
                             })
                         }
                         className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"

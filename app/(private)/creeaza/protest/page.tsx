@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import ProtestFlow from "@/components/containers/protest/ProtestFlow";
+import ProtestFlow from "@/features/protest/flow/ProtestFlow";
 
 export default function Protest() {
 

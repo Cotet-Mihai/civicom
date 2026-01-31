@@ -1,16 +1,9 @@
+import L from "leaflet";
 // ================================================
-// MapSearch Types
+// Types for Shapes
 // ================================================
 
-export type Suggestion = {
-    display_name: string;
-    lat: string;
-    lon: string;
-};
-
-// ================================================
-// Map / Shape Types
-// ================================================
+// TODO: Verifica sa nu ai conflict aici cu State-urile de la LocationFlow
 
 export type MarkerShape = {
     id: number;
@@ -28,7 +21,21 @@ export type PolylineShape = {
 /** Either a marker or a polyline */
 export type Shape = MarkerShape | PolylineShape;
 
-/** Props for location step / component */
-export type LocationInfoProps = {
-    typeProtest?: string;
+// ================================================
+// Types for MapSearch
+// ================================================
+
+export type Suggestion = {
+    display_name: string;
+    lat: string;
+    lon: string;
 };
+
+// ================================================
+// Types for MapHelper
+// ================================================
+
+export type MapHelpersProps = {
+    layers: L.FeatureGroup,
+    L: typeof L | null
+}
