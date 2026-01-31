@@ -1,3 +1,3 @@
-import {ProtestStepProps} from "@/features2/protest/types";
+import {ProtestStepProps} from "@/features/protest/types";
 
 export type CalendarWithStartStopTimeProps<T> = ProtestStepProps<T>;
