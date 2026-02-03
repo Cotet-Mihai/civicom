@@ -1,9 +1,8 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 import GatheringMap from "@/features/protest/components/steps/locationSteps/gatheringMap";
 
 import {Gathering} from "@/features/protest/types/locationTypes";
-import {extractShapes} from "@/utils/mapHelper";
 import {checkLocation} from "@/features/protest/utils";
 import {toast} from "sonner";
 

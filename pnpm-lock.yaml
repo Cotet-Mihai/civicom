@@ -68,6 +68,12 @@ importers:
       leaflet-draw:
         specifier: ^1.0.4
         version: 1.0.4
+      leaflet.fullscreen:
+        specifier: ^5.3.0
+        version: 5.3.0(leaflet@1.9.4)
+      leaflet.markercluster:
+        specifier: ^1.5.3
+        version: 1.5.3(leaflet@1.9.4)
       lucide-react:
         specifier: ^0.553.0
         version: 0.553.0(react@19.2.0)
@@ -2421,6 +2427,11 @@ packages:
 
   leaflet-draw@1.0.4:
     resolution: {integrity: sha512-rsQ6saQO5ST5Aj6XRFylr5zvarWgzWnrg46zQ1MEOEIHsppdC/8hnN8qMoFvACsPvTioAuysya/TVtog15tyAQ==}
+
+  leaflet.fullscreen@5.3.0:
+    resolution: {integrity: sha512-ZWlu30qf9qNysYtJtI8d1Akw9tpQcELBHvizhlE2vNKlnn0dt7vgg5xM81oalqd5QRf/JyJ1M9fu+I9NjJsS6Q==}
+    peerDependencies:
+      leaflet: ^1.7.0 || >=2.0.0-alpha.1
 
   leaflet.markercluster@1.5.3:
     resolution: {integrity: sha512-vPTw/Bndq7eQHjLBVlWpnGeLa3t+3zGiuM7fJwCkiMFq+nmRuG3RI3f7f4N4TDX7T4NpbAXpR2+NTRSEGfCSeA==}
@@ -5512,6 +5523,10 @@ snapshots:
       language-subtag-registry: 0.3.23
 
   leaflet-draw@1.0.4: {}
+
+  leaflet.fullscreen@5.3.0(leaflet@1.9.4):
+    dependencies:
+      leaflet: 1.9.4
 
   leaflet.markercluster@1.5.3(leaflet@1.9.4):
     dependencies:

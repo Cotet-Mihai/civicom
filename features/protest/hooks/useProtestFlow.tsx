@@ -25,20 +25,20 @@ export default function useProtestFlow() {
     ];
     const step = useNavigation({validators: validators, locationControl: location?.controls});
 
-    // TODO: De sters useEffect-ul dupa ce ai terminat acest feature.
-    useEffect(() => {
-        console.log("Current Step:", step.state.value);
-        console.log("Basic Info:", basicInfo.state.value);
-        console.log("Visual Media:", visualMedia.state.value);
-        console.log("Logistics:", logistics.state.value);
-        console.log("Location State:", location?.state.value);
-    }, [
-        step.state.value,
-        basicInfo.state.value,
-        visualMedia.state.value,
-        logistics.state.value,
-        location?.state.value,
-    ]);
+    // // TODO: De sters useEffect-ul dupa ce ai terminat acest feature.
+    // useEffect(() => {
+    //     console.log("Current Step:", step.state.value);
+    //     console.log("Basic Info:", basicInfo.state.value);
+    //     console.log("Visual Media:", visualMedia.state.value);
+    //     console.log("Logistics:", logistics.state.value);
+    //     console.log("Location State:", location?.state.value);
+    // }, [
+    //     step.state.value,
+    //     basicInfo.state.value,
+    //     visualMedia.state.value,
+    //     logistics.state.value,
+    //     location?.state.value,
+    // ]);
 
     return {
         step: step,

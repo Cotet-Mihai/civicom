@@ -1,6 +1,6 @@
 import React, {Dispatch, SetStateAction} from "react";
 import {Step} from "@/features/protest/types/navigationTypes";
-import L from "leaflet";
+import type L from "leaflet";
 
 export type UseStateWrapper<T> = {
     value: T,

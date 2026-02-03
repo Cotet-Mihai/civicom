@@ -4,7 +4,6 @@ import usePicketStep from "@/features/protest/hooks/LocationStep/usePicketStep";
 import useBoycottStep from "@/features/protest/hooks/LocationStep/useBoycottStep";
 
 import {TypeProtest} from "@/features/protest/types/basicInfoTypes";
-import {useEffect} from "react";
 
 // TODO: De adaugat typeResult dupa ce ai toate controalele
 
