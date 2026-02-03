@@ -4,9 +4,11 @@ import {Textarea} from "@/components/ui/textarea";
 import CalendarWithStartStopTime from "@/components/calendarWithStartStopTime";
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
 
-import {BasicInfoProps, TypeProtest} from "@/features/protest/types";
+import {StandardStepProp} from "@/features/protest/types/type";
+import {BasicInfo, TypeProtest} from "@/features/protest/types/basicInfoTypes";
 
-export default function BasicInfoStep({dataState}: BasicInfoProps) {
+
+export default function BasicInfoStep({dataState}: StandardStepProp<BasicInfo>) {
     const {value: data, set: onChange} = dataState
 
     return (
@@ -18,7 +20,7 @@ export default function BasicInfoStep({dataState}: BasicInfoProps) {
                     type="single"
                     className={'border'}
                     value={data.typeProtest}
-                    onValueChange={(e: TypeProtest) => onChange({ ...data, typeProtest: e })}
+                    onValueChange={(e) => onChange({ ...data, typeProtest: e as TypeProtest })}
                 >
                     <ToggleGroupItem
                         value="gathering"

@@ -18,7 +18,8 @@ import {
 } from '@/components/ui/stepper';
 import {H3} from "@/components/Typography";
 
-import {StepperFlowUIProps} from "@/features/protest/types";
+import {StepperFlowUIProps} from "@/features/protest/types/type";
+
 
 
 export default function StepperFlowUI({ children, currentStepState, stepsData, handleNavigation }: StepperFlowUIProps) {
@@ -50,7 +51,7 @@ export default function StepperFlowUI({ children, currentStepState, stepsData, h
                                 </StepperIndicator>
                                 <div className="flex flex-col items-start gap-1">
                                     <div className="text-[10px] font-semibold uppercase text-muted-foreground">
-                                        Step {index + 1}
+                                        Pasul {index + 1}
                                     </div>
                                     <StepperTitle className="text-start text-base font-semibold group-data-[state=inactive]/step:text-muted-foreground">
                                         {step.title}
@@ -62,7 +63,7 @@ export default function StepperFlowUI({ children, currentStepState, stepsData, h
                                             appearance="light"
                                             className="hidden group-data-[state=active]/step:inline-flex"
                                         >
-                                            In Progress
+                                            În curs
                                         </Badge>
                                         <Badge
                                             variant="success"
@@ -70,14 +71,14 @@ export default function StepperFlowUI({ children, currentStepState, stepsData, h
                                             appearance="light"
                                             className="hidden group-data-[state=completed]/step:inline-flex"
                                         >
-                                            Completed
+                                            Completat
                                         </Badge>
                                         <Badge
                                             variant="secondary"
                                             size="sm"
                                             className="hidden group-data-[state=inactive]/step:inline-flex text-muted-foreground"
                                         >
-                                            Pending
+                                            În așteptare
                                         </Badge>
                                     </div>
                                 </div>
@@ -116,7 +117,7 @@ export default function StepperFlowUI({ children, currentStepState, stepsData, h
                     <Button
                         variant="outline"
                         onClick={handleNavigation.handleNext}
-                        disabled={currentStep === stepsData.length} //todo: schimba logica de aici
+                        disabled={currentStep === stepsData.length} // TODO: SUBMITUL E BLOCAT DE AICI
                     >
                         {currentStep === stepsData.length ? 'Trimite' : 'Următorul'}
                     </Button>

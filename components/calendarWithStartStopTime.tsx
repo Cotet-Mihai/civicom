@@ -11,7 +11,7 @@ import {Label} from "@/components/ui/label";
 import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover";
 import {CalendarWithStartStopTimeProps} from "@/types/components/calendar";
 
-import {BasicInfo} from "@/features/protest/types";
+import {BasicInfo} from "@/features/protest/types/basicInfoTypes";
 
 export default function CalendarWithStartStopTime({dataState}: CalendarWithStartStopTimeProps<BasicInfo>) {
     const [open, setOpen] = useState(false);

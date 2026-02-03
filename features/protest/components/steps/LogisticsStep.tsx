@@ -1,6 +1,7 @@
-import {LogisticsProps} from "@/features/protest/types";
+import {StandardStepProp} from "@/features/protest/types/type";
+import {Logistics} from "@/features/protest/types/logisticsTypes";
 
-export default function LogisticsStep({dataState}: LogisticsProps) {
+export default function LogisticsStep({dataState}: StandardStepProp<Logistics>) {
     const {value: data, set: onChange} = dataState
 
     return (

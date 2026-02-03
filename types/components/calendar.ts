@@ -1,3 +1,5 @@
-import {ProtestStepProps} from "@/features/protest/types";
+import {UseStateWrapper} from "@/features/protest/types/type";
 
-export type CalendarWithStartStopTimeProps<T> = ProtestStepProps<T>;
+export type CalendarWithStartStopTimeProps<T> = {
+    dataState: UseStateWrapper<T>
+};

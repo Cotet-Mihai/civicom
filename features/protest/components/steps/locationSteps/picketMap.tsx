@@ -1,4 +1,4 @@
-import React, {JSX, useEffect} from "react";
+import React from "react";
 import L from "leaflet";
 
 import {defaultLocation} from "@/features/protest/protest.config";
@@ -16,10 +16,10 @@ import MapSearchControlWrapper from "@/utils/MapSearch";
 import {extractMarkers, removeDuplicateMarkers} from "@/utils/mapHelper";
 
 import {StandardStepProp} from "@/features/protest/types/type";
-import {Gathering} from "@/features/protest/types/locationTypes";
+import {Picket} from "@/features/protest/types/locationTypes";
 import {MarkerShape} from "@/types/map";
 
-export default function GatheringMap({dataState}: StandardStepProp<Gathering>): JSX.Element {
+export default function PicketMap({dataState}: StandardStepProp<Picket>) {
     const {set: onChange} = dataState;
 
     function handleOnChange(layers: L.FeatureGroup) {
@@ -27,7 +27,7 @@ export default function GatheringMap({dataState}: StandardStepProp<Gathering>): 
 
         const marker: MarkerShape = extractMarkers(layers)[0];
 
-        onChange((prev: Gathering) => ({
+        onChange((prev: Picket) => ({
                 ...prev,
                 location: {
                     lat: marker.position.lat,

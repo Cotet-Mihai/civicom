@@ -1,25 +1,33 @@
 import L from "leaflet";
+import {Coords, PolylineCoords} from "@/features/protest/types/type";
 // ================================================
 // Types for Shapes
 // ================================================
 
-// TODO: Verifica sa nu ai conflict aici cu State-urile de la LocationFlow
+export type MarkerType = 'marker' | 'start' | 'inter' | 'finish'
 
 export type MarkerShape = {
     id: number;
-    type?: string;
-    lat: number;
-    lng: number;
+    type: MarkerType | undefined;
+    position: Coords;
 };
 
 export type PolylineShape = {
     id: number;
-    type: "polyline";
-    points: L.LatLng[] | L.LatLng[][] | L.LatLng[][][];
+    type: 'polyline';
+    points: PolylineCoords;
 };
 
-/** Either a marker or a polyline */
 export type Shape = MarkerShape | PolylineShape;
+
+// ================================================
+// Types for MapHelper
+// ================================================
+
+export type ExtractShapes = {
+    markers: MarkerShape[],
+    polylines: PolylineShape[]
+}
 
 // ================================================
 // Types for MapSearch
@@ -30,12 +38,3 @@ export type Suggestion = {
     lat: string;
     lon: string;
 };
-
-// ================================================
-// Types for MapHelper
-// ================================================
-
-export type MapHelpersProps = {
-    layers: L.FeatureGroup,
-    L: typeof L | null
-}
