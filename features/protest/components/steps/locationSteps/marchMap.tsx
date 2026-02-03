@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import type L from "leaflet";
 
 import {defaultLocation} from "@/features/protest/protest.config";
@@ -9,7 +9,7 @@ import {
     MapDrawDelete,
     MapDrawEdit, MapDrawMarkerFinish, MapDrawMarkerInter, MapDrawMarkerStart, MapDrawPolyline,
     MapLocateControl,
-    MapTileLayer
+    MapTileLayer, useLeaflet
 } from "@/components/ui/map";
 
 import MapSearchControlWrapper from "@/utils/MapSearch";
@@ -23,6 +23,9 @@ import {MarkerShape, PolylineShape} from "@/types/map";
 
 export default function MarchMap({dataState}: StandardStepProp<March>) {
     const {set: onChange} = dataState;
+
+    const mapRef = useRef<L.Map | null>(null)
+    const {L} = useLeaflet();
 
     const result: March = {
         start: {lat: undefined, lng: undefined},
@@ -68,6 +71,7 @@ export default function MarchMap({dataState}: StandardStepProp<March>) {
             <Map
                 center={defaultLocation}
                 zoom={13}
+                ref={mapRef}
             >
                 <MapTileLayer/>
                 <MapSearchControlWrapper/>
