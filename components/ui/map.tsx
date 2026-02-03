@@ -953,7 +953,7 @@ function MapSearchControl({
     )
 }
 
-type MapDrawShape = "marker" | "polyline" | "circle" | "rectangle" | "polygon" | "start" | "inter" | "finish"
+type MapDrawShape = "marker" | "polyline" | "circle" | "rectangle" | "polygon" | "Începutul" | "Punct intermediar" | "Finalul"
 type MapDrawAction = "edit" | "delete"
 type MapDrawMode = MapDrawShape | MapDrawAction | null
 interface MapDrawContextType {
