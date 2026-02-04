@@ -19,8 +19,7 @@ export default function useProtestFlow() {
 
     const validators = [
         basicInfo.validator,
-        // ...(location ? [location.validator] : []),
-        location.validator,
+        ...(location ? [location.validator] : []),
         visualMedia.validator,
         logistics.validator
     ];

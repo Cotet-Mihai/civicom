@@ -18,8 +18,10 @@ export default function ProtestFlow() {
                 return <Step dataState={basicInfo.state}/>;
             }
             case 2: {
-                const Step = location.component;
+                const Step = location?.component;
                 if (!Step) return ;
+                // @ts-expect-error Typescript can't know what location component comes next without the protest type,
+                // but the user doesn't have the right to reach this step until they select the type.
                 return <Step dataState={location.state}/>;
             }
             case 3: {

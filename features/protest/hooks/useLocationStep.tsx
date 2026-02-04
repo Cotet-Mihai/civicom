@@ -1,21 +1,22 @@
 import useGatheringStep from "@/features/protest/hooks/LocationStep/useGatheringStep";
 
 import {TypeProtest} from "@/features/protest/types/basicInfoTypes";
+import useMarchStep from "@/features/protest/hooks/LocationStep/useMarchStep";
+import usePicketStep from "@/features/protest/hooks/LocationStep/usePicketStep";
+import useBoycottStep from "@/features/protest/hooks/LocationStep/useBoycottStep";
 
 // TODO: De adaugat typeResult dupa ce ai toate controalele
 
 export default function useLocationStep(type: TypeProtest) {
-    // const registry = {
-    //     gathering: useGatheringStep(),
-    //     march: useMarchStep(),
-    //     picket: usePicketStep(),
-    //     boycott: useBoycottStep(),
-    // };
-    //
-    // if (!type) return ;
-    // return registry[type];
+    const registry = {
+        gathering: useGatheringStep(),
+        march: useMarchStep(),
+        picket: usePicketStep(),
+        boycott: useBoycottStep(),
+    };
 
-    return useGatheringStep();
+    if (!type) return ;
+    return registry[type];
 }
 
 /*
