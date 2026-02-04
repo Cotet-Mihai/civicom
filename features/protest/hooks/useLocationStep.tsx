@@ -1,7 +1,4 @@
 import useGatheringStep from "@/features/protest/hooks/LocationStep/useGatheringStep";
-import useMarchStep from "@/features/protest/hooks/LocationStep/useMarchStep";
-import usePicketStep from "@/features/protest/hooks/LocationStep/usePicketStep";
-import useBoycottStep from "@/features/protest/hooks/LocationStep/useBoycottStep";
 
 import {TypeProtest} from "@/features/protest/types/basicInfoTypes";
 
