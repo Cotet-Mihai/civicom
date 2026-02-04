@@ -13,9 +13,10 @@ import {
 
 import MapSearchControlWrapper from "@/utils/MapSearch";
 import {removeDuplicateMarkers} from "@/utils/mapHelper";
+import {defaultLocation} from "@/features/protest/protest.config";
 
 // @ts-expect-error just for testing
-export default function GatheringMap(dataState, defaultLocation) {
+export default function GatheringMap({dataState}) {
     const {value: data, set: onChange} = dataState;
 
     const mapRef = useRef<L.Map | null>(null);
