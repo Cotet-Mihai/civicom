@@ -1,6 +1,5 @@
-import React, {JSX, useRef} from "react";
-
-import {defaultLocation} from "@/features/protest/protest.config";
+import React, { useRef } from "react";
+import L from "leaflet";
 
 import {
     Map,
@@ -11,69 +10,42 @@ import {
     MapTileLayer, useLeaflet
 } from "@/components/ui/map";
 
+
 import MapSearchControlWrapper from "@/utils/MapSearch";
-import {extractMarkers, removeDuplicateMarkers} from "@/utils/mapHelper";
+import {removeDuplicateMarkers} from "@/utils/mapHelper";
 
-import {StandardStepProp} from "@/features/protest/types/type";
-import {Gathering} from "@/features/protest/types/locationTypes";
-import {MarkerShape} from "@/types/map";
-
-
-export default function GatheringMap({dataState}: StandardStepProp<Gathering>): JSX.Element {
-    const {set: onChange} = dataState;
+// @ts-expect-error just for testing
+export default function GatheringMap(dataState, defaultLocation) {
+    const {value: data, set: onChange} = dataState;
 
     const mapRef = useRef<L.Map | null>(null);
-    const {L} = useLeaflet();
 
-    function handleOnChange(layers: L.FeatureGroup) {
-        removeDuplicateMarkers(layers);
-
-        const marker: MarkerShape = extractMarkers(layers)[0];
-
-        onChange((prev: Gathering) => ({
-                ...prev,
-                location: {
-                    lat: marker.position.lat,
-                    lng: marker.position.lng
-                },
-            })
-        );
-    }
+    const {L} = useLeaflet()
 
     return (
-        // <Map
-        //     center={defaultLocation}
-        //     zoom={13}
-        //     ref={mapRef}
-        // >
-        //     <MapTileLayer />
-        //     <MapSearchControlWrapper/>
-        //     <MapLocateControl />
-        //     <MapDrawControl
-        //         onLayersChange={(layers: L.FeatureGroup) => handleOnChange(layers)}
-        //     >
-        //         <MapDrawMarker />
-        //         <MapDrawEdit />
-        //         <MapDrawDelete />
-        //     </MapDrawControl>
-        // </Map>
-
-        <Map
-            center={defaultLocation}
-            zoom={13}
-            ref={mapRef}
-            className="h-[500px]"
-        >
-            <MapTileLayer />
-            <MapSearchControlWrapper/>
-            <MapLocateControl />
-            <MapDrawControl
-                onLayersChange={(layers: L.FeatureGroup) => handleOnChange(layers)}
+        <>
+            <Map
+                center={defaultLocation}
+                zoom={13}
+                ref={mapRef}
+                className="h-[500px]"
             >
-                <MapDrawMarker />
-                <MapDrawEdit />
-                <MapDrawDelete />
-            </MapDrawControl>
-        </Map>
+                <MapTileLayer />
+                <MapSearchControlWrapper/>
+                <MapLocateControl />
+                <MapDrawControl
+                    onLayersChange={
+                        (layers) => {
+                            // @ts-expect-error just for testing
+                            removeDuplicateMarkers({layers, L})
+                        }
+                    }
+                >
+                    <MapDrawMarker />
+                    <MapDrawEdit />
+                    <MapDrawDelete />
+                </MapDrawControl>
+            </Map>
+        </>
     );
 }
