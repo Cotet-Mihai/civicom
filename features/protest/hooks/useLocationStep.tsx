@@ -8,15 +8,17 @@ import {TypeProtest} from "@/features/protest/types/basicInfoTypes";
 // TODO: De adaugat typeResult dupa ce ai toate controalele
 
 export default function useLocationStep(type: TypeProtest) {
-    const registry = {
-        gathering: useGatheringStep(),
-        march: useMarchStep(),
-        picket: usePicketStep(),
-        boycott: useBoycottStep(),
-    };
+    // const registry = {
+    //     gathering: useGatheringStep(),
+    //     march: useMarchStep(),
+    //     picket: usePicketStep(),
+    //     boycott: useBoycottStep(),
+    // };
+    //
+    // if (!type) return ;
+    // return registry[type];
 
-    if (!type) return ;
-    return registry[type];
+    return useGatheringStep();
 }
 
 /*

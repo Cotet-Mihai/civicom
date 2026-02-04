@@ -18,7 +18,6 @@ export default function useNavigation({validators, locationControl}: UseNavigati
     function nextStep(): void {
         if (step === 1) {
             locationControl?.reset();
-            console.log('AAAAAAAAAAAMMMMMMMMMMMMMMMMM RRRRRRRRRRRRRRRRREEEEEEEESSSSSSSSSSEEEEEEEEEEEEEEEE')
         }
 
         const isValid = validators[step - 1]();
