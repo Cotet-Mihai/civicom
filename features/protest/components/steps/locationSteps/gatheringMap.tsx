@@ -8,7 +8,7 @@ import {
     MapDrawDelete,
     MapDrawEdit, MapDrawMarker,
     MapLocateControl,
-    MapTileLayer
+    MapTileLayer, useLeaflet
 } from "@/components/ui/map";
 
 import MapSearchControlWrapper from "@/utils/MapSearch";
@@ -23,7 +23,7 @@ export default function GatheringMap({dataState}: StandardStepProp<Gathering>): 
     const {set: onChange} = dataState;
 
     const mapRef = useRef<L.Map | null>(null);
-    // const {L} = useLeaflet();
+    const {L} = useLeaflet();
 
     function handleOnChange(layers: L.FeatureGroup) {
         removeDuplicateMarkers(layers);
