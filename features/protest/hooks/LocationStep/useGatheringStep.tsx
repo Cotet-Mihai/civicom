@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-import GatheringMap from "@/features/protest/components/steps/locationSteps/gatheringMap.client";
+import GatheringMap from "@/features/protest/components/steps/locationSteps/gatheringMap";
 
 import {Gathering} from "@/features/protest/types/locationTypes";
 import {checkLocation} from "@/features/protest/utils";
