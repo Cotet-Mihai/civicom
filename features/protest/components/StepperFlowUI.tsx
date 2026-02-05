@@ -1,3 +1,8 @@
+import React from "react";
+import Link from "next/link";
+
+import { Check,  LoaderCircleIcon } from 'lucide-react';
+
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,13 +16,14 @@ import {
     StepperTrigger,
     StepperSeparator,
 } from '@/components/ui/stepper';
-import { Check,  LoaderCircleIcon } from 'lucide-react';
-import {StepperFlowUIProps} from "@/types/protestStepper";
 import {H3} from "@/components/Typography";
-import Link from "next/link";
-import React from "react";
 
-export default function StepperFlowUI({ children, currentStep, setCurrentStep, steps, handleNavigation }: StepperFlowUIProps) {
+import {StepperFlowUIProps} from "@/features/protest/types/type";
+
+
+
+export default function StepperFlowUI({ children, currentStepState, stepsData, handleNavigation }: StepperFlowUIProps) {
+    const { value: currentStep, set: setCurrentStep } = currentStepState;
 
     return (
         <>
@@ -37,7 +43,7 @@ export default function StepperFlowUI({ children, currentStep, setCurrentStep, s
                 className="space-y-8"
             >
                 <StepperNav className="gap-3">
-                    {steps.map((step, index) => (
+                    {stepsData.map((step, index) => (
                         <StepperItem key={index} step={index + 1} className="relative flex-1 items-start">
                             <StepperTrigger className="flex flex-col items-start justify-center gap-2.5 grow" asChild>
                                 <StepperIndicator className="size-8 border-2 data-[state=completed]:text-white data-[state=completed]:bg-green-500 data-[state=inactive]:bg-transparent data-[state=inactive]:border-border data-[state=inactive]:text-muted-foreground data-[state=active]:bg-blue-500">
@@ -45,7 +51,7 @@ export default function StepperFlowUI({ children, currentStep, setCurrentStep, s
                                 </StepperIndicator>
                                 <div className="flex flex-col items-start gap-1">
                                     <div className="text-[10px] font-semibold uppercase text-muted-foreground">
-                                        Step {index + 1}
+                                        Pasul {index + 1}
                                     </div>
                                     <StepperTitle className="text-start text-base font-semibold group-data-[state=inactive]/step:text-muted-foreground">
                                         {step.title}
@@ -57,7 +63,7 @@ export default function StepperFlowUI({ children, currentStep, setCurrentStep, s
                                             appearance="light"
                                             className="hidden group-data-[state=active]/step:inline-flex"
                                         >
-                                            In Progress
+                                            În curs
                                         </Badge>
                                         <Badge
                                             variant="success"
@@ -65,19 +71,19 @@ export default function StepperFlowUI({ children, currentStep, setCurrentStep, s
                                             appearance="light"
                                             className="hidden group-data-[state=completed]/step:inline-flex"
                                         >
-                                            Completed
+                                            Completat
                                         </Badge>
                                         <Badge
                                             variant="secondary"
                                             size="sm"
                                             className="hidden group-data-[state=inactive]/step:inline-flex text-muted-foreground"
                                         >
-                                            Pending
+                                            În așteptare
                                         </Badge>
                                     </div>
                                 </div>
                             </StepperTrigger>
-                            {steps.length > index + 1 && (
+                            {stepsData.length > index + 1 && (
                                 <StepperSeparator className="absolute top-4 inset-x-0 start-9 m-0 group-data-[orientation=horizontal]/stepper-nav:w-[calc(100%-2rem)] group-data-[orientation=horizontal]/stepper-nav:flex-none  group-data-[state=completed]/step:bg-green-500" />
                             )}
                         </StepperItem>
@@ -85,7 +91,7 @@ export default function StepperFlowUI({ children, currentStep, setCurrentStep, s
                 </StepperNav>
 
                 <StepperPanel className="text-sm">
-                    {steps.map((step, index) => (
+                    {stepsData.map((step, index) => (
                         <StepperContent
                             key={index}
                             value={index + 1}
@@ -111,9 +117,9 @@ export default function StepperFlowUI({ children, currentStep, setCurrentStep, s
                     <Button
                         variant="outline"
                         onClick={handleNavigation.handleNext}
-                        disabled={currentStep === steps.length} //todo: schimba logica de aici
+                        disabled={currentStep === stepsData.length} // TODO: SUBMITUL E BLOCAT DE AICI
                     >
-                        {currentStep === steps.length ? 'Trimite' : 'Următorul'}
+                        {currentStep === stepsData.length ? 'Trimite' : 'Următorul'}
                     </Button>
                 </div>
             </Stepper>
