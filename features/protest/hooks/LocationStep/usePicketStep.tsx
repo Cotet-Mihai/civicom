@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-import PicketMap from "@/features/protest/components/steps/locationSteps/maps.dynamic";
+import {PicketMap} from "@/features/protest/components/steps/locationSteps/maps.dynamic";
 
 import {Picket} from "@/features/protest/types/locationTypes";
 import {checkLocation} from "@/features/protest/utils";
