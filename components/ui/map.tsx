@@ -1108,7 +1108,7 @@ function MapDrawMarker({ ...props }: DrawOptions.MarkerOptions) {
             createDrawTool={(L, map) =>
                 new L.Draw.Marker(map, {
                     icon: L.divIcon({
-                        className: "", // For fixing the moving bug when going in and out the edit mode
+                        className: "marker", // For fixing the moving bug when going in and out the edit mode
                         iconAnchor: [12, 12],
                         html: renderToString(<MapPinIcon className="size-6" />),
                     }),
