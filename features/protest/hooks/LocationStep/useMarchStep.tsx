@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-import MarchMap from "@/features/protest/components/steps/locationSteps/marchMap.client";
+import MarchMap from "@/features/protest/components/steps/locationSteps/maps.dynamic";
 
 import {March} from "@/features/protest/types/locationTypes";
 import {checkLocation, checkMultiLocation} from "@/features/protest/utils";
