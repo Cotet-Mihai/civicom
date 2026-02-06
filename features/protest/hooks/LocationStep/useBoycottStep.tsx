@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-import BoycottMap from "@/features/protest/components/steps/locationSteps/boycottMap";
+import BoycottStep from "@/features/protest/components/steps/locationSteps/boycottStep/boycottStep";
 
 import {Boycott} from "@/features/protest/types/locationTypes";
 
@@ -21,7 +21,7 @@ export default function useBoycottStep(){
 
     return {
         state: {value: boycott, set: setBoycott},
-        component: BoycottMap,
+        component: BoycottStep,
         validator: validator,
         controls: {
             reset: reset
