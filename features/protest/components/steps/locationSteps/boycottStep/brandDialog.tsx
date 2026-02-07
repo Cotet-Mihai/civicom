@@ -105,8 +105,11 @@ export function BrandDialog({
                     onOpenChange(val)
                 }}
             >
-                <DialogContent className="flex max-h-[85vh] flex-col sm:max-w-lg p-0">
-                    <DialogHeader className="px-6 pt-6">
+                <DialogContent
+                    className="flex max-h-[85vh] flex-col sm:max-w-lg p-0 overflow-hidden"
+                >
+
+                <DialogHeader className="px-6 pt-6 shrink-0">
                         <DialogTitle>
                             {initialData ? "Editare brand" : "Adaugare brand"}
                         </DialogTitle>
@@ -117,8 +120,9 @@ export function BrandDialog({
                         </DialogDescription>
                     </DialogHeader>
 
-                    <ScrollArea className="flex-1 px-6">
-                        <div className="flex flex-col gap-5 pb-4">
+                    <ScrollArea className="flex-1 overflow-y-auto px-6">
+
+                    <div className="flex flex-col gap-5 pb-4">
                             {/* Brand Name */}
                             <div className="flex flex-col gap-2">
                                 <Label htmlFor="brand-name">
@@ -134,7 +138,9 @@ export function BrandDialog({
 
                             {/* Brand Link */}
                             <div className="flex flex-col gap-2">
-                                <Label htmlFor="brand-link">Link brand</Label>
+                                <Label htmlFor="brand-link">
+                                    Link brand <span className="text-destructive">*</span>
+                                </Label>
                                 <div className="relative">
                                     <LinkIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                                     <Input
@@ -173,9 +179,6 @@ export function BrandDialog({
                                                 Adauga alternativa
                                             </Button>
                                         </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>Sugereaza o alternativa etica</p>
-                                        </TooltipContent>
                                     </Tooltip>
                                 </div>
 
@@ -205,9 +208,6 @@ export function BrandDialog({
                                                             <Trash2 className="h-4 w-4" />
                                                         </Button>
                                                     </TooltipTrigger>
-                                                    <TooltipContent>
-                                                        <p>Sterge alternativa</p>
-                                                    </TooltipContent>
                                                 </Tooltip>
                                             </div>
 
@@ -226,7 +226,9 @@ export function BrandDialog({
                                             </div>
 
                                             <div className="flex flex-col gap-2">
-                                                <Label htmlFor={`alt-link-${idx}`}>Link</Label>
+                                                <Label htmlFor={`alt-link-${idx}`}>
+                                                    Link <span className="text-destructive">*</span>
+                                                </Label>
                                                 <Input
                                                     id={`alt-link-${idx}`}
                                                     placeholder="https://www.alternativa.com"
@@ -262,7 +264,7 @@ export function BrandDialog({
                         </div>
                     </ScrollArea>
 
-                    <DialogFooter className="gap-2 border-t border-border px-6 py-4">
+                    <DialogFooter className="shrink-0 gap-2 border-t px-6 py-4">
                         <Button
                             variant="outline"
                             onClick={() => {
@@ -274,8 +276,8 @@ export function BrandDialog({
                         </Button>
                         <Button
                             onClick={handleSave}
-                            disabled={!name.trim()}
-                            className="bg-primary text-primary-foreground hover:bg-primary/90"
+                            disabled={!name.trim() || !link.trim()}
+                            className="bg-yellow-300 text-green-900 hover:bg-yellow-300/60"
                         >
                             {initialData ? "Salveaza" : "Adauga brand"}
                         </Button>

@@ -35,6 +35,8 @@ const OPERATIONS = [
     "Altele",
 ] as const
 
+// data-[state=on]:bg-yellow-300 data-[state=on]:text-green-900
+
 export default function BoycottStep() {
     const [selectedReasons, setSelectedReasons] = useState<string[]>([])
     const [customReason, setCustomReason] = useState("")
@@ -94,8 +96,8 @@ export default function BoycottStep() {
                 {/* REASONS */}
                 <section className="flex flex-col gap-4">
                     <div className="flex items-center gap-2">
-                        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/15">
-                            <ShieldAlert className="h-4 w-4" />
+                        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-yellow-300/30">
+                            <ShieldAlert className="h-4 w-4"/>
                         </div>
                         <Label className="text-base font-semibold">
                             Motivul boicotului
@@ -112,7 +114,7 @@ export default function BoycottStep() {
                                 onPressedChange={() =>
                                     toggleSelection(reason, selectedReasons, setSelectedReasons)
                                 }
-                                className="rounded-full px-4 py-2 text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+                                className="rounded-full px-4 py-2 text-sm font-medium data-[state=on]:bg-yellow-300 data-[state=on]:text-green-900"
                             >
                                 {reason}
                             </Toggle>
@@ -137,7 +139,7 @@ export default function BoycottStep() {
                 {/* OPERATIONS */}
                 <section className="flex flex-col gap-4">
                     <div className="flex items-center gap-2">
-                        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/15">
+                        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-yellow-300/30">
                             <Megaphone className="h-4 w-4" />
                         </div>
                         <Label className="text-base font-semibold">Mod de operare</Label>
@@ -157,7 +159,7 @@ export default function BoycottStep() {
                                         setSelectedOperations
                                     )
                                 }
-                                className="rounded-full px-4 py-2 text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+                                className="rounded-full px-4 py-2 text-sm font-medium data-[state=on]:bg-yellow-300 data-[state=on]:text-green-900"
                             >
                                 {op}
                             </Toggle>
@@ -197,10 +199,10 @@ export default function BoycottStep() {
                                 <TooltipTrigger asChild>
                                     <Button
                                         variant="outline"
-                                        className="flex h-24 w-24 flex-col items-center justify-center gap-1.5 rounded-xl border-2 border-primary bg-primary/10"
+                                        className="flex h-24 w-24 flex-col items-center justify-center gap-1.5 rounded-xl border-2 border-yellow-300 bg-yellow-300/10 hover:bg-yellow-300/30"
                                         onClick={() => openViewDialog(idx)}
                                     >
-                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-yellow-300 text-green-900 font-bold">
                       {brand.name.charAt(0).toUpperCase()}
                     </span>
                                         <span className="line-clamp-2 text-xs font-medium">
@@ -208,7 +210,7 @@ export default function BoycottStep() {
                     </span>
                                     </Button>
                                 </TooltipTrigger>
-                                <TooltipContent>
+                                <TooltipContent  className={'bg-yellow-300 text-green-900 mb-2'}>
                                     <p>Apasa pentru a vedea detaliile</p>
                                 </TooltipContent>
                             </Tooltip>
