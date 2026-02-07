@@ -5,10 +5,10 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetTitle,
+    Sheet,
+    SheetContent,
+    SheetTrigger,
+    SheetTitle, SheetDescription, SheetHeader, SheetFooter,
 } from "@/components/ui/sheet";
 
 const navLinks = [
@@ -31,29 +31,16 @@ export function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? "bg-background/90 backdrop-blur-md shadow-sm border-b border-border"
+          ? "bg-background/70 backdrop-blur-md shadow-sm border-b border-border"
           : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-8">
         <Link href="#" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              className="h-5 w-5 text-primary-foreground"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-            </svg>
-          </div>
-          <span className="text-xl font-bold tracking-tight text-foreground">
-            Civicom
+          <span className="text-xl font-extrabold tracking-tight text-green-700">
+            CIVICOM✨
           </span>
         </Link>
 
@@ -62,20 +49,28 @@ export function Navbar() {
             <Link
               key={link.label}
               href={link.href}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+              className="rounded-lg px-3 py-2 text-sm font-bold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
+        {/*  // TODO: De implementat logica de a detecta daca este conectat sau nu*/}
         <div className="hidden items-center gap-3 md:flex">
           <Button variant="outline" size="sm" className="border-primary/30 text-primary hover:bg-accent hover:text-accent-foreground bg-transparent">
-            Implica-te
+            Autentifică-te
           </Button>
           <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-            Creaza eveniment
+            Înregistrează-te
           </Button>
+            {/*// TODO: De adaugat logica de a verifica daca exista utilziator conectat*/}
+            {/*<Button variant="outline" size="sm" className="border-primary/30 text-primary hover:bg-accent hover:text-accent-foreground bg-transparent">*/}
+            {/*    Implica-te*/}
+            {/*</Button>*/}
+            {/*<Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">*/}
+            {/*    Creează eveniment*/}
+            {/*</Button>*/}
         </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
@@ -90,7 +85,10 @@ export function Navbar() {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-72 bg-background">
-            <SheetTitle className="text-foreground">Meniu</SheetTitle>
+            <SheetHeader>
+                <SheetTitle className="text-green-700 font-extrabold text-xl">CIVICOM✨</SheetTitle>
+                <SheetDescription></SheetDescription>
+            </SheetHeader>
             <nav className="mt-8 flex flex-col gap-2">
               {navLinks.map((link) => (
                 <Link
@@ -102,15 +100,22 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              <div className="mt-4 flex flex-col gap-2 px-4">
-                <Button variant="outline" className="w-full border-primary/30 text-primary hover:bg-accent bg-transparent">
-                  Implica-te
-                </Button>
-                <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                  Creaza eveniment
-                </Button>
-              </div>
             </nav>
+              <SheetFooter>
+                  <Button variant="outline" className="w-full border-primary/30 text-primary hover:bg-accent bg-transparent">
+                      Autentifică-te
+                  </Button>
+                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                      Înregistrează-te
+                  </Button>
+                  {/*// TODO: De adaugat logica de a verifica daca utilziator este autentificat*/}
+                  {/*<Button variant="outline" className="w-full border-primary/30 text-primary hover:bg-accent bg-transparent">*/}
+                  {/*    Implica-te*/}
+                  {/*</Button>*/}
+                  {/*<Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">*/}
+                  {/*    Creaza eveniment*/}
+                  {/*</Button>*/}
+              </SheetFooter>
           </SheetContent>
         </Sheet>
       </div>
