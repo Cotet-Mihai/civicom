@@ -2,7 +2,7 @@
 
 import { stats } from "@/data/seedHome";
 import { useAnimateOnIntersect } from "@/app/(public)/hook/useAnimateOnIntersect";
-import { useInView } from "../hook/useInView";
+import { useInView } from "@/app/(public)/hook/useInView";
 import { useCountUp } from "@/app/(public)/hook/useCountUp";
 
 interface AnimatedCounterProps {
