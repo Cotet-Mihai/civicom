@@ -1,10 +1,8 @@
 import "./globals.css";
-import {montserrat} from "@/lib/fonts";
 import React from "react";
 import {Metadata} from "next";
 import {Analytics} from '@vercel/analytics/next';
 import {SpeedInsights} from "@vercel/speed-insights/next"
-import {Toaster} from "sonner";
 
 export const metadata: Metadata = {
     title: "Civicom - Platformă digitală pentru voluntariat și implicare civică",
@@ -26,22 +24,17 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children,}: Readonly<{children: React.ReactNode;}>) {
-  return (
-    <html lang="ro">
-      <body
-        className={`${montserrat.className} antialiased`}
-      >
-        {children}
+    return (
+        <html lang="ro">
+            <body>
+                {children}
 
-        {/* Vercel Analytics for tracking user interactions */}
-        <Analytics/>
+                {/* Vercel Analytics for tracking user interactions */}
+                <Analytics/>
 
-        {/* Vercel Speed Insights for performance monitoring */}
-        <SpeedInsights/>
-
-        {/* Toast notifications for user feedback */}
-        <Toaster position="top-center" richColors/>
-      </body>
-    </html>
-  );
+                {/* Vercel Speed Insights for performance monitoring */}
+                <SpeedInsights/>
+            </body>
+        </html>
+    );
 }
