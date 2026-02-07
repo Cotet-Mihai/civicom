@@ -14,6 +14,12 @@ export default function Page() {
             <Navbar />
             <main className="flex-1">
                 <HeroSection />
+                <NgoCarousel />
+                <EventsSection />
+                <StatsSection />
+                <FaqSection />
+                <TestimonialsSection />
+                <CtaSection />
             </main>
             <Footer />
         </div>
