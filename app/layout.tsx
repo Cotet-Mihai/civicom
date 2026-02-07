@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: "Civicom - Platformă digitală pentru voluntariat și implicare civică",
     description: "Civicom conectează voluntari, ONG-uri și instituții publice într-o platformă modernă pentru evenimente, donații, petiții și implicare civică. Descoperă, înscrie-te și susține cauze sociale cu ușurință.",
     keywords: [
-        "CiviCom",
+        "civicom",
         "voluntariat",
         "implicare civică",
         "ONG",
