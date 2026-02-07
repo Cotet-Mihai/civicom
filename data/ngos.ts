@@ -77,3 +77,31 @@ export const ngos = [
         url: "https://motivation.ro/",
     }
 ];
+
+export const faqItems = [
+    {
+        question: "Cum verificăm transparența financiară a ONG-urilor?",
+        answer:
+            "Fiecare ONG listat pe Civicom trece printr-un proces riguros de verificare. Analizăm rapoartele financiare anuale, auditul extern, sursele de finanțare și modul în care fondurile sunt alocate. Doar organizațiile cu transparență financiară dovedită pot primi badge-ul 'Verificat'.",
+    },
+    {
+        question: "Ce înseamnă impact demonstrabil?",
+        answer:
+            "Impactul demonstrabil se referă la rezultate concrete și măsurabile ale activităților ONG-urilor. Evaluăm numărul de beneficiari, proiectele finalizate cu succes, rapoartele de impact și testimonialele din comunitățile deservite. Ne asigurăm că fiecare organizație produce schimbări reale.",
+    },
+    {
+        question: "De ce contează activitatea constantă?",
+        answer:
+            "O organizație cu activitate constantă demonstrează angajament pe termen lung față de cauza sa. Verificăm istoricul proiectelor, frecvența evenimentelor organizate, prezența în comunitate și capacitatea de a menține programe în desfășurare. Aceasta asigură susținerea continuă a beneficiarilor.",
+    },
+    {
+        question: "Cum colectăm feedback-ul din comunitate?",
+        answer:
+            "Feedback-ul este colectat direct de la voluntari, beneficiari și parteneri ai ONG-urilor. Folosim sondaje anonime, recenzii verificate și interviuri cu membrii comunității. Acest feedback ne ajută să menținem un standard ridicat de calitate și încredere pe platformă.",
+    },
+    {
+        question: "Cum pot deveni voluntar prin Civicom?",
+        answer:
+            "Crearea unui cont pe Civicom este gratuită și simplă. După înregistrare, poți explora evenimentele disponibile în zona ta, te poți înscrie la activități care te interesează și poți urmări progresul tău ca voluntar. Fiecare contribuție contează și este recunoscută pe platformă.",
+    },
+]
