@@ -4,7 +4,6 @@ import { NgoCarousel } from "@/app/(public)/components/ngoCarousel";
 import { EventsSection } from "@/app/(public)/components/eventsSection";
 import { StatsSection } from "@/app/(public)/components/statsSection";
 import { FaqSection } from "@/app/(public)/components/faqSection";
-import { TestimonialsSection } from "@/app/(public)/components/testimonialsSection";
 import { CtaSection } from "@/app/(public)/components/ctaSection";
 import { Footer } from "@/app/(public)/components/footer";
 
@@ -16,9 +15,8 @@ export default function Page() {
                 <HeroSection />
                 <NgoCarousel />
                 <FaqSection />
-                <EventsSection />
                 <StatsSection />
-                <TestimonialsSection />
+                <EventsSection />
                 <CtaSection />
             </main>
             <Footer />
