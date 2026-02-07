@@ -1,36 +1,12 @@
 "use client"
 
-import {useEffect, useRef} from "react"
 import Image from "next/image"
 import {Button} from "@/components/ui/button"
 import {ArrowRight, Calendar} from "lucide-react"
+import {useAnimateOnIntersect} from "@/app/(public)/hook/useAnimateOnIntersect";
 
 export function HeroSection() {
-    const sectionRef = useRef<HTMLElement>(null)
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                for (const entry of entries) {
-                    if (entry.isIntersecting) {
-                        const animatedEls = entry.target.querySelectorAll("[data-animate]")
-                        animatedEls.forEach((el, i) => {
-                            const htmlEl = el as HTMLElement
-                            htmlEl.style.animationDelay = `${i * 150}ms`
-                            htmlEl.classList.add("animate-fade-in-up")
-                        })
-                        observer.unobserve(entry.target)
-                    }
-                }},
-            { threshold: 0.1 }
-        )
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current)
-        }
-
-        return () => observer.disconnect()
-    }, [])
+    const sectionRef = useAnimateOnIntersect();
 
     return (
         <section

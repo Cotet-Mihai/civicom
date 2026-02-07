@@ -1,6 +1,4 @@
 "use client"
-
-import { useEffect, useRef } from "react"
 import {
     Accordion,
     AccordionContent,
@@ -8,34 +6,11 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 import {faqItems} from "@/data/ngos";
+import {useAnimateOnIntersect} from "@/app/(public)/hook/useAnimateOnIntersect";
 
 export function FaqSection() {
-    const sectionRef = useRef<HTMLElement>(null)
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                for (const entry of entries) {
-                    if (entry.isIntersecting) {
-                        const animatedEls = entry.target.querySelectorAll("[data-animate]")
-                        animatedEls.forEach((el, i) => {
-                            const htmlEl = el as HTMLElement
-                            htmlEl.style.animationDelay = `${i * 100}ms`
-                            htmlEl.classList.add("animate-fade-in-up")
-                        })
-                        observer.unobserve(entry.target)
-                    }
-                }
-            },
-            { threshold: 0.1 }
-        )
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current)
-        }
-
-        return () => observer.disconnect()
-    }, [])
+    const sectionRef = useAnimateOnIntersect();
 
     return (
         <section
