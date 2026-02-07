@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
-    Card,
+    Card, CardAction,
     CardDescription,
     CardFooter,
     CardHeader,
@@ -20,6 +20,9 @@ import Autoplay from "embla-carousel-autoplay";
 import {ngos} from '@/data/ngos';
 import Image from "next/image";
 import Link from "next/link";
+import {Badge} from "@/components/ui/badge";
+import {BadgeCheck} from 'lucide-react';
+import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/tooltip";
 
 export function NgoCarousel() {
     const sectionRef = useRef<HTMLElement>(null)
@@ -111,6 +114,17 @@ export function NgoCarousel() {
                                             </div>
 
                                             <CardHeader>
+                                                <CardAction>
+                                                    <Tooltip>
+                                                        <TooltipTrigger asChild>
+                                                            <BadgeCheck color={'#1fad5a'}/>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent>
+                                                            <p className={'font-bold'}>Organizație Verificată Oficial</p>
+                                                        </TooltipContent>
+                                                    </Tooltip>
+
+                                                </CardAction>
                                                 <CardTitle>{ngo.name}</CardTitle>
                                                 <CardDescription>
                                                     {ngo.description}
@@ -125,7 +139,7 @@ export function NgoCarousel() {
                                                     Donează ❤
                                                 </Button>
                                                 <Link href={ngo.url} target={'_blank'}>
-                                                    <Button className="font-semibold">Află mai multe</Button>
+                                                    <Button className="font-semibold" variant={'secondary'}>Află mai multe</Button>
                                                 </Link>
                                             </CardFooter>
                                         </Card>

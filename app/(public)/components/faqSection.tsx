@@ -84,8 +84,8 @@ export function FaqSection() {
             data-animate
             className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground opacity-0 lg:text-lg"
           >
-            Fiecare organizatie este evaluata pe baza criteriilor noastre
-            riguroase de selectie.
+              Fiecare organizație înscrisă este evaluată conform criteriilor noastre riguroase; doar organizațiile care
+              îndeplinesc standardele primesc badge-ul „Verificat”.
           </p>
         </div>
 

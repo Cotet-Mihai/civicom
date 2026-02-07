@@ -15,9 +15,9 @@ export default function Page() {
             <main className="flex-1">
                 <HeroSection />
                 <NgoCarousel />
+                <FaqSection />
                 <EventsSection />
                 <StatsSection />
-                <FaqSection />
                 <TestimonialsSection />
                 <CtaSection />
             </main>
