@@ -1,9 +1,9 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import {useEffect, useRef} from "react"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Calendar } from "lucide-react"
+import {Button} from "@/components/ui/button"
+import {ArrowRight, Calendar} from "lucide-react"
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -36,7 +36,7 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-background pt-12 pb-20 lg:pt-20 lg:pb-28"
+      className="relative w-screen h-screen flex items-center justify-center overflow-hidden bg-background"
     >
       {/* Subtle background decoration */}
       <div className="pointer-events-none absolute inset-0">
@@ -47,44 +47,32 @@ export function HeroSection() {
       <div className="relative mx-auto flex max-w-7xl flex-col items-center gap-12 px-4 lg:flex-row lg:gap-16 lg:px-8">
         {/* Text content */}
         <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left">
-          <div
-            data-animate
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground opacity-0"
-          >
-            <span className="inline-block h-2 w-2 rounded-full bg-primary" />
-            Platforma pentru implicare civica
-          </div>
 
-          <h1 className="max-w-2xl">
-            <span
-              data-animate
-              className="block text-2xl font-medium leading-tight text-muted-foreground opacity-0 md:text-3xl"
-            >
-              Gaseste evenimente,
-            </span>
-            <span
-              data-animate
-              className="mt-2 block text-5xl font-bold uppercase leading-none tracking-tight text-primary opacity-0 md:text-7xl lg:text-8xl"
-            >
-              FII SCHIMBAREA,
-            </span>
-            <span
-              data-animate
-              className="mt-2 block text-2xl font-medium leading-tight text-muted-foreground opacity-0 md:text-3xl"
-            >
-              fa voluntariat.
-            </span>
-          </h1>
+            <h1 className="max-w-2xl">
 
-          <p
-            data-animate
-            className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground opacity-0 lg:text-lg"
-          >
-            Civicom conecteaza ONG-urile cu voluntarii pasionati. Descopera
-            petitii, proteste, activitati comunitare si evenimente caritabile in
-            apropierea ta.
-          </p>
+              <span data-animate
+                    className="block text-xl font-medium leading-tight text-green-600 opacity-0 md:text-2xl">
+                Gasește evenimente,
+              </span>
 
+                <span data-animate
+                      className="block text-3xl font-bold uppercase leading-none tracking-tight text-primary opacity-0 md:text-4xl lg:text-5xl">
+                FII SCHIMBAREA,
+              </span>
+
+                <span data-animate
+                      className="block text-2xl font-medium leading-tight text-green-700 opacity-0 md:text-3xl text-right">
+                fă voluntariat.
+              </span>
+
+            </h1>
+            <p
+                data-animate
+                className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground opacity-0 lg:text-sm"
+            >
+                Aducem voluntari, ONG-uri și instituții împreună pentru evenimente, petiții și donații.
+                Descoperă, implică-te și susține cauze care contează. ✨
+            </p>
           <div
             data-animate
             className="mt-8 flex flex-col gap-3 opacity-0 sm:flex-row"
@@ -93,7 +81,7 @@ export function HeroSection() {
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2 px-6"
             >
-              Descopera evenimente
+                Descoperă evenimente
               <ArrowRight className="h-4 w-4" />
             </Button>
             <Button
@@ -102,7 +90,7 @@ export function HeroSection() {
               className="gap-2 border-primary/30 text-primary hover:bg-accent hover:text-accent-foreground px-6 bg-transparent"
             >
               <Calendar className="h-4 w-4" />
-              Creaza un eveniment
+                Creează un eveniment
             </Button>
           </div>
         </div>
@@ -116,7 +104,7 @@ export function HeroSection() {
             <div className="absolute -inset-4 rounded-3xl bg-primary/5 blur-2xl" />
             <Image
               src="/images/home_image.webp"
-              alt="Maini care tin o inima verde - simbolul implicarii civice"
+              alt="Sigla Civicom - Mâini ridicate ținând o inimă verde"
               width={460}
               height={460}
               className="relative rounded-2xl object-contain"
