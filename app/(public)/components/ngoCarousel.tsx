@@ -16,7 +16,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import {ngos} from '@/data/ngos';
+import {seedHome} from '@/data/seedHome';
 import Image from "next/image";
 import Link from "next/link";
 import {BadgeCheck} from 'lucide-react';
@@ -69,7 +69,7 @@ export function NgoCarousel() {
                         ]}
                     >
                         <CarouselContent className="-ml-4">
-                            {ngos.map((ngo) => {
+                            {seedHome.map((ngo) => {
                                 return (
                                     <CarouselItem
                                         key={ngo.name}

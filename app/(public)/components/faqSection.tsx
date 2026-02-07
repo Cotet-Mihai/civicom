@@ -5,7 +5,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
-import {faqItems} from "@/data/ngos";
+import {faqItems} from "@/data/seedHome";
 import {useAnimateOnIntersect} from "@/app/(public)/hook/useAnimateOnIntersect";
 
 export function FaqSection() {
