@@ -1,75 +1,30 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react";
-import {stats} from "@/data/seedHome";
+import { stats } from "@/data/seedHome";
+import { useAnimateOnIntersect } from "@/app/(public)/hook/useAnimateOnIntersect";
+import { useInView } from "../hook/useInView";
+import { useCountUp } from "@/app/(public)/hook/useCountUp";
 
-function AnimatedCounter({
-                             target,
-                             suffix,
-                             inView,
-                         }: {
+interface AnimatedCounterProps {
     target: number
     suffix: string
     inView: boolean
-}) {
-    const [count, setCount] = useState(0)
+}
 
-    useEffect(() => {
-        if (!inView) return
-
-        let start = 0
-        const duration = 2000
-        const increment = target / (duration / 16)
-        const timer = setInterval(() => {
-            start += increment
-            if (start >= target) {
-                setCount(target)
-                clearInterval(timer)
-            } else {
-                setCount(Math.floor(start))
-            }
-        }, 16)
-
-        return () => clearInterval(timer)
-    }, [inView, target])
+export function AnimatedCounter({ target, suffix, inView }: AnimatedCounterProps) {
+    const count = useCountUp(target, inView);
 
     return (
         <span>
-      {count.toLocaleString("ro-RO")}
+            {count.toLocaleString("ro-RO")}
             {suffix}
-    </span>
+        </span>
     )
 }
 
 export function StatsSection() {
-    const sectionRef = useRef<HTMLElement>(null)
-    const [inView, setInView] = useState(false)
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                for (const entry of entries) {
-                    if (entry.isIntersecting) {
-                        setInView(true)
-                        const animatedEls = entry.target.querySelectorAll("[data-animate]")
-                        animatedEls.forEach((el, i) => {
-                            const htmlEl = el as HTMLElement
-                            htmlEl.style.animationDelay = `${i * 150}ms`
-                            htmlEl.classList.add("animate-count-up")
-                        })
-                        observer.unobserve(entry.target)
-                    }
-                }
-            },
-            { threshold: 0.2 }
-        )
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current)
-        }
-
-        return () => observer.disconnect()
-    }, [])
+    const sectionRef = useAnimateOnIntersect(0.2, 150);
+    const inView = useInView(sectionRef, 0.2);
 
     return (
         <section ref={sectionRef} className="bg-primary py-16 lg:py-20">
