@@ -1,15 +1,11 @@
 import React from "react";
-import NavBarSwitcher from "@/components/containers/NavBarSwitcher";
+import {TooltipProvider} from "@/components/ui/tooltip";
 
 export default function PublicLayout({children,} : Readonly<{ children: React.ReactNode }>) {
     return(
         <>
             <main className={"min-h-screen"}>
-                {/* Server Component that conditionally renders Public or Private Navbar */}
-                <NavBarSwitcher/>
-
-                {/* Main page content */}
-                {children}
+                <TooltipProvider>{children}</TooltipProvider>
             </main>
         </>
     )
