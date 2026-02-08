@@ -6,76 +6,76 @@ export const seedHome = [
         description:
             "Organizație umanitară care protejează și ajută persoanele vulnerabile din întreaga țară.",
         url: "https://crucearosie.ro",
-        logo: "/seedHome/crucea_rosie_romana.png",
+        logo: "/ngos/crucea_rosie_romana.png",
     },
     {
         name: "Salvați Copiii",
         description:
             "Organizație care apără drepturile copiilor și oferă suport educativ și medical celor defavorizați.",
         url: "https://salvaticopiiromania.ro",
-        logo: "/seedHome/salvati_copiii.png",
+        logo: "/ngos/salvati_copiii.png",
     },
     {
         name: "WWF România",
         description:
             "Organizație de conservare a naturii care protejează biodiversitatea și promovează dezvoltarea durabilă.",
         url: "https://wwf.ro",
-        logo: "/seedHome/wwf.png",
+        logo: "/ngos/wwf.png",
     },
     {
         name: "Habitat for Humanity",
         description:
             "Organizație globală care construiește case și comunități pentru familii aflate în nevoie.",
         url: "https://habitat.ro",
-        logo: "/seedHome/habitat_for_humanity.png",
+        logo: "/ngos/habitat_for_humanity.png",
     },
     {
         name: "Teach for Romania",
         description:
             "Program care aduce tineri profesioniști în comunitățile educaționale defavorizate.",
         url: "https://teachforromania.org",
-        logo: "/seedHome/teach_for_romania.png",
+        logo: "/ngos/teach_for_romania.png",
     },
     {
         name: "Asociația Ramses",
         description:
             "Organizație care strânge fonduri pentru adăposturi și asociații din întreaga țară.",
-        logo: "/seedHome/asociatia-ramses.png",
+        logo: "/ngos/asociatia-ramses.png",
         url: "https://asociatiaramses.ro/",
     },
     {
         name: "Centrul FILIA",
         description:
             "Organizație feministă care susține drepturile femeilor prin activism, advocacy și implicare în comunitate.",
-        logo: "/seedHome/centrul-filia.png",
+        logo: "/ngos/centrul-filia.png",
         url: "https://centrulfilia.ro/",
     },
     {
         name: "O Mână De Ajutor",
         description:
             "Organizație non-profit care dezvoltă proiecte sociale și comunitare pentru persoanele din București și împrejurimi.",
-        logo: "/seedHome/o-mana-de-ajutor.png",
+        logo: "/ngos/o-mana-de-ajutor.png",
         url: "https://omanadeajutor.eu/",
     },
     {
         name: "Agenția Împreună",
         description:
             "Organizație care promovează identitatea romilor și implementează politici sociale dedicate comunității lor.",
-        logo: "/seedHome/agentia_impreuna.png",
+        logo: "/ngos/agentia_impreuna.png",
         url: "https://www.agentiaimpreuna.ro/",
     },
     {
         name: "Vocea copiilor abandonați",
         description:
             "Organizație care sprijină copiii și tinerii abandonați prin educație și consiliere într-un mediu sigur.",
-        logo: "/seedHome/vocea-copiilor-abandonati.png",
+        logo: "/ngos/vocea-copiilor-abandonati.png",
         url: "https://voceacopiilor.ro/",
     },
     {
         name: "Motivation",
         description:
             "Organizație care sprijină persoanele cu dizabilități prin programe de incluziune, mobilitate și independență.",
-        logo: "/seedHome/motivation.png",
+        logo: "/ngos/motivation.png",
         url: "https://motivation.ro/",
     }
 ];

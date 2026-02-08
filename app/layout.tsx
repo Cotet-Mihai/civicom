@@ -3,6 +3,7 @@ import React from "react";
 import {Metadata} from "next";
 import {Analytics} from '@vercel/analytics/next';
 import {SpeedInsights} from "@vercel/speed-insights/next"
+import {TooltipProvider} from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
     title: "Civicom - Platformă digitală pentru voluntariat și implicare civică",
@@ -27,7 +28,8 @@ export default function RootLayout({children,}: Readonly<{children: React.ReactN
     return (
         <html lang="ro">
             <body>
-                {children}
+                <TooltipProvider>{children}</TooltipProvider>
+
 
                 {/* Vercel Analytics for tracking user interactions */}
                 <Analytics/>
