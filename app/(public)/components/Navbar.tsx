@@ -91,7 +91,6 @@ export function Navbar() {
                     <Button
                         variant="outline"
                         size="sm"
-                        className="border-primary/30 text-primary hover:bg-accent hover:text-accent-foreground bg-transparent"
                     >
                         Autentifică-te
                     </Button>

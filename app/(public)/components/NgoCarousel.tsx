@@ -108,12 +108,12 @@ export function NgoCarousel() {
                                             <CardFooter className="mt-auto flex justify-between">
                                                 <Button
                                                     variant="outline"
-                                                    className="font-semiboldtransition-all duration-200 ease-out hover:bg-red-50 hover:border-red-100 hover:text-red-500"
+                                                    className="border-foreground/10 text-foreground font-semibold transition-all duration-200 ease-out hover:bg-red-50 hover:border-red-100 hover:text-red-500"
                                                 >
                                                     Donează ❤
                                                 </Button>
                                                 <Link href={ngo.url} target={'_blank'}>
-                                                    <Button className="font-semibold" variant={'secondary'}>Află mai multe</Button>
+                                                    <Button className="font-medium" variant={'secondary'}>Află mai multe</Button>
                                                 </Link>
                                             </CardFooter>
                                         </Card>

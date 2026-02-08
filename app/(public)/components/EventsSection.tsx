@@ -5,6 +5,7 @@ import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious}
 import Autoplay from "embla-carousel-autoplay";
 import {EventCard} from "@/app/(public)/components/EventCard";
 import {useAnimateOnIntersect} from "@/app/(public)/hook/useAnimateOnIntersect";
+import {Button} from "@/components/ui/button";
 
 export function EventsSection() {
     const sectionRef = useAnimateOnIntersect();
@@ -61,7 +62,18 @@ export function EventsSection() {
                         Descoperă evenimentele organizate de ONG-uri verificate și implică-te activ în comunitate.
                     </p>
                 </div>
-
+                <div
+                    data-animate
+                    className="mb-8 flex justify-center lg:justify-end opacity-0"
+                >
+                    <Button
+                        size="lg"
+                        className="px-8 lg:mr-8"
+                        variant={"outline"}
+                    >
+                        Vezi toate evenimentele →
+                    </Button>
+                </div>
                 {/* Carousel */}
                 <Carousel
                     data-animate
