@@ -30,7 +30,7 @@ export function NgoCarousel() {
         <section
             ref={sectionRef}
             id="ong-uri"
-            className="bg-muted/50 py-20 lg:py-28 h-screen"
+            className="bg-muted/50 py-20 lg:py-28 h-screen scroll-mt-16"
         >
             <div className="mx-auto max-w-7xl px-4 lg:px-8">
                 <div className="mb-12 text-center">

@@ -182,3 +182,7 @@
 .animate-count-up {
     animation: count-up 0.5s ease-out forwards;
 }
+
+html {
+    scroll-behavior: smooth;
+}

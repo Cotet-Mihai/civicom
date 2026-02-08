@@ -10,6 +10,7 @@ export function HeroSection() {
 
     return (
         <section
+            id={'top'}
             ref={sectionRef}
             className="relative w-screen h-screen flex items-center justify-center overflow-hidden bg-background"
         >
