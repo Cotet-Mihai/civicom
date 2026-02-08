@@ -2,29 +2,10 @@
 
 import { stats } from "@/data/seedHome";
 import { useAnimateOnIntersect } from "@/app/(public)/hook/useAnimateOnIntersect";
-import { useInView } from "@/app/(public)/hook/useInView";
-import { useCountUp } from "@/app/(public)/hook/useCountUp";
-
-interface AnimatedCounterProps {
-    target: number
-    suffix: string
-    inView: boolean
-}
-
-export function AnimatedCounter({ target, suffix, inView }: AnimatedCounterProps) {
-    const count = useCountUp(target, inView);
-
-    return (
-        <span>
-            {count.toLocaleString("ro-RO")}
-            {suffix}
-        </span>
-    )
-}
+import {CountingNumber} from "@/components/animate-ui/primitives/texts/counting-number";
 
 export function StatsSection() {
-    const sectionRef = useAnimateOnIntersect(0.2, 150);
-    const inView = useInView(sectionRef, 0.2);
+    const sectionRef = useAnimateOnIntersect(0.2);
 
     return (
         <section ref={sectionRef} className="bg-primary py-16 lg:py-20">
@@ -42,15 +23,12 @@ export function StatsSection() {
                                     <IconComp className="h-6 w-6" />
                                 </div>
                                 <span className="text-3xl font-bold text-primary-foreground md:text-4xl">
-                  <AnimatedCounter
-                      target={stat.value}
-                      suffix={stat.suffix}
-                      inView={inView}
-                  />
-                </span>
+                                    <CountingNumber number={stat.value} inView={true}/>
+                                    <span>{stat.suffix}</span>
+                                </span>
                                 <span className="mt-1 text-sm font-medium text-primary-foreground/80">
-                  {stat.label}
-                </span>
+                                  {stat.label}
+                                </span>
                             </div>
                         )
                     })}

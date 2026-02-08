@@ -1,47 +1,28 @@
 'use client'
 
-import { useEffect, useRef } from "react"
+import {useRef, useEffect, RefObject} from "react";
+import { useInView } from "./useInView";
 
 /**
- * Custom React hook that automatically animates child elements when they enter the viewport.
+ * Custom React hook that animates child elements with `data-animate` when the container enters the viewport.
  *
- * Elements inside the container with the `data-animate` attribute will receive the
- * `animate-fade-in-up` class and a staggered animation delay based on their order.
+ * Uses the `useInView` hook to detect visibility.
  *
- * @param threshold - IntersectionObserver threshold to trigger animations (default: 0.1)
  * @param delayStep - Delay in milliseconds between staggered animations for each element (default: 100)
- * @returns ref - A React ref that should be attached to the container element
  */
-export function useAnimateOnIntersect(
-    threshold: number = 0.1,
-    delayStep: number = 100
-) {
-    const ref = useRef<HTMLElement>(null)
+export function useAnimateOnIntersect(delayStep: number = 100): RefObject<HTMLElement | null> {
+    const ref: RefObject<HTMLElement | null> = useRef<HTMLElement>(null);
+    const inView: boolean = useInView(ref);
 
     useEffect(() => {
-        if (!ref.current) return
+        if (!inView || !ref.current) return;
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                for (const entry of entries) {
-                    if (entry.isIntersecting) {
-                        const animatedEls = entry.target.querySelectorAll("[data-animate]")
-                        animatedEls.forEach((el, i) => {
-                            const htmlEl = el as HTMLElement
-                            htmlEl.style.animationDelay = `${i * delayStep}ms`
-                            htmlEl.classList.add("animate-fade-in-up")
-                        })
-                        observer.unobserve(entry.target)
-                    }
-                }
-            },
-            { threshold }
-        )
+        const animatedEls: NodeListOf<HTMLElement> = ref.current.querySelectorAll<HTMLElement>("[data-animate]");
+        animatedEls.forEach((el: HTMLElement, i: number): void => {
+            el.style.animationDelay = `${i * delayStep}ms`;
+            el.classList.add("animate-fade-in-up");
+        });
+    }, [inView, delayStep]);
 
-        observer.observe(ref.current)
-
-        return () => observer.disconnect()
-    }, [threshold, delayStep])
-
-    return ref
+    return ref;
 }
