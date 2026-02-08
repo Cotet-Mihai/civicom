@@ -11,6 +11,7 @@ export function EventsSection() {
 
     return (
         <section
+            id={'evenimente'}
             ref={sectionRef}
             className="bg-muted/50 py-20 lg:py-28 min-h-screen"
         >

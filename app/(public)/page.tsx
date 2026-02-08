@@ -2,10 +2,10 @@ import { Navbar } from "@/app/(public)/components/Navbar";
 import { HeroSection } from "@/app/(public)/components/HeroSection";
 import { NgoCarousel } from "@/app/(public)/components/NgoCarousel";
 import { EventsSection } from "@/app/(public)/components/EventsSection";
-import { StatsSection } from "@/app/(public)/components/StatsSection";
 import { FaqSection } from "@/app/(public)/components/FaqSection";
 import { CtaSection } from "@/app/(public)/components/CtaSection";
 import { Footer } from "@/app/(public)/components/Footer";
+import {StatsSection} from "@/app/(public)/components/StatsSection";
 
 export default function Page() {
     return (
