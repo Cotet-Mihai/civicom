@@ -1,3 +1,5 @@
+'use client'
+
 import { cn } from '@/lib/utils';
 import InputPassword from "@/components/InputPassword";
 
