@@ -11,7 +11,7 @@ import {
     FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input"
-import useSignup from "@/app/(auth)/inscriere/useSignin";
+import useSignin from "@/app/(auth)/inscriere/useSignin";
 import InputPassword from "@/components/InputPassword";
 import InputPasswordStrength from "@/components/InputPasswordWithStrength";
 import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/tooltip";
@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/dialog";
 
 export function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
-    const { states, validator, controls, strength } = useSignup();
+    const { states, validator, controls, strength } = useSignin();
     const [loading, setLoading] = useState<boolean>(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 

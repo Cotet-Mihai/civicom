@@ -4,18 +4,18 @@ import {useEffect, useState} from "react";
 import {toast} from "sonner";
 import {passwordRequirements} from "@/app/(auth)/inscriere/data";
 
-export default function useSignup() {
+export default function useSignin() {
     const [lastName, setLastName] = useState<string>("");
     const [firstName, setFirstName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-    const isFormFilled = areAllFilled(lastName, firstName, email, password, confirmPassword);
-
     function areAllFilled(...values: Array<string | undefined>): boolean {
         return values.every(value => value !== undefined && value.trim() !== '')
     }
+
+    const isFormFilled = areAllFilled(lastName, firstName, email, password, confirmPassword);
 
     function validator(): boolean {
         if (!isFormFilled) return false;
