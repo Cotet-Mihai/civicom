@@ -124,8 +124,12 @@
     @apply !bg-card !font-[inherit];
     @apply !bg-card !font-[inherit];
     @apply !bg-card !font-[inherit];
+    @apply !bg-card !font-[inherit];
+    @apply !bg-card !font-[inherit];
   }
   .leaflet-container a {
+    @apply !text-inherit;
+    @apply !text-inherit;
     @apply !text-inherit;
     @apply !text-inherit;
     @apply !text-inherit;
@@ -134,8 +138,12 @@
     @apply !bg-transparent !border-none;
     @apply !bg-transparent !border-none;
     @apply !bg-transparent !border-none;
+    @apply !bg-transparent !border-none;
+    @apply !bg-transparent !border-none;
   }
   .leaflet-popup-content-wrapper, .leaflet-popup-content, .leaflet-popup-content p {
+    @apply ![all:unset];
+    @apply ![all:unset];
     @apply ![all:unset];
     @apply ![all:unset];
     @apply ![all:unset];
@@ -144,8 +152,12 @@
     @apply !animate-none;
     @apply !animate-none;
     @apply !animate-none;
+    @apply !animate-none;
+    @apply !animate-none;
   }
   .leaflet-popup-close-button {
+    @apply ring-offset-background focus:ring-ring bg-secondary rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:outline-hidden;
+    @apply ring-offset-background focus:ring-ring bg-secondary rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:outline-hidden;
     @apply ring-offset-background focus:ring-ring bg-secondary rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:outline-hidden;
     @apply ring-offset-background focus:ring-ring bg-secondary rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:outline-hidden;
     @apply ring-offset-background focus:ring-ring bg-secondary rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:outline-hidden;
@@ -154,8 +166,12 @@
     @apply !bg-foreground !text-background !animate-none !rounded-md !border-none !p-0 !px-3 !py-1.5 !shadow-none;
     @apply !bg-foreground !text-background !animate-none !rounded-md !border-none !p-0 !px-3 !py-1.5 !shadow-none;
     @apply !bg-foreground !text-background !animate-none !rounded-md !border-none !p-0 !px-3 !py-1.5 !shadow-none;
+    @apply !bg-foreground !text-background !animate-none !rounded-md !border-none !p-0 !px-3 !py-1.5 !shadow-none;
+    @apply !bg-foreground !text-background !animate-none !rounded-md !border-none !p-0 !px-3 !py-1.5 !shadow-none;
   }
   .leaflet-draw-tooltip:before {
+    @apply bg-foreground !top-1/2 !right-0.5 size-2.5 translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[2px] !border-none;
+    @apply bg-foreground !top-1/2 !right-0.5 size-2.5 translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[2px] !border-none;
     @apply bg-foreground !top-1/2 !right-0.5 size-2.5 translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[2px] !border-none;
     @apply bg-foreground !top-1/2 !right-0.5 size-2.5 translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[2px] !border-none;
     @apply bg-foreground !top-1/2 !right-0.5 size-2.5 translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[2px] !border-none;
@@ -164,8 +180,12 @@
     @apply !bg-destructive !text-white;
     @apply !bg-destructive !text-white;
     @apply !bg-destructive !text-white;
+    @apply !bg-destructive !text-white;
+    @apply !bg-destructive !text-white;
   }
   .leaflet-error-draw-tooltip:before {
+    @apply bg-destructive;
+    @apply bg-destructive;
     @apply bg-destructive;
     @apply bg-destructive;
     @apply bg-destructive;
@@ -174,8 +194,12 @@
     @apply !text-background;
     @apply !text-background;
     @apply !text-background;
+    @apply !text-background;
+    @apply !text-background;
   }
   .leaflet-popup-tip-container, .leaflet-tooltip-top:before, .leaflet-tooltip-bottom:before, .leaflet-tooltip-left:before, .leaflet-tooltip-right:before {
+    @apply hidden;
+    @apply hidden;
     @apply hidden;
     @apply hidden;
     @apply hidden;
@@ -184,8 +208,12 @@
     @apply !bg-muted rounded-md !px-[4px] !py-[2px] text-[10px] !leading-none !text-inherit;
     @apply !bg-muted rounded-md !px-[4px] !py-[2px] text-[10px] !leading-none !text-inherit;
     @apply !bg-muted rounded-md !px-[4px] !py-[2px] text-[10px] !leading-none !text-inherit;
+    @apply !bg-muted rounded-md !px-[4px] !py-[2px] text-[10px] !leading-none !text-inherit;
+    @apply !bg-muted rounded-md !px-[4px] !py-[2px] text-[10px] !leading-none !text-inherit;
   }
   .leaflet-draw-guide-dash {
+    @apply rounded-full;
+    @apply rounded-full;
     @apply rounded-full;
     @apply rounded-full;
     @apply rounded-full;
@@ -194,8 +222,12 @@
     @apply !border-transparent !bg-transparent;
     @apply !border-transparent !bg-transparent;
     @apply !border-transparent !bg-transparent;
+    @apply !border-transparent !bg-transparent;
+    @apply !border-transparent !bg-transparent;
   }
   .marker-cluster div {
+    @apply font-[inherit];
+    @apply font-[inherit];
     @apply font-[inherit];
     @apply font-[inherit];
     @apply font-[inherit];

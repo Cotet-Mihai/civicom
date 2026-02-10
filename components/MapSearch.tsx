@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import L from "leaflet";
 import {SearchIcon} from "lucide-react";
 import {InputGroup, InputGroupAddon, InputGroupInput} from "@/components/ui/input-group";
-import {Suggestion} from "@/types/mapSearch";
+import {Suggestion} from "@/types/map";
 
 
 export function MapSearch({

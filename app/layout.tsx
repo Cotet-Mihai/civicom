@@ -40,7 +40,10 @@ export default function RootLayout({children,}: Readonly<{children: React.ReactN
         <SpeedInsights/>
 
         {/* Toast notifications for user feedback */}
-        <Toaster position="top-center" richColors/>
+        <Toaster
+            position="top-center"
+            richColors
+        />
       </body>
     </html>
   );
