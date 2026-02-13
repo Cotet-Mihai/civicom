@@ -11,7 +11,7 @@ import {
     FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input"
-import useSignin from "@/app/(auth)/inscriere/useSignin";
+import useSignin from "@/app/(auth)/inregistrare/useSignin";
 import InputPassword from "@/components/InputPassword";
 import InputPasswordStrength from "@/components/InputPasswordWithStrength";
 import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/tooltip";

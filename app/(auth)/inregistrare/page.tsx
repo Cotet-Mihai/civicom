@@ -1,4 +1,4 @@
-import {SignupForm} from "@/app/(auth)/inscriere/components/signupForm";
+import {SignupForm} from "@/app/(auth)/inregistrare/components/signupForm";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -8,7 +8,7 @@ export default function SignupPage() {
         <div className="grid min-h-svh lg:grid-cols-2">
             <div className="flex flex-col p-6 md:p-10">
                 <div className="flex justify-center md:justify-start">
-                    <Link href="/" className="flex items-center font-extrabold text-primary">
+                    <Link href="/public" className="flex items-center font-extrabold text-primary">
                         CIVICOM✨
                     </Link>
                 </div>

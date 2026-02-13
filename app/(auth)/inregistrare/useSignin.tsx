@@ -2,7 +2,7 @@
 
 import {useEffect, useState} from "react";
 import {toast} from "sonner";
-import {passwordRequirements} from "@/app/(auth)/inscriere/data";
+import {passwordRequirements} from "@/app/(auth)/inregistrare/data";
 
 export default function useSignin() {
     const [lastName, setLastName] = useState<string>("");

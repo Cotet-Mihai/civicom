@@ -12,6 +12,7 @@ import {
     SheetHeader,
     SheetFooter,
 } from "@/components/ui/sheet"
+import Link from "next/link";
 
 interface NavLink {
     label: string
@@ -94,12 +95,15 @@ export function Navbar() {
                     >
                         Autentifică-te
                     </Button>
-                    <Button
-                        size="sm"
-                        className="bg-primary text-primary-foreground hover:bg-primary/90"
-                    >
-                        Înregistrează-te
-                    </Button>
+                    <Link
+                    href={'/inregistrare'}>
+                        <Button
+                                size="sm"
+                                className="bg-primary text-primary-foreground hover:bg-primary/90"
+                        >
+                            Înregistrează-te
+                        </Button>
+                    </Link>
                 </div>
 
                 {/* Mobile menu */}
