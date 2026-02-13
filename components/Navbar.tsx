@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
 import { useState, useEffect } from "react"
-import { Menu } from "lucide-react"
+import { Menu, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
     Sheet,
@@ -12,7 +12,8 @@ import {
     SheetHeader,
     SheetFooter,
 } from "@/components/ui/sheet"
-import Link from "next/link";
+import Link from "next/link"
+import { useAuthUser } from "@/app/(public)/hook/useAuthUser" // import hook-ul tău
 
 interface NavLink {
     label: string
@@ -27,6 +28,7 @@ const navLinks: NavLink[] = [
 ]
 
 export function Navbar() {
+    const { user, loading } = useAuthUser() // folosim hook-ul
     const [scrolled, setScrolled] = useState(false)
     const [open, setOpen] = useState(false)
 
@@ -36,22 +38,12 @@ export function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
-    /**
-     * Smooth scroll to section by id
-     */
     const handleScrollTo = (id: string) => {
         const element = document.getElementById(id)
         if (!element) return
-
-        // închidem Sheet-ul pe mobil
         setOpen(false)
-
-        // delay mic ca să se termine animația Sheet-ului
         setTimeout(() => {
-            element.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-            })
+            element.scrollIntoView({ behavior: "smooth", block: "start" })
         }, 100)
     }
 
@@ -65,10 +57,7 @@ export function Navbar() {
         >
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-8">
                 {/* Logo */}
-                <button
-                    onClick={() => handleScrollTo("top")}
-                    className="flex items-center gap-2"
-                >
+                <button onClick={() => handleScrollTo("top")} className="flex items-center gap-2">
                     <span className="text-xl font-extrabold tracking-tight text-green-700">
                         CIVICOM✨
                     </span>
@@ -89,41 +78,40 @@ export function Navbar() {
 
                 {/* Actions desktop */}
                 <div className="hidden items-center gap-3 md:flex">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                    >
-                        Autentifică-te
-                    </Button>
-                    <Link
-                    href={'/inregistrare'}>
-                        <Button
-                                size="sm"
-                                className="bg-primary text-primary-foreground hover:bg-primary/90"
-                        >
-                            Înregistrează-te
-                        </Button>
-                    </Link>
+                    {!loading && user ? (
+                        <>
+                            <Link href="#">
+                                <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
+                                    Creează eveniment
+                                </Button>
+                            </Link>
+                            <Button variant="outline" size="sm" className="flex items-center gap-1">
+                                <User className="w-4 h-4" />
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            <Button variant="outline" size="sm">Autentifică-te</Button>
+                            <Link href={'/inregistrare'}>
+                                <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
+                                    Înregistrează-te
+                                </Button>
+                            </Link>
+                        </>
+                    )}
                 </div>
 
                 {/* Mobile menu */}
                 <Sheet open={open} onOpenChange={setOpen}>
                     <SheetTrigger asChild>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="md:hidden text-foreground"
-                            aria-label="Deschide meniul"
-                        >
+                        <Button variant="ghost" size="icon" className="md:hidden text-foreground" aria-label="Deschide meniul">
                             <Menu className="h-5 w-5" />
                         </Button>
                     </SheetTrigger>
 
                     <SheetContent side="right" className="w-72 bg-background">
                         <SheetHeader>
-                            <SheetTitle className="text-green-700 font-extrabold text-xl">
-                                CIVICOM✨
-                            </SheetTitle>
+                            <SheetTitle className="text-green-700 font-extrabold text-xl">CIVICOM✨</SheetTitle>
                             <SheetDescription />
                         </SheetHeader>
 
@@ -139,16 +127,34 @@ export function Navbar() {
                             ))}
                         </nav>
 
-                        <SheetFooter className="mt-6 flex flex-col gap-2">
-                            <Button
-                                variant="outline"
-                                className="w-full border-primary/30 text-primary hover:bg-accent bg-transparent"
-                            >
-                                Autentifică-te
-                            </Button>
-                            <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                                Înregistrează-te
-                            </Button>
+                        <SheetFooter className="mt-auto flex flex-row gap-2">
+                            {!loading && user ? (
+                                <>
+                                    <Button
+                                        variant="outline"
+                                        className="flex items-center gap-1"
+                                    >
+                                        <User className="w-4 h-4" />
+                                    </Button>
+                                    <Link href="#" className="flex-1">
+                                        <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                                            Creează eveniment
+                                        </Button>
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Button
+                                        variant="outline"
+                                        className="flex-1 border-primary/30 text-primary hover:bg-accent bg-transparent"
+                                    >
+                                        Autentifică-te
+                                    </Button>
+                                    <Button className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90">
+                                        Înregistrează-te
+                                    </Button>
+                                </>
+                            )}
                         </SheetFooter>
                     </SheetContent>
                 </Sheet>
