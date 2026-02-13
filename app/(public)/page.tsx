@@ -1,4 +1,4 @@
-import { Navbar } from "@/app/(public)/components/Navbar";
+import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/app/(public)/components/HeroSection";
 import { NgoCarousel } from "@/app/(public)/components/NgoCarousel";
 import { EventsSection } from "@/app/(public)/components/EventsSection";

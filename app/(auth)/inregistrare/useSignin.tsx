@@ -1,90 +1,116 @@
 'use client'
 
-import {useEffect, useState} from "react";
-import {toast} from "sonner";
-import {passwordRequirements} from "@/app/(auth)/inregistrare/data";
+import { useMemo, useState } from "react";
+import { toast } from "sonner";
+import { passwordRequirements } from "@/app/(auth)/inregistrare/data";
 
+/**
+ * useSignin
+ *
+ * Custom hook responsible for:
+ * - managing form field state
+ * - computing password strength
+ * - handling validation logic
+ *
+ * Keeps the SignupForm component clean and focused on UI.
+ */
 export default function useSignin() {
+
+    /** -------------------------
+     *  Form Field State
+     *  -------------------------
+     *  Controlled inputs for the signup form
+     */
     const [lastName, setLastName] = useState<string>("");
     const [firstName, setFirstName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-    function areAllFilled(...values: Array<string | undefined>): boolean {
-        return values.every(value => value !== undefined && value.trim() !== '')
-    }
+    /**
+     * Checks if all required fields contain non-empty trimmed values.
+     * Used to disable submit button until form is complete.
+     */
+    const isFormFilled =
+        [lastName, firstName, email, password, confirmPassword]
+            .every(value => value.trim() !== '');
 
-    const isFormFilled = areAllFilled(lastName, firstName, email, password, confirmPassword);
+    /**
+     * Password strength calculation.
+     *
+     * Memoized to only recompute when the password changes.
+     * Prevents unnecessary recalculations on other state updates.
+     */
+    const { strength, strengthScore } = useMemo(() => {
 
+        // Map requirements into UI-friendly structure
+        const strength = passwordRequirements.map(req => ({
+            met: req.regex.test(password),
+            text: req.text
+        }));
+
+        // Count how many requirements are satisfied
+        const strengthScore = strength.filter(s => s.met).length;
+
+        return { strength, strengthScore };
+
+    }, [password]);
+
+    /**
+     * Validates form data before submission.
+     * Shows toast messages for validation failures.
+     *
+     * @returns boolean indicating if form is valid
+     */
     function validator(): boolean {
+
+        // Basic completeness check
         if (!isFormFilled) return false;
 
-        if (password.length < 7) {
-            toast.error('Parola ta trebuie să conțină cel puțin 8 caractere.')
-            return false
+        // Minimum length validation
+        if (password.length < 8) {
+            toast.error('Parola ta trebuie să conțină cel puțin 8 caractere.');
+            return false;
         }
 
+        // Password strength validation
         if (strengthScore < 3) {
-            toast.error('Parola e prea slabă.')
-            return false
+            toast.error('Parola e prea slabă.');
+            return false;
         }
 
+        // Confirm password match validation
         if (password !== confirmPassword) {
-            toast.error('Parolele nu coincid.')
-            return false
+            toast.error('Parolele nu coincid.');
+            return false;
         }
 
-        return true
+        return true;
     }
 
-    const strength = passwordRequirements.map(req => ({
-        met: req.regex.test(password),
-        text: req.text
-    }));
-
-    const strengthScore = passwordRequirements.filter(req => req.regex.test(password)).length;
-
-
-    useEffect(() => {
-        console.log("Signup state updated:", {
-            lastName,
-            firstName,
-            password,
-            confirmPassword,
-        })
-    }, [lastName, firstName, email, password, confirmPassword])
-
+    /**
+     * Exposed API of the hook.
+     *
+     * - states → grouped field state setters/values
+     * - validator → form validation function
+     * - controls → derived UI helpers
+     * - strength → password strength info for UI rendering
+     */
     return {
-        states:{
-            lastName: {
-                value: lastName,
-                set: setLastName,
-            },
-            firstName: {
-                value: firstName,
-                set: setFirstName,
-            },
-            email: {
-                value: email,
-                set: setEmail,
-            },
-            password: {
-                value: password,
-                set: setPassword,
-            },
-            confirmPassword: {
-                value: confirmPassword,
-                set: setConfirmPassword,
-            },
+        states: {
+            lastName: { value: lastName, set: setLastName },
+            firstName: { value: firstName, set: setFirstName },
+            email: { value: email, set: setEmail },
+            password: { value: password, set: setPassword },
+            confirmPassword: { value: confirmPassword, set: setConfirmPassword },
         },
-        validator: validator,
+        validator,
         controls: {
-            isFormFilled: isFormFilled
+            isFormFilled
         },
         strength: {
-            strength: strength,
-            strengthScore: strengthScore
+            strength,
+            strengthScore
         }
     }
 }
