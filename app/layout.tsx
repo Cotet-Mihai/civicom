@@ -1,16 +1,16 @@
 import "./globals.css";
-import {montserrat} from "@/lib/fonts";
 import React from "react";
 import {Metadata} from "next";
 import {Analytics} from '@vercel/analytics/next';
 import {SpeedInsights} from "@vercel/speed-insights/next"
-import {Toaster} from "sonner";
+import {TooltipProvider} from "@/components/ui/tooltip";
+import {Toaster} from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
     title: "Civicom - Platformă digitală pentru voluntariat și implicare civică",
     description: "Civicom conectează voluntari, ONG-uri și instituții publice într-o platformă modernă pentru evenimente, donații, petiții și implicare civică. Descoperă, înscrie-te și susține cauze sociale cu ușurință.",
     keywords: [
-        "CiviCom",
+        "civicom",
         "voluntariat",
         "implicare civică",
         "ONG",
@@ -26,22 +26,19 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children,}: Readonly<{children: React.ReactNode;}>) {
-  return (
-    <html lang="ro">
-      <body
-        className={`${montserrat.className} antialiased`}
-      >
-        {children}
+    return (
+        <html lang="ro">
+            <body>
+                <TooltipProvider>{children}</TooltipProvider>
 
-        {/* Vercel Analytics for tracking user interactions */}
-        <Analytics/>
+                <Toaster position={'top-center'}/>
 
-        {/* Vercel Speed Insights for performance monitoring */}
-        <SpeedInsights/>
+                {/* Vercel Analytics for tracking user interactions */}
+                <Analytics/>
 
-        {/* Toast notifications for user feedback */}
-        <Toaster position="top-center" richColors/>
-      </body>
-    </html>
-  );
+                {/* Vercel Speed Insights for performance monitoring */}
+                <SpeedInsights/>
+            </body>
+        </html>
+    );
 }

@@ -4,32 +4,21 @@ import React, {JSX, useState} from "react"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
 import { Eye, EyeOff } from "lucide-react"
 
-/**
- * Props for PasswordInput component
- */
+
 type InputPasswordProps = {
-    /** Name attribute for the input field */
     name?: string
-    /** Placeholder text for the input */
     placeholder?: string
-    /** Controlled value for the input */
-    value?: string
-    /** Change handler for controlled input */
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    value: string
+    onChangeAction: (value: string) => void
     tabIndex?: number
 }
 
-/**
- * PasswordInput component provides a password field with a toggle to show/hide the password.
- *
- * @param {InputPasswordProps} props - Props to configure the input field
- * @returns JSX.Element - Rendered password input with visibility toggle
- */
+
 export default function InputPassword({
                                           name = "password",
                                           placeholder = "Introduceți parola",
                                           value,
-                                          onChange,
+                                          onChangeAction,
                                           tabIndex = 0,
                                       }: InputPasswordProps): JSX.Element {
     // State to control visibility of the password
@@ -42,9 +31,9 @@ export default function InputPassword({
                 type={visible ? "text" : "password"}
                 name={name}
                 placeholder={placeholder}
-                {...(value !== undefined ? { value, onChange } : {})}
+                value={value ?? ''}
+                onChange={(e) => onChangeAction(e.target.value)}
                 tabIndex={tabIndex}
-                required
             />
 
             {/* Toggle button to show/hide password */}
