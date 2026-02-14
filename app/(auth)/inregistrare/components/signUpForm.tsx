@@ -1,6 +1,6 @@
-'use client'
+import React from "react";
+import Link from "next/link";
 
-import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,12 +11,10 @@ import {
     FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input"
-import useSignUp from "@/app/(auth)/inregistrare/useSignUp";
 import InputPassword from "@/components/InputPassword";
 import InputPasswordStrength from "@/components/InputPasswordWithStrength";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { CheckIcon, HelpCircle, XIcon } from "lucide-react";
-import { signUpUser } from "@/services/auth/signUpService";
 import { Spinner } from "@/components/ui/spinner";
 import {
     Dialog, DialogClose,
@@ -25,7 +23,8 @@ import {
     DialogHeader,
     DialogTitle
 } from "@/components/ui/dialog";
-import Link from "next/link";
+
+import useSignUp from "@/app/(auth)/inregistrare/useSignUp";
 
 /**
  * SignupForm
@@ -43,47 +42,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<"form">
      * - validation logic
      * - password strength logic
      */
-    const { states, validator, controls, strength } = useSignUp();
-
-    /** Controls submit loading state */
-    const [loading, setLoading] = useState<boolean>(false);
-
-    /** Controls success dialog visibility */
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-    /**
-     * Handles form submission.
-     * - prevents default submit behavior
-     * - runs validation
-     * - calls signup service
-     * - displays success dialog on success
-     */
-    async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-        e.preventDefault();
-
-        const isValid = validator();
-        if (!isValid) return;
-
-        setLoading(true);
-
-        try {
-            await signUpUser(
-                states.email.value,
-                states.password.value,
-                states.firstName.value,
-                states.lastName.value,
-            );
-
-            // Open confirmation dialog after successful signup
-            setIsDialogOpen(true);
-
-        } catch (err) {
-            // Ideally this could be replaced with a toast
-            console.error("Signup error:", err);
-        } finally {
-            setLoading(false);
-        }
-    }
+    const { states, handleSubmit, controls, strength } = useSignUp();
 
     return (
         <form
@@ -92,7 +51,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<"form">
             {...props}
         >
             {/* Success Dialog shown after account creation */}
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <Dialog open={states.dialog.value} onOpenChange={states.dialog.set}>
                 <DialogContent showCloseButton={false}>
                     <DialogHeader>
                         <DialogTitle>Cont creat cu succes!</DialogTitle>
@@ -210,12 +169,12 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<"form">
                 <Field>
                     <Button
                         type="submit"
-                        disabled={!controls.isFormFilled || loading}
+                        disabled={!controls.isFormFilled || states.loading.value}
                         className="flex items-center justify-center gap-2"
                     >
-                        {loading && <Spinner />}
+                        {states.loading.value && <Spinner />}
 
-                        {loading
+                        {states.loading.value
                             ? "Se înregistrează..."
                             : !controls.isFormFilled
                                 ? 'Completează toate câmpurile'

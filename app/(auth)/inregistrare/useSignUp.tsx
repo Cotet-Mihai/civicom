@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { passwordRequirements } from "@/app/(auth)/inregistrare/data";
+import {signUpUser} from "@/services/auth/signUpService";
 
 /**
  * useSignin
@@ -26,6 +27,46 @@ export default function useSignUp() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+    /** Controls submit loading state */
+    const [loading, setLoading] = useState<boolean>(false);
+
+    /** Controls success dialog visibility */
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    /**
+     * Handles form submission.
+     * - prevents default submit behavior
+     * - runs validation
+     * - calls signup service
+     * - displays success dialog on success
+     */
+    async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        const isValid = validator();
+        if (!isValid) return;
+
+        setLoading(true);
+
+        try {
+            await signUpUser(
+                email,
+                password,
+                firstName,
+                lastName,
+            );
+
+            // Open confirmation dialog after successful signup
+            setIsDialogOpen(true);
+
+        } catch (err) {
+            // Ideally this could be replaced with a toast
+            console.error("Signup error:", err);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     /**
      * Checks if all required fields contain non-empty trimmed values.
@@ -103,8 +144,10 @@ export default function useSignUp() {
             email: { value: email, set: setEmail },
             password: { value: password, set: setPassword },
             confirmPassword: { value: confirmPassword, set: setConfirmPassword },
+            loading: { value: loading, set: setLoading},
+            dialog: { value: isDialogOpen, set: setIsDialogOpen}
         },
-        validator,
+        handleSubmit,
         controls: {
             isFormFilled
         },
