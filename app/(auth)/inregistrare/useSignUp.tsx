@@ -1,12 +1,12 @@
 'use client'
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, SubmitEvent } from "react";
 import { toast } from "sonner";
 import { passwordRequirements } from "@/app/(auth)/inregistrare/data";
-import {signUpUser} from "@/services/auth/signUpService";
+import { signUpAction } from "@/services/auth/signUpAction";
 
 /**
- * useSignin
+ * useSignUp
  *
  * Custom hook responsible for:
  * - managing form field state
@@ -41,7 +41,7 @@ export default function useSignUp() {
      * - calls signup service
      * - displays success dialog on success
      */
-    async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
 
         const isValid = validator();
@@ -50,18 +50,13 @@ export default function useSignUp() {
         setLoading(true);
 
         try {
-            await signUpUser(
-                email,
-                password,
-                firstName,
-                lastName,
-            );
+            await signUpAction(email, password, firstName, lastName);
 
             // Open confirmation dialog after successful signup
             setIsDialogOpen(true);
 
         } catch (err) {
-            // Ideally this could be replaced with a toast
+            // Display or log signup errors
             console.error("Signup error:", err);
         } finally {
             setLoading(false);
@@ -72,9 +67,8 @@ export default function useSignUp() {
      * Checks if all required fields contain non-empty trimmed values.
      * Used to disable submit button until form is complete.
      */
-    const isFormFilled =
-        [lastName, firstName, email, password, confirmPassword]
-            .every(value => value.trim() !== '');
+    const isFormFilled = [lastName, firstName, email, password, confirmPassword]
+        .every(value => value.trim() !== '');
 
     /**
      * Password strength calculation.
@@ -83,7 +77,6 @@ export default function useSignUp() {
      * Prevents unnecessary recalculations on other state updates.
      */
     const { strength, strengthScore } = useMemo(() => {
-
         // Map requirements into UI-friendly structure
         const strength = passwordRequirements.map(req => ({
             met: req.regex.test(password),
@@ -94,7 +87,6 @@ export default function useSignUp() {
         const strengthScore = strength.filter(s => s.met).length;
 
         return { strength, strengthScore };
-
     }, [password]);
 
     /**
@@ -104,8 +96,7 @@ export default function useSignUp() {
      * @returns boolean indicating if form is valid
      */
     function validator(): boolean {
-
-        // Basic completeness check
+        // Check if all fields are filled
         if (!isFormFilled) return false;
 
         // Minimum length validation
@@ -133,8 +124,8 @@ export default function useSignUp() {
      * Exposed API of the hook.
      *
      * - states → grouped field state setters/values
-     * - validator → form validation function
-     * - controls → derived UI helpers
+     * - handleSubmit → submit function for form
+     * - controls → derived UI helpers (like isFormFilled)
      * - strength → password strength info for UI rendering
      */
     return {
@@ -144,8 +135,8 @@ export default function useSignUp() {
             email: { value: email, set: setEmail },
             password: { value: password, set: setPassword },
             confirmPassword: { value: confirmPassword, set: setConfirmPassword },
-            loading: { value: loading, set: setLoading},
-            dialog: { value: isDialogOpen, set: setIsDialogOpen}
+            loading: { value: loading, set: setLoading },
+            dialog: { value: isDialogOpen, set: setIsDialogOpen }
         },
         handleSubmit,
         controls: {

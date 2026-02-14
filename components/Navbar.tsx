@@ -24,7 +24,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import {Separator} from "@/components/ui/separator";
-import {signOutUser} from "@/services/auth/signOutService";
+import {signOutAction} from "@/services/auth/signOutAction";
 
 interface NavLink {
     label: string
@@ -62,7 +62,7 @@ export function Navbar() {
 
     const handleLogout = async (): Promise<void> => {
         try {
-            await signOutUser();
+            await signOutAction();
 
             setOpen(false); // close sheet if its on mobile
         } catch (error) {

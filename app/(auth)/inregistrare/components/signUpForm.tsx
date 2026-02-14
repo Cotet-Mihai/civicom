@@ -32,24 +32,25 @@ import useSignUp from "@/app/(auth)/inregistrare/useSignUp";
  * SignupForm
  *
  * Client component responsible for:
- * - managing UI state (loading, dialog visibility)
+ * - rendering the signup form UI
  * - handling form submission
- * - delegating field state & validation to useSignin hook
+ * - delegating field state & validation to useSignUp hook
+ * - showing a success dialog after signup
  */
 export function SignUpForm({ className, ...props }: React.ComponentProps<"form">) {
 
     /**
-     * Custom hook that encapsulates:
+     * Custom hook encapsulating:
      * - field state management
      * - validation logic
-     * - password strength logic
+     * - password strength calculation
      */
     const { states, handleSubmit, controls, strength } = useSignUp();
 
     return (
         <form
             className={cn("flex flex-col", className)}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit} // Calls hook’s submit handler
             {...props}
         >
             {/* Success Dialog shown after account creation */}
@@ -70,6 +71,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<"form">
                 </DialogContent>
             </Dialog>
 
+            {/* Group all fields */}
             <FieldGroup className="gap-4">
 
                 {/* Header Section */}
@@ -175,7 +177,6 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<"form">
                         className="flex items-center justify-center gap-2"
                     >
                         {states.loading.value && <Spinner />}
-
                         {states.loading.value
                             ? "Se înregistrează..."
                             : !controls.isFormFilled
