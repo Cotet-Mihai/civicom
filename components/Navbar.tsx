@@ -24,6 +24,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import {Separator} from "@/components/ui/separator";
+import {signOutUser} from "@/services/auth/signoutService";
 
 interface NavLink {
     label: string
@@ -57,6 +58,16 @@ export function Navbar() {
         setTimeout(() => {
             element.scrollIntoView({ behavior: "smooth", block: "start" })
         }, 100)
+    }
+
+    const handleLogout = async (): Promise<void> => {
+        try {
+            await signOutUser();
+
+            setOpen(false); // close sheet if its on mobile
+        } catch (error) {
+            console.error('Logout failed:', error)
+        }
     }
 
     return (
@@ -145,7 +156,11 @@ export function Navbar() {
                             <SheetFooter className="mt-auto flex flex-col gap-2 pt-6">
                                 {!loading && user ? (
                                     <Link href="#">
-                                        <Button variant={'destructive'} className={'w-full'}>
+                                        <Button
+                                            variant={'destructive'}
+                                            className={'w-full'}
+                                            onClick={handleLogout}
+                                        >
                                             <LogOutIcon className="w-4 h-4" />
                                             Deconectare
                                         </Button>
@@ -227,7 +242,10 @@ export function Navbar() {
 
                                     <DropdownMenuGroup>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem variant="destructive">
+                                        <DropdownMenuItem
+                                            variant="destructive"
+                                            onClick={handleLogout}
+                                        >
                                             <LogOutIcon />
                                             Deconectare
                                         </DropdownMenuItem>
