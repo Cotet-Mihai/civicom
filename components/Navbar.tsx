@@ -24,7 +24,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import {Separator} from "@/components/ui/separator";
-import {signOutUser} from "@/services/auth/signoutService";
+import {signOutUser} from "@/services/auth/signOutService";
 
 interface NavLink {
     label: string
@@ -255,9 +255,11 @@ export function Navbar() {
                         </>
                     ) : (
                         <>
-                            <Button variant="outline" size="sm">
-                                Autentifică-te
-                            </Button>
+                            <Link href={'/autentificare'}>
+                                <Button variant="outline" size="sm">
+                                    Autentifică-te
+                                </Button>
+                            </Link>
                             <Link href="/inregistrare">
                                 <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
                                     Înregistrează-te

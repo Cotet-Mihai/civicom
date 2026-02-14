@@ -11,12 +11,12 @@ import {
     FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input"
-import useSignin from "@/app/(auth)/inregistrare/useSignin";
+import useSignUp from "@/app/(auth)/inregistrare/useSignUp";
 import InputPassword from "@/components/InputPassword";
 import InputPasswordStrength from "@/components/InputPasswordWithStrength";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { CheckIcon, HelpCircle, XIcon } from "lucide-react";
-import { signUpUser } from "@/services/auth/signupService";
+import { signUpUser } from "@/services/auth/signUpService";
 import { Spinner } from "@/components/ui/spinner";
 import {
     Dialog, DialogClose,
@@ -25,6 +25,7 @@ import {
     DialogHeader,
     DialogTitle
 } from "@/components/ui/dialog";
+import Link from "next/link";
 
 /**
  * SignupForm
@@ -34,7 +35,7 @@ import {
  * - handling form submission
  * - delegating field state & validation to useSignin hook
  */
-export function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
+export function SignUpForm({ className, ...props }: React.ComponentProps<"form">) {
 
     /**
      * Custom hook that encapsulates:
@@ -42,7 +43,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"form">
      * - validation logic
      * - password strength logic
      */
-    const { states, validator, controls, strength } = useSignin();
+    const { states, validator, controls, strength } = useSignUp();
 
     /** Controls submit loading state */
     const [loading, setLoading] = useState<boolean>(false);
@@ -243,7 +244,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"form">
 
                 {/* Redirect to log in */}
                 <FieldDescription className="text-center">
-                    Ai deja un cont? <a href="#">Autentifică-te</a>
+                    Ai deja un cont? <Link href="/autentificare">Autentifică-te</Link>
                 </FieldDescription>
 
             </FieldGroup>

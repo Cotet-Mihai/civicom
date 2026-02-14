@@ -14,7 +14,7 @@ import { passwordRequirements } from "@/app/(auth)/inregistrare/data";
  *
  * Keeps the SignupForm component clean and focused on UI.
  */
-export default function useSignin() {
+export default function useSignUp() {
 
     /** -------------------------
      *  Form Field State

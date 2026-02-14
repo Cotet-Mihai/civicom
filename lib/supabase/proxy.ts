@@ -41,7 +41,7 @@ export async function updateSession(request: NextRequest) {
 
     const isPublic =
         pathname === '/' ||
-        pathname.startsWith('/conectare') ||
+        pathname.startsWith('/autentificare') ||
         pathname.startsWith('/inregistrare') ||
         pathname.startsWith('/eroare') ||
         pathname.startsWith('/api/confirm-sign-up') ||
