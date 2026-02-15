@@ -24,7 +24,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
-import { signOutAction } from "@/actions/auth/signOutAction"
+import { signOutAction } from "@/services/auth/signOutAction"
 import { useAnimateOnIntersect } from "@/app/(public)/hook/useAnimateOnIntersect"
 
 interface NavLink {
