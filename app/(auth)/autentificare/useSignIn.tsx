@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { signInAction } from "@/services/auth/signInAction";
+import { signInAction } from "@/actions/auth/signInAction";
 import { toast } from "sonner";
 
 /**

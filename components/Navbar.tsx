@@ -13,7 +13,7 @@ import {
     SheetFooter,
 } from "@/components/ui/sheet"
 import Link from "next/link"
-import { useAuthUser } from "@/app/(public)/hook/useAuthUser"
+import { useAuthUser } from "@/hooks/useAuthUser"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -23,8 +23,9 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
-import {Separator} from "@/components/ui/separator";
-import {signOutAction} from "@/services/auth/signOutAction";
+import { Separator } from "@/components/ui/separator"
+import { signOutAction } from "@/actions/auth/signOutAction"
+import { useAnimateOnIntersect } from "@/app/(public)/hook/useAnimateOnIntersect"
 
 interface NavLink {
     label: string
@@ -39,9 +40,12 @@ const navLinks: NavLink[] = [
 ]
 
 export function Navbar() {
-    const { user, loading } = useAuthUser()
+    const {user, setUser} = useAuthUser()
+
     const [scrolled, setScrolled] = useState<boolean>(false)
     const [open, setOpen] = useState<boolean>(false)
+
+    const sectionRef = useAnimateOnIntersect()
 
     useEffect(() => {
         const handleScroll = (): void => setScrolled(window.scrollY > 20)
@@ -62,27 +66,31 @@ export function Navbar() {
 
     const handleLogout = async (): Promise<void> => {
         try {
-            await signOutAction();
-
-            setOpen(false); // close sheet if its on mobile
+            await signOutAction()
+            setOpen(false)
+            setUser(null)
         } catch (error) {
-            console.error('Logout failed:', error)
+            console.error("Logout failed:", error)
         }
     }
 
     return (
         <header
+            ref={sectionRef}
             className={`fixed top-0 z-50 w-full transition-all duration-300 ${
                 scrolled
                     ? "bg-background/70 backdrop-blur-md shadow-sm border-b border-border"
                     : "bg-transparent"
             }`}
         >
-            <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-8">
-
-                {/* LEFT SIDE: Mobile trigger + Logo */}
+            <div
+                data-animate
+                className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-8 opacity-0"
+            >
+                {/* ================= LEFT SIDE ================= */}
                 <div className="flex items-center gap-2">
 
+                    {/* Mobile Sheet */}
                     <Sheet open={open} onOpenChange={setOpen}>
                         <SheetTrigger asChild>
                             <Button
@@ -95,21 +103,21 @@ export function Navbar() {
                             </Button>
                         </SheetTrigger>
 
-                        <SheetContent side="right" className="w-72 bg-background flex flex-col justify-start">
-
+                        <SheetContent
+                            side="right"
+                            className="w-72 bg-background flex flex-col justify-start"
+                        >
                             <SheetHeader>
                                 <SheetTitle className="text-green-700 font-extrabold text-xl">
                                     CIVICOM✨
                                 </SheetTitle>
-
                                 <SheetDescription>
                                     Tot ce ai nevoie, într-un singur loc.
                                 </SheetDescription>
                             </SheetHeader>
 
-                            {/* ================= NAVIGATION SECTION ================= */}
+                            {/* NAVIGATION */}
                             <div>
-
                                 <p className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                                     Navigare
                                 </p>
@@ -119,7 +127,7 @@ export function Navbar() {
                                         <Button
                                             key={link.id}
                                             onClick={() => handleScrollTo(link.id)}
-                                            className={'flex justify-start text-black text-md gap-3 bg-transparent hover:bg-accent'}
+                                            className="flex justify-start text-black text-md gap-3 bg-transparent hover:bg-accent"
                                         >
                                             {link.label}
                                         </Button>
@@ -127,52 +135,49 @@ export function Navbar() {
                                 </nav>
                             </div>
 
-                            {/* ================= ACCOUNT SECTION ================= */}
-                            {!loading && user && (
+                            {/* ACCOUNT SECTION */}
+                            {user && (
                                 <>
-                                    <Separator/>
+                                    <Separator />
                                     <span className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                                         Contul meu
                                     </span>
 
                                     <div className="flex flex-col gap-1">
-                                        <Button className={'flex justify-start text-black text-md gap-3 bg-transparent hover:bg-accent'}>
+                                        <Button className="flex justify-start text-black text-md gap-3 bg-transparent hover:bg-accent">
                                             <UserIcon />
                                             Profil
                                         </Button>
 
-                                        <Button className={'flex justify-start items-center text-black text-md gap-3 bg-transparent hover:bg-accent'}>
+                                        <Button className="flex justify-start items-center text-black text-md gap-3 bg-transparent hover:bg-accent">
                                             <SettingsIcon />
                                             Setări
                                         </Button>
-
-
                                     </div>
                                 </>
-
                             )}
 
-                            {/* ================= FOOTER ACTIONS ================= */}
+                            {/* FOOTER ACTIONS */}
                             <SheetFooter className="mt-auto flex flex-col gap-2 pt-6">
-                                {!loading && user ? (
-                                    <Link href="#">
-                                        <Button
-                                            variant={'destructive'}
-                                            className={'w-full'}
-                                            onClick={handleLogout}
-                                        >
-                                            <LogOutIcon className="w-4 h-4" />
-                                            Deconectare
-                                        </Button>
-                                    </Link>
+                                {user ? (
+                                    <Button
+                                        variant="destructive"
+                                        className="w-full"
+                                        onClick={handleLogout}
+                                    >
+                                        <LogOutIcon className="w-4 h-4" />
+                                        Deconectare
+                                    </Button>
                                 ) : (
                                     <>
-                                        <Button
-                                            variant="outline"
-                                            className="w-full border-primary/30 text-primary hover:bg-accent bg-transparent"
-                                        >
-                                            Autentifică-te
-                                        </Button>
+                                        <Link href="/autentificare">
+                                            <Button
+                                                variant="outline"
+                                                className="w-full border-primary/30 text-primary hover:bg-accent bg-transparent"
+                                            >
+                                                Autentifică-te
+                                            </Button>
+                                        </Link>
 
                                         <Link href="/inregistrare">
                                             <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
@@ -182,7 +187,6 @@ export function Navbar() {
                                     </>
                                 )}
                             </SheetFooter>
-
                         </SheetContent>
                     </Sheet>
 
@@ -197,7 +201,7 @@ export function Navbar() {
                     </button>
                 </div>
 
-                {/* Desktop nav */}
+                {/* ================= DESKTOP NAV ================= */}
                 <nav className="hidden items-center gap-1 md:flex">
                     {navLinks.map((link) => (
                         <button
@@ -210,9 +214,9 @@ export function Navbar() {
                     ))}
                 </nav>
 
-                {/* Desktop actions */}
+                {/* ================= DESKTOP ACTIONS ================= */}
                 <div className="hidden items-center gap-3 md:flex">
-                    {!loading && user ? (
+                    {user ? (
                         <>
                             <Link href="#">
                                 <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
@@ -236,7 +240,7 @@ export function Navbar() {
                                         </DropdownMenuItem>
                                         <DropdownMenuItem>
                                             <SettingsIcon />
-                                            Setari
+                                            Setări
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
 
@@ -255,11 +259,12 @@ export function Navbar() {
                         </>
                     ) : (
                         <>
-                            <Link href={'/autentificare'}>
+                            <Link href="/autentificare">
                                 <Button variant="outline" size="sm">
                                     Autentifică-te
                                 </Button>
                             </Link>
+
                             <Link href="/inregistrare">
                                 <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
                                     Înregistrează-te

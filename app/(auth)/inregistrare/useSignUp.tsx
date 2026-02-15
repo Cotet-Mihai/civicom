@@ -3,7 +3,7 @@
 import { useMemo, useState, SubmitEvent } from "react";
 import { toast } from "sonner";
 import { passwordRequirements } from "@/app/(auth)/inregistrare/data";
-import { signUpAction } from "@/services/auth/signUpAction";
+import { signUpAction } from "@/actions/auth/signUpAction";
 
 /**
  * useSignUp

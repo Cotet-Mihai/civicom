@@ -1,4 +1,6 @@
-import { createClient } from "@/lib/supabase/client"
+'use server'
+
+import { createClient } from "@/lib/supabase/server"
 
 /**
  * signOutAction
@@ -14,13 +16,11 @@ import { createClient } from "@/lib/supabase/client"
  */
 export async function signOutAction(): Promise<void> {
     // Create a Supabase client (browser/client-side)
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Attempt to sign out the user
     const { error } = await supabase.auth.signOut()
 
     // Throw an error if sign out fails
-    if (error) {
-        throw new Error(error.message)
-    }
+    if (error) {throw new Error(error.message)}
 }
