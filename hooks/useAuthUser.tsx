@@ -13,7 +13,7 @@ export function useAuthUser(): UseAuthUserReturn {
     const [user, setUser] = useState<User | null>(null)
 
     useEffect(() => {
-        isAuthUser(setUser);
+        return isAuthUser(setUser);
     }, [])
 
     return {
