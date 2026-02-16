@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useState } from "react";
+import React, {Dispatch, SetStateAction, useState} from "react";
 import { useRouter } from "next/navigation";
 
 import { signInAction } from "@/services/auth/signInAction";
 import { toast } from "sonner";
+import {resetPasswordAction} from "@/services/auth/passwordActions";
 
 /**
  * useSignIn
@@ -28,9 +29,14 @@ export default function useSignIn() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
+    const [emailResetPassword, setEmailResetPassword] = useState<string>("");
+
 
     // Shows spinner or disables button during submission
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loadingSubmitSignIn, setLoadingSubmitSignIn] = useState<boolean>(false);
+    const [loadingResetPassword, setLoadingResetPassword] = useState<boolean>(false);
+
+    const [openReset, setOpenReset] = useState<boolean>(false);
 
     // Checks if all required fields are filled
     const isFormFilled = [email, password].every(value => value.trim() !== '');
@@ -57,7 +63,7 @@ export default function useSignIn() {
         const isValid = validator();
         if (!isValid) return;
 
-        setLoading(true);
+        setLoadingSubmitSignIn(true);
 
         try {
             // Call server action for sign-in
@@ -75,11 +81,43 @@ export default function useSignIn() {
                 toast.error(`A apărut o eroare la autentificare`);
             }
 
-            console.error("Sign in error:", err);
+            console.error("Eroare Autentificare:", err);
 
             // Reset loading state on error
-            setLoading(false);
+            setLoadingSubmitSignIn(false);
         }
+    }
+
+    type HandleForgetPasswordProps = {
+        e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLInputElement>,
+        setOpen: Dispatch<SetStateAction<boolean>>
+    }
+
+
+    async function handleForgetPassword({e, setOpen}: HandleForgetPasswordProps ) {
+        e.preventDefault();
+        setLoadingResetPassword(true);
+
+        toast.promise(
+            resetPasswordAction(emailResetPassword),
+            {
+                loading: "Se trimite solicitarea...",
+                success: () => {
+                    setLoadingResetPassword(false);
+                    setOpen(false);
+                    setEmailResetPassword('');
+                    return "Email-ul de resetare a fost trimis cu succes!"
+                },
+                error: (err) => {
+                    setLoadingResetPassword(false)
+                    if (err instanceof Error && err.message.includes('invalid format') || err.message.includes('Password recovery requires an email')) {
+                        return 'Adaugă o adresă de e-mail validă.'
+                    }
+                    console.log(err);
+                    return 'A apărut o eroare la trimiterea e-mail-ului.'
+                }
+            }
+        );
     }
 
     /** -------------------------
@@ -93,9 +131,13 @@ export default function useSignIn() {
         states: {
             email: { value: email, set: setEmail },
             password: { value: password, set: setPassword },
-            loading: { value: loading, set: setLoading }
+            loadingSubmitSignIn: { value: loadingSubmitSignIn, set: setLoadingSubmitSignIn },
+            emailResetPassword: { value: emailResetPassword, set: setEmailResetPassword },
+            loadingResetPassword: { value: loadingResetPassword, set: setEmailResetPassword},
+            openReset: { value: openReset, set: setOpenReset}
         },
         handleSubmit,
+        handleForgetPassword,
         controls: { isFormFilled }
     }
 }

@@ -15,6 +15,16 @@ import { Input } from "@/components/ui/input"
 import InputPassword from "@/components/InputPassword";
 import useSignIn from "@/app/(auth)/autentificare/useSignIn";
 import {Spinner} from "@/components/ui/spinner";
+import {
+    Dialog, DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/components/ui/dialog";
+import {Label} from "@/components/ui/label";
 
 /**
  * SignInForm
@@ -29,7 +39,7 @@ import {Spinner} from "@/components/ui/spinner";
 export function SignInForm({ className, ...props }: React.ComponentProps<"form">) {
 
     // Hook that manages state, validation, and submit
-    const { states, handleSubmit, controls } = useSignIn();
+    const { states, handleSubmit, handleForgetPassword, controls } = useSignIn();
 
     return (
         <form
@@ -62,13 +72,59 @@ export function SignInForm({ className, ...props }: React.ComponentProps<"form">
                 <Field>
                     <div className="flex items-center">
                         <FieldLabel htmlFor="password">Parolă</FieldLabel>
-                        <Link
-                            href="#"
-                            className="ml-auto text-sm underline-offset-4 hover:underline"
-                            tabIndex={6}
-                        >
-                            Ai uitat parola?
-                        </Link>
+                        <Dialog open={states.openReset.value} onOpenChange={states.openReset.set}>
+                            <DialogTrigger asChild>
+                                <Button
+                                    variant={"link"}
+                                    className="ml-auto text-secondary-foreground p-0"
+                                    tabIndex={6}
+                                >
+                                    Ai uitat parola?
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-sm">
+                                <DialogHeader>
+                                    <DialogTitle>Ai uitat parola ?</DialogTitle>
+                                    <DialogDescription>
+                                        Introdu adresa ta de e-mail mai jos și îți vom trimite un link de resetare a parolei.
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <FieldGroup>
+                                    <Field>
+                                        <Label htmlFor={'email'}>E-mail</Label>
+                                        <Input
+                                            name={'email'}
+                                            type={"email"}
+                                            placeholder={'nume@exemplu.ro'}
+                                            value={states.emailResetPassword.value ?? ''}
+                                            onChange={(e) => states.emailResetPassword.set(e.target.value)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter') {
+                                                    e.preventDefault();
+                                                    if (!states.loadingResetPassword.value && states.emailResetPassword.value) {
+                                                        handleForgetPassword( { e:e, setOpen: states.openReset.set } );
+                                                    }
+                                                }
+                                            }}
+                                        />
+                                    </Field>
+                                </FieldGroup>
+                                <DialogFooter>
+                                    <DialogClose asChild>
+                                        <Button variant="outline">Anulează</Button>
+                                    </DialogClose>
+                                    <Button
+                                        onClick={(e) => handleForgetPassword({
+                                            e,
+                                            setOpen: states.openReset.set // aici trimiți funcția care închide dialogul
+                                        })}
+                                        disabled={states.loadingResetPassword.value}
+                                    >
+                                        {states.loadingResetPassword.value ? "Se trimite..." : "Trimite solicitare"}
+                                    </Button>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
                     </div>
                     <InputPassword
                         value={states.password.value}
@@ -81,12 +137,12 @@ export function SignInForm({ className, ...props }: React.ComponentProps<"form">
                 <Field>
                     <Button
                         type="submit"
-                        disabled={!controls.isFormFilled || states.loading.value} // Disable button if form incomplete or loading
+                        disabled={!controls.isFormFilled || states.loadingSubmitSignIn.value} // Disable button if form incomplete or loading
                         tabIndex={3}
                     >
-                        {states.loading.value && <Spinner />} {/* Show spinner while loading */}
+                        {states.loadingSubmitSignIn.value && <Spinner />} {/* Show spinner while loading */}
 
-                        {states.loading.value
+                        {states.loadingSubmitSignIn.value
                             ? "Se verifică..."
                             : !controls.isFormFilled
                                 ? 'Completează toate câmpurile'
