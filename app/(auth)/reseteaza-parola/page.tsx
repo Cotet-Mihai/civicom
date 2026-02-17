@@ -1,28 +1,57 @@
 'use client'
 
-import { useState } from "react"
-import { KeyRound, ArrowRight, ArrowLeft, CheckCircle2, Eye, EyeOff, Lock } from "lucide-react"
+import React from "react"
+import {
+    KeyRound,
+    ArrowRight,
+    ArrowLeft,
+    HelpCircle,
+    CheckIcon,
+    XIcon
+} from "lucide-react"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
+import InputPasswordStrength from "@/components/InputPasswordWithStrength";
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import InputPassword from "@/components/InputPassword";
+import useUpdatePassword from "@/app/(auth)/reseteaza-parola/useUpdatePassword";
 
+/**
+ * ResetPassword Page
+ *
+ * Handles the UI for updating the user's password during the recovery flow.
+ *
+ * Responsibilities:
+ * - Render password reset form
+ * - Display dynamic password strength feedback
+ * - Handle submission through useUpdatePassword hook
+ * - Provide visual guidance for secure password creation
+ *
+ * Notes:
+ * - This is a Client Component because it relies on client-side state and hooks.
+ * - Business logic is delegated to the `useUpdatePassword` hook.
+ */
 export default function ResetPassword() {
-    const [newPassword, setNewPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
-    const [showPassword, setShowPassword] = useState(false)
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+    // Custom hook that encapsulates:
+    // - state management
+    // - validation logic
+    // - password strength calculation
+    // - submission handler
+    const { states, handleSubmit, strength } = useUpdatePassword();
 
     return (
         <main className="flex min-h-screen items-center justify-center p-4">
             <Card className="overflow-hidden border-border/60 shadow-lg w-full max-w-md p-0">
+
+                {/* Header Section */}
                 <CardHeader className="flex flex-col items-center bg-accent/40 pb-8 pt-10">
                     <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
                         <KeyRound className="h-10 w-10 text-primary" />
                     </div>
+
                     <div className="text-center">
                         <h1 className="text-2xl font-semibold tracking-tight text-card-foreground text-balance">
                             Reseteaza parola
@@ -34,59 +63,93 @@ export default function ResetPassword() {
                 </CardHeader>
 
                 <CardContent>
-                    <form className="flex flex-col gap-4" id="reset-form">
-                        <div className="flex flex-col gap-2">
-                            <Label htmlFor="new-password" className="text-sm font-medium text-foreground">
-                                Parola noua
-                            </Label>
-                            <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                                <Input
-                                    id="new-password"
-                                    type={showPassword ? "text" : "password"}
-                                    placeholder="Minim 8 caractere"
-                                    value={newPassword}
-                                    onChange={(e) => setNewPassword(e.target.value)}
-                                    className="pl-10 pr-10"
+                    {/*
+                        Password Reset Form
+                        - Controlled inputs
+                        - Submission handled by custom hook
+                    */}
+                    <form
+                        className="flex flex-col gap-4"
+                        id="reset-form"
+                        onSubmit={handleSubmit}
+                    >
+                        {/* New Password Field */}
+                        <div className="flex flex-col gap-2 w-full">
+                            <Field className={'w-full'}>
+                                <FieldLabel>
+                                    Parola nouă
+
+                                    {/*
+                                        Tooltip showing dynamic password requirements.
+                                        Requirements update in real time based on password input.
+                                    */}
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <Button
+                                                variant='ghost'
+                                                size='icon'
+                                                className='p-0 w-4 h-4 text-muted-foreground hover:text-foreground'
+                                            >
+                                                <HelpCircle className='w-4 h-4' />
+                                                <span className='sr-only'>Cerințe parolă</span>
+                                            </Button>
+                                        </TooltipTrigger>
+
+                                        <TooltipContent className='text-xs'>
+                                            <ul className='space-y-1'>
+                                                {strength.strength.map((req, index) => (
+                                                    <li key={index} className='flex items-center gap-1'>
+                                                        {/* Visual feedback for each password requirement */}
+                                                        {req.met
+                                                            ? <CheckIcon className='w-3 h-3 text-green-600 dark:text-green-400' />
+                                                            : <XIcon className='w-3 h-3 text-muted-foreground' />
+                                                        }
+                                                        <span>{req.text}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </FieldLabel>
+
+                                {/*
+                                    Password input component with strength indicator.
+                                    Strength data is computed inside the hook.
+                                */}
+                                <InputPasswordStrength
+                                    password={states.newPassword.value}
+                                    setPasswordAction={states.newPassword.set}
+                                    strength={strength}
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                                    aria-label={showPassword ? "Ascunde parola" : "Arata parola"}
-                                >
-                                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                </button>
-                            </div>
+                            </Field>
                         </div>
 
+                        {/* Confirm Password Field */}
                         <div className="flex flex-col gap-2">
-                            <Label htmlFor="confirm-password" className="text-sm font-medium text-foreground">
-                                Confirma parola
-                            </Label>
-                            <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                                <Input
-                                    id="confirm-password"
-                                    type={showConfirmPassword ? "text" : "password"}
-                                    placeholder="Repeta parola noua"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    className="pl-10 pr-10"
+                            <Field>
+                                <FieldLabel>
+                                    Confirmă Parola
+                                </FieldLabel>
+
+                                {/*
+                                    Simple controlled password input.
+                                    Must match new password during validation.
+                                */}
+                                <InputPassword
+                                    value={states.confirmPassword.value ?? ''}
+                                    onChangeAction={(val) => states.confirmPassword.set(val)}
+                                    placeholder={'Confirmați parola'}
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                                    aria-label={showConfirmPassword ? "Ascunde parola" : "Arata parola"}
-                                >
-                                    {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                </button>
-                            </div>
+
+                                <FieldDescription>
+                                    Te rugăm să confirmi parola.
+                                </FieldDescription>
+                            </Field>
                         </div>
 
                         <Separator />
 
+                        {/* Security Tips Section */}
                         <div className="flex items-start gap-3 rounded-lg bg-foreground/5 p-3">
                             <KeyRound className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                             <div>
@@ -94,7 +157,7 @@ export default function ResetPassword() {
                                     Sfaturi pentru o parola sigura
                                 </p>
                                 <p className="mt-0.5 text-xs text-muted-foreground leading-relaxed">
-                                    Foloseste cel putin 8 caractere, incluzand litere mari, mici, cifre si simboluri.
+                                    Foloseste cel putin 12 caractere, incluzand litere mari, mici, cifre si simboluri.
                                 </p>
                             </div>
                         </div>
@@ -103,82 +166,25 @@ export default function ResetPassword() {
 
                 <Separator />
 
+                {/* Footer Actions */}
                 <CardFooter className="flex flex-col gap-3 pb-5">
+                    {/* Submit Button */}
                     <Button
                         className="w-full"
                         size="lg"
-                        type="submit"
+                        type={"submit"}
                         form="reset-form"
-                        disabled={isLoading}
+                        disabled={states.loading.value}
                     >
-                        {isLoading ? "Se proceseaza..." : "Reseteaza parola"}
-                        {!isLoading && <ArrowRight />}
+                        {states.loading.value ? "Se proceseaza..." : "Reseteaza parola"}
+                        {!states.loading.value && <ArrowRight />}
                     </Button>
+
+                    {/* Back to log in */}
                     <Button variant="ghost" className="w-full" size="sm" asChild>
                         <Link href="/">
                             <ArrowLeft className="h-4 w-4" />
                             Inapoi la autentificare
-                        </Link>
-                    </Button>
-                </CardFooter>
-            </Card>
-        </main>
-    )
-}
-
-function SuccessView() {
-    return (
-        <main className="flex min-h-screen items-center justify-center p-4">
-            <Card className="overflow-hidden border-border/60 shadow-lg w-full max-w-md p-0">
-                <CardHeader className="flex flex-col items-center bg-accent/40 pb-8 pt-10">
-                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
-                        <CheckCircle2 className="h-10 w-10 text-primary" />
-                    </div>
-                    <div className="text-center">
-                        <h1 className="text-2xl font-semibold tracking-tight text-card-foreground text-balance">
-                            Parola a fost resetata
-                        </h1>
-                        <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                            Parola contului tau a fost schimbata cu succes.
-                        </p>
-                    </div>
-                </CardHeader>
-
-                <CardContent className="px-6 py-6">
-                    <div className="flex flex-col gap-4">
-                        <div className="flex items-start gap-3 rounded-lg bg-foreground/5 p-3">
-                            <KeyRound className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                            <div>
-                                <p className="text-sm font-medium text-foreground">
-                                    Parola actualizata
-                                </p>
-                                <p className="mt-0.5 text-xs text-muted-foreground leading-relaxed">
-                                    Noua ta parola a fost salvata. Foloseste-o la urmatoarea autentificare.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-start gap-3 rounded-lg bg-foreground/5 p-3">
-                            <Lock className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                            <div>
-                                <p className="text-sm font-medium text-foreground">
-                                    Cont securizat
-                                </p>
-                                <p className="mt-0.5 text-xs text-muted-foreground leading-relaxed">
-                                    Toate sesiunile anterioare au fost deconectate pentru siguranta ta.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </CardContent>
-
-                <Separator />
-
-                <CardFooter className="pb-5">
-                    <Button className="w-full" size="lg" asChild>
-                        <Link href="/">
-                            Inapoi la autentificare
-                            <ArrowRight />
                         </Link>
                     </Button>
                 </CardFooter>

@@ -29,7 +29,7 @@ export default function InputPasswordStrength({
     };
 
     return (
-        <div className='w-full max-w-xs space-y-2'>
+        <div className='w-full space-y-2'>
             <InputPassword
                 value={password}
                 onChangeAction={setPasswordAction}
