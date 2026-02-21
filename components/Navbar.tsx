@@ -26,6 +26,14 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { signOutAction } from "@/services/auth/signOutAction"
 import { useAnimateOnIntersect } from "@/app/(public)/hook/useAnimateOnIntersect"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/components/ui/dialog";
 
 interface NavLink {
     label: string
@@ -160,14 +168,63 @@ export function Navbar() {
                             {/* FOOTER ACTIONS */}
                             <SheetFooter className="mt-auto flex flex-col gap-2 pt-6">
                                 {user ? (
-                                    <Button
-                                        variant="destructive"
-                                        className="w-full"
-                                        onClick={handleLogout}
-                                    >
-                                        <LogOutIcon className="w-4 h-4" />
-                                        Deconectare
-                                    </Button>
+                                    <>
+                                        {/* CREATE EVENT - MOBILE */}
+                                        <Dialog>
+                                            <DialogTrigger asChild>
+                                                <Button className="w-full">
+                                                    Creează Eveniment
+                                                </Button>
+                                            </DialogTrigger>
+
+                                            <DialogContent className="max-h-[90vh] overflow-y-auto">
+                                                <DialogHeader>
+                                                    <DialogTitle className="text-black">
+                                                        Ce tip de eveniment vrei să creezi?
+                                                    </DialogTitle>
+                                                    <DialogDescription>
+                                                        Alege tipul dorit pentru a continua configurarea.
+                                                    </DialogDescription>
+                                                </DialogHeader>
+
+                                                <div className="flex flex-col gap-3 mt-4">
+                                                    <Link href="/creeaza/petitie" className="w-full">
+                                                        <div className="p-4 rounded-xl border bg-card hover:bg-accent transition">
+                                                            Petiție
+                                                        </div>
+                                                    </Link>
+
+                                                    <Link href="/creeaza/protest" className="w-full">
+                                                        <div className="p-4 rounded-xl border bg-card hover:bg-accent transition">
+                                                            Protest
+                                                        </div>
+                                                    </Link>
+
+                                                    <Link href="/creeaza/activitate-comunitara" className="w-full">
+                                                        <div className="p-4 rounded-xl border bg-card hover:bg-accent transition">
+                                                            Activitate Comunitară
+                                                        </div>
+                                                    </Link>
+
+                                                    <Link href="/creeaza/eveniment-caritabil" className="w-full">
+                                                        <div className="p-4 rounded-xl border bg-card hover:bg-accent transition">
+                                                            Eveniment Caritabil
+                                                        </div>
+                                                    </Link>
+                                                </div>
+                                            </DialogContent>
+                                        </Dialog>
+
+                                        {/* LOGOUT */}
+                                        <Button
+                                            variant="destructive"
+                                            className="w-full"
+                                            onClick={handleLogout}
+                                        >
+                                            <LogOutIcon className="w-4 h-4" />
+                                            Deconectare
+                                        </Button>
+                                    </>
                                 ) : (
                                     <>
                                         <Link href="/autentificare">
@@ -218,11 +275,97 @@ export function Navbar() {
                 <div className="hidden items-center gap-3 md:flex">
                     {user ? (
                         <>
-                            <Link href="#">
-                                <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-                                    Creează eveniment
-                                </Button>
-                            </Link>
+                            <Dialog>
+                                <DialogTrigger asChild>
+                                    <Button>
+                                        Creează Eveniment
+                                    </Button>
+                                </DialogTrigger>
+                                <DialogContent>
+                                    <DialogHeader>
+                                        <DialogTitle>
+                                            <span className={'text-black'}>Ce tip de eveniment vrei sa creezi ?</span>
+                                        </DialogTitle>
+                                        <DialogDescription>
+                                            Fiecare eveniment in parte are un meniu diferit de configurare.
+                                        </DialogDescription>
+                                    </DialogHeader>
+
+                                    <div className="grid grid-cols-2 gap-4 w-full max-w-md mx-auto">
+                                        {/* Card 1 */}
+                                        <DialogTrigger asChild>
+                                            <Link href={'/creeaza/petitie'}>
+                                                <div
+                                                    className="relative w-full aspect-square bg-cover bg-center rounded-xl shadow-lg cursor-pointer group"
+                                                    style={{backgroundImage: "url('images/petitie.webp')"}}
+                                                >
+                                                    <div
+                                                        className="absolute inset-0 bg-black/60 flex items-center justify-center rounded-xl transition-all duration-300 ease-in-out group-hover:bg-black/80">
+                                                  <span
+                                                      className="text-white font-bold text-lg text-center px-2 transition-transform duration-300 ease-in-out group-hover:scale-125">
+                                                    Petiție
+                                                  </span>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </DialogTrigger>
+
+                                        {/* Card 2 */}
+                                        <DialogTrigger asChild>
+                                            <Link href={'/creeaza/protest'}>
+                                                <div
+                                                    className="relative w-full aspect-square bg-cover bg-center rounded-xl shadow-lg cursor-pointer group"
+                                                    style={{backgroundImage: "url('images/protest.webp')"}}
+                                                >
+                                                    <div
+                                                        className="absolute inset-0 bg-black/60 flex items-center justify-center rounded-xl transition-all duration-300  ease-in-out group-hover:bg-black/80">
+                                                  <span
+                                                      className="text-white font-bold text-lg text-center px-2 transition-transform duration-300 ease-in-out group-hover:scale-125">
+                                                    Protest
+                                                  </span>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </DialogTrigger>
+
+                                        {/* Card 3 */}
+                                        <DialogTrigger asChild>
+                                            <Link href={'/creeaza/activitate-comunitara'}>
+                                                <div
+                                                    className="relative w-full aspect-square bg-cover bg-center rounded-xl shadow-lg cursor-pointer group"
+                                                    style={{backgroundImage: "url('images/activitate_comunitara.webp')"}}
+                                                >
+                                                    <div
+                                                        className="absolute inset-0 bg-black/60 flex items-center justify-center rounded-xl transition-all duration-300 ease-in-out group-hover:bg-black/80">
+                                                  <span
+                                                      className="text-white font-bold text-lg text-center px-2 transition-transform duration-300 ease-in-out group-hover:scale-125">
+                                                    Activitate <br/> Comunitară
+                                                  </span>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </DialogTrigger>
+
+                                        {/* Card 4 */}
+                                        <DialogTrigger asChild>
+                                            <Link href={'/creeaza/eveniment-caritabil'}>
+                                                <div
+                                                    className="relative w-full aspect-square bg-cover bg-center rounded-xl shadow-lg cursor-pointer group"
+                                                    style={{backgroundImage: "url('/images/eveniment_caritabil.webp')"}}
+                                                >
+                                                    <div
+                                                        className="absolute inset-0 bg-black/60 flex items-center justify-center rounded-xl transition-all duration-300 ease-in-out group-hover:bg-black/80">
+                                                  <span
+                                                      className="text-white font-bold text-lg text-center px-2 transition-transform duration-300 ease-in-out group-hover:scale-125">
+                                                    Eveniment <br/> caritabil
+                                                  </span>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </DialogTrigger>
+                                    </div>
+                                </DialogContent>
+                            </Dialog>
 
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
