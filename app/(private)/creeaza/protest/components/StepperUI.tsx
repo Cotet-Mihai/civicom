@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import {Dispatch, ReactNode, SetStateAction} from "react"
 import { Badge } from "@/components/reui/badge"
 import {
     Stepper,
@@ -21,13 +21,26 @@ import {
 } from 'lucide-react'
 import {steps} from '@/app/(private)/creeaza/protest/data';
 
-export function StepperFlow() {
-    const [currentStep, setCurrentStep] = useState(1)
+
+type StepperFlowProps = {
+    children: ReactNode,
+    currentStep: {
+        value: number,
+        set: Dispatch<SetStateAction<number>>
+    },
+    handleNavigation: {
+        nextStep: () => void,
+        prevStep: () => void
+    }
+}
+
+export function StepperUI({children, currentStep, handleNavigation}: StepperFlowProps) {
+
 
     return (
         <Stepper
-            value={currentStep}
-            onValueChange={setCurrentStep}
+            value={currentStep.value}
+            onValueChange={currentStep.set}
             indicators={{
                 completed: (
                     <CheckIcon  className="size-3.5" />
@@ -36,7 +49,7 @@ export function StepperFlow() {
                     <LoaderCircleIcon  className="size-3.5 animate-spin" />
                 ),
             }}
-            className="w-full space-y-8"
+            className="w-full space-y-5"
         >
             <StepperNav className="gap-3">
                 {steps.map((step, index) => (
@@ -92,34 +105,41 @@ export function StepperFlow() {
             </StepperNav>
 
             <StepperPanel className="text-sm">
-                {steps.map((step, index) => (
-                    <StepperContent
-                        key={index}
-                        value={index + 1}
-                        className="flex items-start justify-start"
-                    >
-                        <div className={'mb-10'}>
-                            <h3 className={'text-2xl font-semibold'}>{step.title}</h3>
-                            <span className={'text-muted-foreground'}>{step.description}</span>
-                        </div>
-                    </StepperContent>
-                ))}
+                {steps.map((step, index) => {
+                    return (
+                        <StepperContent
+                            key={index}
+                            value={index + 1}
+                            className="flex items-start justify-start"
+                        >
+                            <section className={'flex flex-col w-full'}>
+                                <div className={'mb-5'}>
+                                    <h3 className={'text-2xl font-semibold'}>{step.title}</h3>
+                                    <span className={'text-muted-foreground'}>{step.description}</span>
+                                </div>
+
+                                {children}
+                            </section>
+
+                        </StepperContent>
+                    )
+                })}
             </StepperPanel>
 
             <div className="flex items-center justify-between gap-2.5">
                 <Button
                     variant="outline"
-                    onClick={() => setCurrentStep((prev) => prev - 1)}
-                    disabled={currentStep === 1}
+                    onClick={handleNavigation.prevStep}
+                    disabled={currentStep.value === 1}
                 >
                     Anterior
                 </Button>
                 <Button
                     variant="outline"
-                    onClick={() => setCurrentStep((prev) => prev + 1)}
-                    disabled={currentStep === steps.length}
+                    onClick={handleNavigation.nextStep}
+                    disabled={currentStep.value === steps.length}
                 >
-                    Următorul
+                    {currentStep.value === steps.length ? 'Trimite' : 'Următorul'}
                 </Button>
             </div>
         </Stepper>
