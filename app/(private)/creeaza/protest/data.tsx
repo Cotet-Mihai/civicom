@@ -1,5 +1,7 @@
 import {Camera, Info, ListTodo, MapPin} from "lucide-react";
+import {LatLngExpression} from "leaflet";
 
+export const defaultLocation: [number, number] = [44.4358196, 26.1021932] satisfies LatLngExpression; // Bucharest, România
 
 export const steps = [
     {
@@ -16,13 +18,13 @@ export const steps = [
             <MapPin  className="size-4" />
         )
     },
-    // {
-    //     title: "Media Vizuală",
-    //     description: 'test 3',
-    //     icon: (
-    //         <Camera  className="size-4" />
-    //     ),
-    // },
+    {
+        title: "Media Vizuală",
+        description: 'test 3',
+        icon: (
+            <Camera  className="size-4" />
+        ),
+    },
     // {
     //     title: "Logistică",
     //     description: 'test 4',

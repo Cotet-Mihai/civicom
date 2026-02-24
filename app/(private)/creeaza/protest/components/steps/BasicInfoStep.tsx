@@ -4,7 +4,7 @@ import {Textarea} from "@/components/ui/textarea";
 import CalendarWithStartStopTime from "@/components/CalendarWithStartStopTime";
 
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
-import {BasicInfoStates} from "@/app/(private)/creeaza/protest/types";
+import {BasicInfoStates, ProtestType} from "@/app/(private)/creeaza/protest/types";
 
 export type BasicInfoStepProps = {
     dataStates: BasicInfoStates
@@ -21,7 +21,7 @@ export default function BasicInfoStep({dataStates}: BasicInfoStepProps) {
                     type="single"
                     className={'border'}
                     value={dataStates.type.value}
-                    onValueChange={(e) => dataStates.type.set(e)}
+                    onValueChange={(e) =>  dataStates.type.set(e as ProtestType)}
                 >
                     <ToggleGroupItem
                         value="gathering"

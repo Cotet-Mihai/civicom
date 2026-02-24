@@ -1,7 +1,7 @@
-import {JSX, useEffect, useState} from "react";
-import {BasicInfoStates} from "@/app/(private)/creeaza/protest/types";
-import {toast} from "sonner";
+import {JSX, useState} from "react";
+import {BasicInfoStates, ProtestType} from "@/app/(private)/creeaza/protest/types";
 import BasicInfoStep, {BasicInfoStepProps} from "@/app/(private)/creeaza/protest/components/steps/BasicInfoStep";
+import {checkField, showErrorToast} from "@/app/(private)/creeaza/protest/utils";
 
 
 
@@ -17,44 +17,9 @@ export default function useBasicInfo(): UseBasicInfoReturn {
     const [date, setDate] = useState<Date | undefined>(undefined);
     const [fromTime, setFromTime] = useState<string>('');
     const [toTime, setToTime] = useState<string>('');
-    const [type, setType] = useState<string>('');
+    const [type, setType] = useState<ProtestType>('');
 
-    // For testing
-    // useEffect(() => {
-    //     console.log("Title:", title);
-    //     console.log("Description:", description);
-    //     console.log("Date:", date);
-    //     console.log("From time:", fromTime);
-    //     console.log("To time:", toTime);
-    //     console.log("Type:", type);
-    // }, [title, description, date, fromTime, toTime, type]);
 
-    function checkField(
-        nameField: string,
-        field: string | undefined | Date,
-        missingFields: string[]
-    ) : void {
-        if (field === undefined || field === '') {
-            missingFields.push(nameField)
-        }
-    }
-
-    function showErrorToast(missingFields: string[]): void {
-        (toast.error(
-            <div>
-                <span className={'font-bold'}>
-                Câmpuri lispă:
-            </span>
-                <ul>
-                    {missingFields.map((field, index) => (
-                        <li key={index}>
-                            • {field}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        ))
-    }
 
     function validateData(): boolean {
         const missingFields: string[] = [];

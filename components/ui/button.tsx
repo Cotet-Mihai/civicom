@@ -19,6 +19,8 @@ const buttonVariants = cva(
                 ghost:
                     "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
                 link: "text-primary underline-offset-4 hover:underline",
+                mapButtonDefault: 'bg-[#171717] text-[#fafafa] hover:bg-[#171717]/90]',
+                mapButtonSecondary: 'bg-[#f5f5f5] text-[#171717] hover:bg-[#f5f5f5]/80'
             },
             size: {
                 default: "h-9 px-4 py-2 has-[>svg]:px-3",
