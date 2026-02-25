@@ -1,12 +1,13 @@
-import {JSX, useState} from "react";
+import React, {useState} from "react";
 import {checkField, showErrorToast} from "@/app/(private)/creeaza/protest/utils";
 import {GateringStates} from "@/app/(private)/creeaza/protest/types";
-import GatheringStep, {GatheringStepProps} from "@/app/(private)/creeaza/protest/components/steps/locationSteps/GatheringStep";
+import {GatheringStep} from "@/app/(private)/creeaza/protest/components/steps/locationSteps/locationstep.dynamic";
+import {GatheringStepProps} from "@/app/(private)/creeaza/protest/components/steps/locationSteps/GatheringStep";
 
 type UseGatheringStepReturn = {
     states: GateringStates,
     validator: () => boolean,
-    component: ({dataState}: GatheringStepProps) => JSX.Element
+    component: React.ComponentType<GatheringStepProps>
 }
 
 export default function useGatheringStep(): UseGatheringStepReturn {
