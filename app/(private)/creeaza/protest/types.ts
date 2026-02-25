@@ -1,5 +1,3 @@
-import L from "leaflet";
-
 export type ProtestType = '' | 'gathering' | 'march' | 'picket' | 'boycott'
 
 export type BasicInfoStates = {
@@ -15,19 +13,3 @@ export type GateringStates = {
     lat: {value: number, set: (value: number)=> void},
     lng: {value: number, set: (value: number)=> void},
 }
-
-
-
-export type MarkerShape = {
-    id: number,
-    lat: number,
-    lng: number
-}
-
-export type PolylineShape = {
-    id: number;
-    points: L.LatLng[] | L.LatLng[][] | L.LatLng[][][];
-};
-
-export type Shape = MarkerShape | PolylineShape
-
