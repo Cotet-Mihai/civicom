@@ -32,11 +32,20 @@ export default function GatheringStep({dataState}: GatheringStepProps): JSX.Elem
     }, []);
 
     function handleOnChange(layers: L.FeatureGroup) {
-        removeDuplicateMarkers(layers);
+        const markers = extractMarkers(layers)
 
-        const marker: L.Marker = extractMarkers(layers)[0]
+        if (markers.length === 0) {
+            dataState.lat.set(0)
+            dataState.lng.set(0)
+            return
+        }
 
-        const {lat, lng} = marker.getLatLng();
+        removeDuplicateMarkers(layers)
+
+        const marker = markers[0]
+        if (!marker) return
+
+        const { lat, lng } = marker.getLatLng()
 
         dataState.lat.set(lat)
         dataState.lng.set(lng)

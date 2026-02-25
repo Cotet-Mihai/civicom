@@ -1102,6 +1102,7 @@ function MapDrawShapeButton<T extends Draw.Feature>({
 }
 
 function MapDrawMarker({ ...props }: DrawOptions.MarkerOptions) {
+
     return (
         <MapDrawShapeButton
             drawMode="marker"
@@ -1467,6 +1468,11 @@ function useLeaflet() {
             if (L_object.Control && !L_object.Control.FullScreen) {
                 L_object.Control.FullScreen =
                     leafletFullscreen.default || leafletFullscreen
+            }
+
+            if (L_object.drawLocal) {
+                L_object.drawLocal.draw.handlers.marker.tooltip.start =
+                    "Faceți clic pe hartă pentru a plasa un marker."
             }
 
             setLeafletDraw(leafletDraw)
