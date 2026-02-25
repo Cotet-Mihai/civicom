@@ -16,13 +16,9 @@ import {
 } from "@/components/ui/map";
 
 import {defaultLocation} from "@/app/(private)/creeaza/protest/data";
-import {GateringStates} from "@/app/(private)/creeaza/protest/types";
+import {GatheringStepProps} from "@/app/(private)/creeaza/protest/types";
 import {extractMarkers, removeDuplicateMarkers} from "@/app/(private)/creeaza/protest/utils";
 
-
-export type GatheringStepProps = {
-    dataState: GateringStates
-}
 
 export default function GatheringStep({dataState}: GatheringStepProps): JSX.Element {
 

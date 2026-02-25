@@ -13,3 +13,7 @@ export type GateringStates = {
     lat: {value: number, set: (value: number)=> void},
     lng: {value: number, set: (value: number)=> void},
 }
+
+export type GatheringStepProps = {
+    dataState: GateringStates
+}
