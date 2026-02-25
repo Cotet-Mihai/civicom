@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import {checkField, showErrorToast} from "@/app/(private)/creeaza/protest/utils";
-import {GateringStates} from "@/app/(private)/creeaza/protest/types";
+import {GateringStates, GatheringStepProps} from "@/app/(private)/creeaza/protest/types";
 import {GatheringStep} from "@/app/(private)/creeaza/protest/components/steps/locationSteps/locationstep.dynamic";
-import {GatheringStepProps} from "@/app/(private)/creeaza/protest/components/steps/locationSteps/GatheringStep";
 
 type UseGatheringStepReturn = {
     states: GateringStates,
