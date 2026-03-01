@@ -13,21 +13,21 @@ export function HeroSection() {
 
                         <span
                             data-animate
-                            className="block text-2xl font-medium leading-tight text-green-600 opacity-0 md:text-4xl"
+                            className="block text-2xl font-medium leading-tight text-green-600 md:text-4xl"
                         >
                             Găsește evenimente,
                         </span>
 
                         <span
                             data-animate
-                            className="block text-4xl font-bold uppercase leading-none tracking-tight text-primary opacity-0 md:text-8xl lg:text-6xl"
+                            className="block text-4xl font-bold uppercase leading-none tracking-tight text-primary  md:text-8xl lg:text-6xl"
                         >
                             FII SCHIMBAREA,
                         </span>
 
                         <span
                             data-animate
-                            className="block text-4xl font-medium leading-tight text-green-700 opacity-0 md:text-5xl text-right"
+                            className="block text-4xl font-medium leading-tight text-green-700  md:text-5xl text-right"
                         >
                             fă voluntariat.
                         </span>
@@ -35,14 +35,14 @@ export function HeroSection() {
                     </h1>
                     <p
                         data-animate
-                        className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground opacity-0 lg:text-sm"
+                        className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground  lg:text-sm"
                     >
                         Aducem voluntari, ONG-uri și instituții împreună pentru evenimente, petiții și donații.
                         Descoperă, implică-te și susține cauze care contează. ✨
                     </p>
                     <div
                         data-animate
-                        className="mt-8 flex flex-col gap-3 opacity-0 sm:flex-row"
+                        className="mt-8 flex flex-col gap-3  sm:flex-row"
                     >
                         <Button
                             size="lg"
@@ -65,7 +65,7 @@ export function HeroSection() {
                 {/* Hero image */}
                 <div
                     data-animate
-                    className="flex flex-1 items-center justify-center opacity-0"
+                    className="flex flex-1 items-center justify-center "
                 >
                     <div className="relative">
                         <div className="absolute -inset-4 rounded-3xl bg-primary/5 blur-2xl" />
