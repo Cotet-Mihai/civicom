@@ -1,15 +1,11 @@
-"use client"
-
 import Image from "next/image"
 import {Button} from "@/components/ui/button"
 import {ArrowRight, Calendar} from "lucide-react"
-import {useAnimateOnIntersect} from "@/app/(public)/hook/useAnimateOnIntersect";
 
 export function HeroSection() {
 
     return (
-            <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 lg:flex-row lg:gap-16 lg:px-8"
-                 ref={sectionRef}>
+            <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 lg:flex-row lg:gap-16 lg:px-8">
                 {/* Text content */}
                 <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left">
 
