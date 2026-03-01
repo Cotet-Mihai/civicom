@@ -4,15 +4,15 @@ import dynamic from "next/dynamic";
 
 // Client-only dynamic maps (Leaflet safe)
 
-export const GatheringStep = dynamic(
-    () => import("./GatheringStep"),
+export const DefaultLocationStep = dynamic(
+    () => import("./DefaultLocationStep"),
     { ssr: false }
 );
 
-// export const MarchMap = dynamic(
-//     () => import("./marchMap"),
-//     { ssr: false }
-// );
+export const MarchMap = dynamic(
+    () => import("./MarchStep"),
+    { ssr: false }
+);
 //
 // export const PicketMap = dynamic(
 //     () => import("./picketMap"),

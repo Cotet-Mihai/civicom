@@ -1,13 +1,24 @@
-import useGatheringStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useGatheringStep";
 import {ProtestType} from "@/app/(private)/creeaza/protest/types";
+
+import useDefaultLocationStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useDefaultLocationStep";
+import useMarchStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useMarchStep";
+import useBoycottStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useBoycottStep";
 
 export default function useLocationStep(type: ProtestType) {
 
-    const gathering = useGatheringStep()
+    const defaultStep = useDefaultLocationStep()
 
-    if (type === 'gathering') return gathering
+    const registry = {
+        gathering: defaultStep,
+        march: useMarchStep(),
+        picket: defaultStep,
+        boycott: useBoycottStep(),
+    };
 
-    return gathering;
+    // Default return
+    if (!type) return defaultStep
+
+    return registry[type];
 }
 
 /*

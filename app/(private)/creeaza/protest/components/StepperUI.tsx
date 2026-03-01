@@ -31,11 +31,11 @@ type StepperFlowProps = {
     handleNavigation: {
         nextStep: () => void,
         prevStep: () => void
-    }
+    },
+    description?: string
 }
 
-export function StepperUI({children, currentStep, handleNavigation}: StepperFlowProps) {
-
+export function StepperUI({children, currentStep, handleNavigation, description}: StepperFlowProps) {
 
     return (
         <Stepper
@@ -115,7 +115,7 @@ export function StepperUI({children, currentStep, handleNavigation}: StepperFlow
                             <section className={'flex flex-col w-full'}>
                                 <div className={'mb-5'}>
                                     <h3 className={'text-2xl font-semibold'}>{step.title}</h3>
-                                    <span className={'text-muted-foreground'}>{step.description}</span>
+                                    <span className={'text-muted-foreground'}>{description !== '' ? description : step.description}</span>
                                 </div>
 
                                 {children}

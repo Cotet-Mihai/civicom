@@ -4,11 +4,9 @@ import {Textarea} from "@/components/ui/textarea";
 import CalendarWithStartStopTime from "@/components/CalendarWithStartStopTime";
 
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
-import {BasicInfoStates, ProtestType} from "@/app/(private)/creeaza/protest/types";
+import {BasicInfoStepProps, ProtestType} from "@/app/(private)/creeaza/protest/types";
 
-export type BasicInfoStepProps = {
-    dataStates: BasicInfoStates
-}
+
 
 export default function BasicInfoStep({dataStates}: BasicInfoStepProps) {
 

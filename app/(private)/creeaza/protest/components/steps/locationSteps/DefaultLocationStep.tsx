@@ -3,7 +3,6 @@
 import React, {JSX, useEffect} from "react";
 import type L from "leaflet";
 
-
 import {
     Map,
     MapDrawControl,
@@ -11,41 +10,28 @@ import {
     MapDrawEdit, MapDrawMarker,
     MapLocateControl,
     MapTileLayer,
-    MapSearchControl,
     MapFullscreenControl
 } from "@/components/ui/map";
 
 import {defaultLocation} from "@/app/(private)/creeaza/protest/data";
-import type {GatheringStepProps} from "@/app/(private)/creeaza/protest/types";
-import {extractMarkers, removeDuplicateMarkers} from "@/app/utils/mapHelpers";
+import {extractMarkers, MapSearchControlWrapper, removeDuplicateMarkers} from "@/utils/mapHelpers";
+
+import {DefaultLocationStepProps} from "@/app/(private)/creeaza/protest/types";
 
 
 
-export default function GatheringStep({dataState}: GatheringStepProps): JSX.Element {
+export default function DefaultLocationStep({dataStates}: DefaultLocationStepProps): JSX.Element {
 
     useEffect(() => {
-        dataState.lat.set(0)
-        dataState.lng.set(0)
+        dataStates.marker.set(undefined)
     }, []);
 
     function handleOnChange(layers: L.FeatureGroup) {
-        const markers = extractMarkers(layers)
-
-        if (markers.length === 0) {
-            dataState.lat.set(0)
-            dataState.lng.set(0)
-            return
-        }
-
         removeDuplicateMarkers(layers)
 
-        const marker = markers[0]
-        if (!marker) return
+        const markers: L.Marker[] = extractMarkers(layers)
 
-        const { lat, lng } = marker.getLatLng()
-
-        dataState.lat.set(lat)
-        dataState.lng.set(lng)
+        dataStates.marker.set(markers[0])
     }
 
     return (
@@ -54,7 +40,7 @@ export default function GatheringStep({dataState}: GatheringStepProps): JSX.Elem
             zoom={13}
         >
             <MapTileLayer />
-            <MapSearchControl/>
+            <MapSearchControlWrapper/>
             <MapLocateControl />
             <MapFullscreenControl />
             <MapDrawControl onLayersChange={(layers: L.FeatureGroup) => handleOnChange(layers)}>

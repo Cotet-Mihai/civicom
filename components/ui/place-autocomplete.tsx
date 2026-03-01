@@ -124,7 +124,9 @@ function buildSearchUrl({
     zoom,
 }: PlaceSearchOptions) {
     const url = new URL("https://photon.komoot.io/api")
+
     url.searchParams.set("q", query)
+
 
     if (lang) {
         url.searchParams.set("lang", lang)
@@ -195,7 +197,7 @@ function usePlaceSearch({
             setHasSearched(true)
 
             try {
-                const url = buildSearchUrl({ query: debouncedQuery, ...props })
+                const url = buildSearchUrl({ query: debouncedQuery,  ...props })
                 const response = await fetch(url, {
                     signal: abortController.signal,
                 })

@@ -1,15 +1,11 @@
-import {JSX, useState} from "react";
-import {BasicInfoStates, ProtestType} from "@/app/(private)/creeaza/protest/types";
-import BasicInfoStep, {BasicInfoStepProps} from "@/app/(private)/creeaza/protest/components/steps/BasicInfoStep";
+'use client'
+
+import {useState} from "react";
+import {ProtestType, UseBasicInfoReturn} from "@/app/(private)/creeaza/protest/types";
+import BasicInfoStep from "@/app/(private)/creeaza/protest/components/steps/BasicInfoStep";
 import {checkField, showErrorToast} from "@/app/(private)/creeaza/protest/utils";
 
 
-
-export type UseBasicInfoReturn = {
-    states: BasicInfoStates,
-    validator: () => boolean,
-    component: ({dataStates}: BasicInfoStepProps) => JSX.Element
-}
 
 export default function useBasicInfo(): UseBasicInfoReturn {
     const [title, setTitle] = useState<string>('');

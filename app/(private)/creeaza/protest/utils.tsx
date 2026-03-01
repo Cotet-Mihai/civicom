@@ -1,12 +1,30 @@
 import { toast } from "sonner"
+import type L from 'leaflet'
+import {type Brand} from "@/app/(private)/creeaza/protest/types";
 
 export function checkField(
     nameField: string,
-    field: string | undefined | Date | number,
+    field: string | undefined | Date | number | L.Marker | L.Polyline | L.Marker[] | L.Polyline[] | Brand[],
     missingFields: string[]
-) : void {
-    if (field === undefined || field === '' || field === 0) {
-        missingFields.push(nameField)
+): void {
+
+    if (field === undefined) {
+        missingFields.push(nameField);
+        return;
+    }
+
+    if (typeof field === 'string' && field.trim() === '') {
+        missingFields.push(nameField);
+        return;
+    }
+
+    if (typeof field === 'number' && field === 0) {
+        missingFields.push(nameField);
+        return;
+    }
+
+    if (Array.isArray(field) && field.length === 0) {
+        missingFields.push(nameField);
     }
 }
 

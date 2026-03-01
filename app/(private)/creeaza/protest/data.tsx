@@ -13,7 +13,7 @@ export const steps = [
     },
     {
         title: "Locație",
-        description: 'test 2',
+        description: 'Adăugați punctul de întâlnire pe hartă pentru a continua.',
         icon: (
             <MapPin  className="size-4" />
         )
@@ -25,11 +25,11 @@ export const steps = [
             <Camera  className="size-4" />
         ),
     },
-    // {
-    //     title: "Logistică",
-    //     description: 'test 4',
-    //     icon: (
-    //         <ListTodo  className="size-4" />
-    //     ),
-    // },
+    {
+        title: "Logistică",
+        description: 'test 4',
+        icon: (
+            <ListTodo  className="size-4" />
+        ),
+    },
 ]
