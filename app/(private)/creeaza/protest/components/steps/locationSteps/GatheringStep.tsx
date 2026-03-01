@@ -1,7 +1,7 @@
 'use client';
 
 import React, {JSX, useEffect} from "react";
-import L, {Layer} from "leaflet";
+import type L from "leaflet";
 
 
 import {
@@ -16,33 +16,10 @@ import {
 } from "@/components/ui/map";
 
 import {defaultLocation} from "@/app/(private)/creeaza/protest/data";
-import {GatheringStepProps} from "@/app/(private)/creeaza/protest/types";
+import type {GatheringStepProps} from "@/app/(private)/creeaza/protest/types";
+import {extractMarkers, removeDuplicateMarkers} from "@/app/utils/mapHelpers";
 
-export function removeDuplicateMarkers(layers: L.FeatureGroup) {
-    const markers: L.Marker[] = extractMarkers(layers);
 
-    if (markers.length <= 1) return;
-
-    const lastMarker: L.Marker = markers[markers.length - 1];
-
-    markers.forEach((marker: L.Marker) => {
-        if (marker !== lastMarker) {
-            layers.removeLayer(marker)
-        }
-    })
-}
-
-export function extractMarkers(layers: L.FeatureGroup): L.Marker[] {
-    const markers: L.Marker[] = [];
-
-    layers.getLayers().map((layer: Layer) => {
-        if (layer instanceof L.Marker) {
-            markers.push(layer)
-        }
-    });
-
-    return markers;
-}
 
 export default function GatheringStep({dataState}: GatheringStepProps): JSX.Element {
 
