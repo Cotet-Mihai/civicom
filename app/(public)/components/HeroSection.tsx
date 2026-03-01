@@ -6,7 +6,6 @@ import {ArrowRight, Calendar} from "lucide-react"
 import {useAnimateOnIntersect} from "@/app/(public)/hook/useAnimateOnIntersect";
 
 export function HeroSection() {
-    const sectionRef = useAnimateOnIntersect();
 
     return (
             <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 lg:flex-row lg:gap-16 lg:px-8"
