@@ -9,18 +9,8 @@ export function HeroSection() {
     const sectionRef = useAnimateOnIntersect();
 
     return (
-        <section
-            id={'top'}
-            ref={sectionRef}
-            className="relative w-screen h-screen flex items-center justify-center overflow-hidden bg-background"
-        >
-            {/* Subtle background decoration */}
-            <div className="pointer-events-none absolute inset-0">
-                <div className="absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-primary/5" />
-                <div className="absolute -bottom-20 -left-20 h-[300px] w-[300px] rounded-full bg-secondary/10" />
-            </div>
-
-            <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 lg:flex-row lg:gap-16 lg:px-8">
+            <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 lg:flex-row lg:gap-16 lg:px-8"
+                 ref={sectionRef}>
                 {/* Text content */}
                 <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left">
 
@@ -95,6 +85,5 @@ export function HeroSection() {
                     </div>
                 </div>
             </div>
-        </section>
     )
 }

@@ -10,15 +10,15 @@ import { useInView } from "./useInView";
  *
  * @param delayStep - Delay in milliseconds between staggered animations for each element (default: 100)
  */
-export function useAnimateOnIntersect(delayStep: number = 100): RefObject<HTMLElement | null> {
-    const ref: RefObject<HTMLElement | null> = useRef<HTMLElement>(null);
+export function useAnimateOnIntersect(delayStep: number = 100): RefObject<HTMLDivElement | null> {
+    const ref: RefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null);
     const inView: boolean = useInView(ref);
 
     useEffect(() => {
         if (!inView || !ref.current) return;
 
-        const animatedEls: NodeListOf<HTMLElement> = ref.current.querySelectorAll<HTMLElement>("[data-animate]");
-        animatedEls.forEach((el: HTMLElement, i: number): void => {
+        const animatedEls: NodeListOf<HTMLDivElement> = ref.current.querySelectorAll<HTMLDivElement>("[data-animate]");
+        animatedEls.forEach((el: HTMLDivElement, i: number): void => {
             el.style.animationDelay = `${i * delayStep}ms`;
             el.classList.add("animate-fade-in-up");
         });

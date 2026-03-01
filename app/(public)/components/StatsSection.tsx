@@ -8,8 +8,7 @@ export function StatsSection() {
     const sectionRef = useAnimateOnIntersect(0.2);
 
     return (
-        <section ref={sectionRef} className="bg-primary py-16 lg:py-20">
-            <div className="mx-auto max-w-7xl px-4 lg:px-8">
+            <div className="mx-auto max-w-7xl px-4 lg:px-8" ref={sectionRef}>
                 <div className="grid grid-cols-2 gap-8 lg:grid-cols-4 lg:gap-12">
                     {stats.map((stat) => {
                         const IconComp = stat.icon
@@ -34,6 +33,5 @@ export function StatsSection() {
                     })}
                 </div>
             </div>
-        </section>
     )
 }
