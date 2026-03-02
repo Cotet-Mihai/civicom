@@ -49,7 +49,7 @@ export async function updateSession(request: NextRequest) {
 
     if (!user && !isPublic) {
         const url = request.nextUrl.clone()
-        url.pathname = '/conectare'
+        url.pathname = '/autentificare'
         return NextResponse.redirect(url)
     }
 
