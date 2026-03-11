@@ -11,7 +11,6 @@ import useDefaultLocationStep from "@/app/(private)/creeaza/protest/hooks/Locati
 import useMarchStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useMarchStep";
 import useBoycottStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useBoycottStep";
 import useVisualMedia from "@/app/(private)/creeaza/protest/hooks/useVisualMedia";
-import {useEffect} from "react";
 
 
 
