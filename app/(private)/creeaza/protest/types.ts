@@ -87,3 +87,24 @@ export type BrandDialogProps = {
     onSave: (brand: Brand) => void
     initialData?: Brand | null
 }
+
+export interface VisualMediaStates {
+    banner: {
+        value: File | null
+        set: (value: File | null) => void
+    }
+    gallery: {
+        value: File[]
+        set: (value: File[]) => void
+    }
+}
+
+export interface VisualMediaStepProps {
+    dataStates: VisualMediaStates
+}
+
+export interface UseVisualMediaReturn {
+    states: VisualMediaStates
+    validator: () => boolean
+    component: React.ComponentType<VisualMediaStepProps>
+}

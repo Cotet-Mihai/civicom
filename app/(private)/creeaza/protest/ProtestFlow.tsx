@@ -1,12 +1,17 @@
 'use client'
 
 import {StepperUI} from "@/app/(private)/creeaza/protest/components/StepperUI";
-import useBasicInfo from "@/app/(private)/creeaza/protest/hooks/useBasicInfo";
+
 import useNavigation from "@/app/(private)/creeaza/protest/hooks/useNavigation";
+import useBasicInfo from "@/app/(private)/creeaza/protest/hooks/useBasicInfo";
 import useLocationStep from "@/app/(private)/creeaza/protest/hooks/useLocationStep";
+
+
 import useDefaultLocationStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useDefaultLocationStep";
 import useMarchStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useMarchStep";
 import useBoycottStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useBoycottStep";
+import useVisualMedia from "@/app/(private)/creeaza/protest/hooks/useVisualMedia";
+import {useEffect} from "react";
 
 
 
@@ -15,12 +20,15 @@ export default function ProtestFlow() {
     // Hooks for every step
     const basicInfo = useBasicInfo();
     const location = useLocationStep(basicInfo.states.type.value);
+    const visualMedia = useVisualMedia();
 
     // All validators for every step
     const validators: (() => boolean)[] = [
         basicInfo.validator,
         location.validator,
+        visualMedia.validator
     ]
+
 
     // Hook for navigation
     const { currentStepState, handleNavigation } = useNavigation(validators);
@@ -70,6 +78,12 @@ export default function ProtestFlow() {
                 }
 
             }
+
+            case 3:
+                const Step = visualMedia.component
+                return {
+                    component: <Step dataStates={visualMedia.states}/>
+                }
         }
     }
 

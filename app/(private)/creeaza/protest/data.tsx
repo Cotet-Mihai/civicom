@@ -20,7 +20,7 @@ export const steps = [
     },
     {
         title: "Media Vizuală",
-        description: 'test 3',
+        description: 'Adaugă imaginea pentru bannerul protestului, opțional poți adăuga și fișiere media pentru pancardele pe care le dorești la protest.',
         icon: (
             <Camera  className="size-4" />
         ),
