@@ -6,7 +6,6 @@ export default function useNavigation(validators: (() => boolean)[]) {
     const [currentStep, setCurrentStep] = useState<number>(1);
 
 
-
     function nextStep(): void {
         const isValid = validators[currentStep - 1]();
 

@@ -10,13 +10,15 @@ import useLocationStep from "@/app/(private)/creeaza/protest/hooks/useLocationSt
 import useDefaultLocationStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useDefaultLocationStep";
 import useMarchStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useMarchStep";
 import useBoycottStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useBoycottStep";
+
+
 import useVisualMedia from "@/app/(private)/creeaza/protest/hooks/useVisualMedia";
 import useLogistics from "@/app/(private)/creeaza/protest/hooks/useLogisticsStep";
+import {useEffect} from "react";
 
 
 
 export default function ProtestFlow() {
-
     // Hooks for every step
     const basicInfo = useBasicInfo();
     const location = useLocationStep(basicInfo.states.type.value);
@@ -30,7 +32,6 @@ export default function ProtestFlow() {
         visualMedia.validator,
         logistics.validator
     ]
-
 
     // Hook for navigation
     const { currentStepState, handleNavigation } = useNavigation(validators);

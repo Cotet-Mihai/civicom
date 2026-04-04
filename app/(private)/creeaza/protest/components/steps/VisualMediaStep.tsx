@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { X } from "lucide-react";
+import { X, ImagePlus } from "lucide-react";
 import { VisualMediaStepProps } from "@/app/(private)/creeaza/protest/types";
 import {
     FileUpload,
@@ -15,91 +15,81 @@ import {
     FileUploadList,
     FileUploadTrigger,
 } from "@/components/ui/file-upload";
-import { ImagePlus } from "lucide-react";
+import { BannerUpload } from "@/app/(private)/creeaza/protest/components/BannerUpload";
+import {optimizeGalleryImage} from "@/utils/cropImage";
 
 export default function VisualMediaStep({ dataStates }: VisualMediaStepProps) {
-    const [bannerFiles, setBannerFiles] = React.useState<File[]>([]);
 
-    const bannerPreview = bannerFiles.length > 0 ? URL.createObjectURL(bannerFiles[0]) : null;
+    const handleBannerReady = (optimizedFile: File) => {
+        // We save the final file directly to the global state of the form
+        dataStates.banner.set(optimizedFile);
+    };
 
-    React.useEffect(() => {
-        if (bannerFiles.length > 0) {
-            dataStates.banner.set(bannerFiles[0]);
-        } else {
-            dataStates.banner.set(null);
-        }
-    }, [bannerFiles, dataStates.banner]);
+    const handleGalleryChange = async (files: File[]) => {
+        // We detect if there are new files that are not yet WebP (or optimized)
+        const optimizedFiles = await Promise.all(
+            files.map(async (file) => {
+                // If the file is already WebP and comes from our state, we don't process it anymore
+                // (We avoid re-processing every time the list changes)
+                if (file.type === "image/webp" && file.name.includes("optimized")) {
+                    return file;
+                }
 
-    const removeBanner = () => setBannerFiles([]);
+                try {
+                    return await optimizeGalleryImage(file);
+                } catch (err) {
+                    console.error("Eroare la optimizarea imaginii din galerie", err);
+                    return file; // Fallback to the original file in case of error
+                }
+            })
+        );
+
+        dataStates.gallery.set(optimizedFiles);
+    };
 
     return (
         <div className="flex flex-col gap-6 w-full">
 
-            {/* BANNER */}
+            {/*BANNER*/}
             <Card>
                 <CardHeader>
                     <CardTitle>Imagine banner</CardTitle>
+                    <CardDescription>
+                        Această imagine va apărea în partea de sus a paginii protestului.
+                        Poți reîncadra imaginea după încărcare.
+                    </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent>
+                    <BannerUpload
+                        onImageReady={handleBannerReady}
+                        className="h-64 md:h-72"
+                    />
 
-                    <FileUpload
-                        value={bannerFiles}
-                        onValueChange={setBannerFiles}
-                        accept="image/*"
-                        maxFiles={1}
-                        maxSize={5 * 1024 * 1024}
-                    >
-                        <FileUploadTrigger asChild>
-                            <div className="group relative cursor-pointer overflow-hidden rounded-lg border-2 border-dashed">
-                                {bannerPreview ? (
-                                    <div className="relative aspect-[3/1]">
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img
-                                            src={bannerPreview}
-                                            alt="Cover"
-                                            className="h-full w-full object-cover"
-                                        />
-                                        <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                                            <span className="text-sm font-medium text-white">Click to change</span>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className="flex aspect-[3/1] flex-col items-center justify-center gap-2 bg-muted/50 transition-colors group-hover:bg-muted">
-                                        <ImagePlus className="size-8 text-muted-foreground" />
-                                        <span className="text-sm text-muted-foreground">Adaugă imagine banner</span>
-                                    </div>
-                                )}
-                            </div>
-                        </FileUploadTrigger>
-                    </FileUpload>
-
-                    {bannerPreview && (
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            className="mt-2 text-destructive"
-                            onClick={removeBanner}
-                        >
-                            <X className="mr-1 size-4" /> Remove banner
-                        </Button>
+                    {dataStates.banner.value && (
+                        <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                            <span className="w-2 h-2 bg-green-500 rounded-full" />
+                            Imagine optimizată și pregătită pentru salvare.
+                        </p>
                     )}
                 </CardContent>
             </Card>
 
-            {/* GALERIE */}
+            {/*GALERY*/}
             <Card>
                 <CardHeader>
                     <CardTitle>Pancarde pentru protest</CardTitle>
-                    <CardDescription>Adăugați aici pancartele pe care doriți ca participanții să le aducă la protest</CardDescription>
+                    <CardDescription>
+                        Adăugați aici pancartele pe care doriți ca participanții să le aducă la protest. Imaginile vor fi optimizate automat.
+                    </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
 
                     <FileUpload
                         value={dataStates.gallery.value}
-                        onValueChange={dataStates.gallery.set}
+                        onValueChange={handleGalleryChange}
                         multiple
                         maxFiles={20}
-                        maxSize={5 * 1024 * 1024}
+                        maxSize={10 * 1024 * 1024} // We increase the upload limit, because optimization occurs after
                         className="w-full"
                     >
                         <div className="w-50 mx-auto">
@@ -107,7 +97,9 @@ export default function VisualMediaStep({ dataStates }: VisualMediaStepProps) {
                                 <ImagePlus className="size-4 mx-auto mb-2" />
                                 <span className="text-sm mx-1">Trage imaginile aici sau</span>
                                 <FileUploadTrigger asChild>
-                                    <Button variant="link" size="sm" className="h-auto p-0">selectează fișiere</Button>
+                                    <Button variant="link" size="sm" className="h-auto p-0">
+                                        selectează fișiere
+                                    </Button>
                                 </FileUploadTrigger>
                             </FileUploadDropzone>
                         </div>
@@ -126,9 +118,8 @@ export default function VisualMediaStep({ dataStates }: VisualMediaStepProps) {
                             ))}
                         </FileUploadList>
                     </FileUpload>
-
                 </CardContent>
             </Card>
         </div>
-    )
+    );
 }
