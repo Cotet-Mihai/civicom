@@ -11,6 +11,7 @@ import useDefaultLocationStep from "@/app/(private)/creeaza/protest/hooks/Locati
 import useMarchStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useMarchStep";
 import useBoycottStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useBoycottStep";
 import useVisualMedia from "@/app/(private)/creeaza/protest/hooks/useVisualMedia";
+import useLogistics from "@/app/(private)/creeaza/protest/hooks/useLogisticsStep";
 
 
 
@@ -20,12 +21,14 @@ export default function ProtestFlow() {
     const basicInfo = useBasicInfo();
     const location = useLocationStep(basicInfo.states.type.value);
     const visualMedia = useVisualMedia();
+    const logistics = useLogistics();
 
     // All validators for every step
     const validators: (() => boolean)[] = [
         basicInfo.validator,
         location.validator,
-        visualMedia.validator
+        visualMedia.validator,
+        logistics.validator
     ]
 
 
@@ -78,11 +81,20 @@ export default function ProtestFlow() {
 
             }
 
-            case 3:
+            case 3: {
                 const Step = visualMedia.component
                 return {
                     component: <Step dataStates={visualMedia.states}/>
                 }
+            }
+
+            case 4: {
+                const Step = logistics.component
+                return {
+                    component: <Step dataStates={logistics.states}/>
+                }
+            }
+
         }
     }
 

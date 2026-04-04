@@ -108,3 +108,29 @@ export interface UseVisualMediaReturn {
     validator: () => boolean
     component: React.ComponentType<VisualMediaStepProps>
 }
+
+// types.ts (în același folder ca celelalte types pentru protest)
+
+export interface Contact {
+    firstName: string;
+    lastName: string;
+    mail: string;
+}
+
+export interface LogisticsStepStates {
+    participants: { value: number | null; set: (value: number | null) => void };
+    isUnlimited: { value: boolean; set: (value: boolean) => void };
+    equipment: { value: string[]; set: (value: string[]) => void };
+    safetyRules: { value: string; set: (value: string) => void };
+    contacts: { value: Contact[]; set: (value: Contact[]) => void };
+}
+
+export interface LogisticsStepProps {
+    dataStates: LogisticsStepStates;
+}
+
+export interface UseLogisticsStepReturn {
+    states: LogisticsStepStates;
+    validator: () => boolean;
+    component: React.ComponentType<LogisticsStepProps>;
+}

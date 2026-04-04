@@ -126,7 +126,7 @@ export function StepperUI({children, currentStep, handleNavigation, description}
                 })}
             </StepperPanel>
 
-            <div className="flex items-center justify-between gap-2.5">
+            <div className="flex items-center justify-between gap-2.5 mb-10">
                 <Button
                     variant="outline"
                     onClick={handleNavigation.prevStep}

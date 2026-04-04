@@ -4,7 +4,7 @@ import {type Brand} from "@/app/(private)/creeaza/protest/types";
 
 export function checkField(
     nameField: string,
-    field: string | undefined | Date | number | L.Marker | L.Polyline | L.Marker[] | L.Polyline[] | Brand[],
+    field: string | undefined | Date | number | L.Marker | L.Polyline | L.Marker[] | L.Polyline[] | Brand[] | null | string[],
     missingFields: string[]
 ): void {
 
