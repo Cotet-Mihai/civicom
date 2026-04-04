@@ -14,7 +14,6 @@ import useBoycottStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/
 
 import useVisualMedia from "@/app/(private)/creeaza/protest/hooks/useVisualMedia";
 import useLogistics from "@/app/(private)/creeaza/protest/hooks/useLogisticsStep";
-import {useEffect} from "react";
 
 
 
