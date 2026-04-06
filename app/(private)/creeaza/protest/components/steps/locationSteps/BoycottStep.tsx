@@ -2,6 +2,7 @@
 
 import React, {JSX, useState} from "react"
 import { Plus } from "lucide-react"
+
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -11,12 +12,12 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import {
-    BrandDialog,
-} from "@/app/(private)/creeaza/protest/components/brandDialog"
+
+import {BrandDialog} from "@/app/(private)/creeaza/protest/components/brandDialog"
 import {BrandViewDialog} from "@/app/(private)/creeaza/protest/components/brandViewDialog";
-import {type BoycottStepProps, type Brand} from "@/app/(private)/creeaza/protest/types";
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
+
+import {type BoycottStepProps, type Brand} from "@/app/(private)/creeaza/protest/types";
 
 
 
@@ -175,19 +176,27 @@ export default function BoycottStep({dataStates}: BoycottStepProps): JSX.Element
                                 <TooltipTrigger asChild>
                                     <Button
                                         variant="outline"
-                                        className="flex h-24 w-24 flex-col items-center justify-center gap-1.5 rounded-xl border-2 border-yellow-300 bg-yellow-300/10 hover:bg-yellow-300/30"
+                                        className="group relative flex h-24 w-38 flex-col items-center justify-center gap-2 rounded-xl border-2 border-yellow-300 bg-gradient-to-br from-yellow-200/20 to-yellow-400/10 hover:from-yellow-200/40 hover:to-yellow-400/20 transition-all overflow-hidden"
                                         onClick={() => openViewDialog(idx)}
                                     >
-                                        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-yellow-300 text-green-900 font-bold">
+                                        {/* Initial */}
+                                        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-yellow-300 text-green-900 font-bold shadow-sm">
                                             {brand.name.charAt(0).toUpperCase()}
                                         </span>
-                                        <span className="line-clamp-2 text-xs font-medium">
+
+                                        {/* Short name */}
+                                        <span className="max-w-[80%] truncate text-[11px] font-medium text-center text-foreground/80">
                                             {brand.name}
                                         </span>
                                     </Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <span>Apasă pentru a vedea detaliile</span>
+                                    <div className="flex flex-col">
+                                        <span className="font-semibold">{brand.name}</span>
+                                        <span className="text-xs text-muted-foreground">
+                                            Apasă pentru detalii
+                                        </span>
+                                    </div>
                                 </TooltipContent>
                             </Tooltip>
                         ))}

@@ -100,13 +100,12 @@ export function BannerUpload({ onImageReady, className }: BannerUploadProps) {
                         onCropChange={setCrop}
                         onZoomChange={setZoom}
                         onCropComplete={onCropComplete}
-                        objectFit="horizontal-cover"
                     />
                     {/* Instrucțiuni și Buton Salvare */}
                     <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3">
-            <span className="text-xs text-white bg-black/60 px-3 py-1 rounded-full backdrop-blur-sm">
-              Trage pentru a repoziționa imaginea
-            </span>
+                        <span className="text-xs text-white bg-black/60 px-3 py-1 rounded-full backdrop-blur-sm">
+                          Trage pentru a repoziționa imaginea
+                        </span>
                         <button
                             onClick={(e) => { e.stopPropagation(); handleApplyCrop(); }}
                             disabled={isProcessing}

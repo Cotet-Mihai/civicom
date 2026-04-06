@@ -41,7 +41,7 @@ export default function CalendarWithStartStopTime({date, fromTime, toTime}: Cale
                             id="date"
                             className="w-full justify-between font-normal"
                         >
-                            {date?.value ? date.value.toLocaleDateString() : "Selectează data"}
+                            {date?.value ? date.value.toLocaleDateString("ro-RO") : "Selectează data"}
                             <ChevronDownIcon/>
                         </Button>
                     </PopoverTrigger>
@@ -51,9 +51,15 @@ export default function CalendarWithStartStopTime({date, fromTime, toTime}: Cale
                             selected={date?.value}
                             captionLayout="dropdown"
                             onSelect={(e: Date | undefined) => {
-                                if (!e) return
-                                date.set(e)
-                                setOpen(false)
+                                if (!e) return;
+                                date.set(e);
+                                setOpen(false);
+                            }}
+                            // Disable all dates before today
+                            disabled={(currentDate: Date) => {
+                                const today = new Date();
+                                today.setHours(0, 0, 0, 0); // reset la 00:00
+                                return currentDate < today; // true => disabled
                             }}
                         />
                     </PopoverContent>
@@ -67,7 +73,7 @@ export default function CalendarWithStartStopTime({date, fromTime, toTime}: Cale
                     <Input
                         type="time"
                         id="time-from"
-                        step="1"
+                        step="60"
                         value={fromTime.value}
                         onChange={(e) =>
                             fromTime.set(e.target.value)
@@ -82,7 +88,7 @@ export default function CalendarWithStartStopTime({date, fromTime, toTime}: Cale
                     <Input
                         type="time"
                         id="time-to"
-                        step="1"
+                        step="60"
                         value={toTime.value}
                         onChange={(e) =>
                             toTime.set(e.target.value)

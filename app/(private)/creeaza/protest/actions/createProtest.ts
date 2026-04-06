@@ -106,7 +106,7 @@ async function createLocationsRoutes({ location_id, dataMarchLocation }: { locat
     const supabase = await createClient();
 
     const { error } = await supabase
-        .from('event_location_points')
+        .from('event_location_routes')
         .insert([
             {
                 location_id: location_id,
@@ -183,7 +183,7 @@ async function createEventBoycotts({ event, dataBoycotts }: { event: Event; data
 async function createEventBanner({ event, banner }: { event: Event, banner: File }) {
     const supabase = await createClient();
 
-    const filePath = `events/${event.id}/banner-${Date.now()}-${banner.name}`;
+    const filePath = `events/protest/${event.id}/banner-${Date.now()}-${banner.name}`;
 
     const { error } = await supabase.storage
         .from("banners")
@@ -203,7 +203,7 @@ async function createEventGallery({ event, gallery }: { event: Event, gallery: F
     const supabase = await createClient();
 
     const uploadPromises = gallery.map((file, index) => {
-        const filePath = `events/${event.id}/gallery-${Date.now()}-${index}-${file.name}`;
+        const filePath = `events/protest/${event.id}/gallery-${Date.now()}-${index}-${file.name}`;
 
         return supabase.storage
             .from("banners")

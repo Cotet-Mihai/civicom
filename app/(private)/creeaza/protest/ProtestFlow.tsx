@@ -69,9 +69,6 @@ export default function ProtestFlow() {
 
         } catch (err) {
             console.error("Submit error:", err);
-
-            // ❌ error toast
-            // toast.error("A apărut o eroare!");
         } finally {
             setIsSubmitting(false);
         }

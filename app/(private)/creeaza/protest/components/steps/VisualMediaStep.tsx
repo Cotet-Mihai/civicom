@@ -88,6 +88,7 @@ export default function VisualMediaStep({ dataStates }: VisualMediaStepProps) {
                         value={dataStates.gallery.value}
                         onValueChange={handleGalleryChange}
                         multiple
+                        accept="image/*"
                         maxFiles={20}
                         maxSize={10 * 1024 * 1024} // We increase the upload limit, because optimization occurs after
                         className="w-full"
