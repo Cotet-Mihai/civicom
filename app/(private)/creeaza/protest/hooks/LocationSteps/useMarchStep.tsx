@@ -24,8 +24,12 @@ export default function useMarchStep(): UseMarchStepReturn {
     function getData(): DataMarchLocation {
         const latLngs = polyline?.getLatLngs() as L.LatLng[];
 
+        if (!latLngs) return {
+            polylines: []
+        } ;
+
         const pointsArray: number[][] = [];
-        latLngs.forEach((point) => {
+        latLngs.map((point) => {
             pointsArray.push([point.lat, point.lng]);
         });
 

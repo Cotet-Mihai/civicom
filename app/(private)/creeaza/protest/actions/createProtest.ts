@@ -14,11 +14,15 @@ import {
 async function createEventBasicInfo({ event, dataBasicInfo }: { event: Event, dataBasicInfo: DataBasicInfo }) {
     const supabase = await createClient();
 
-    const formattedDate = dataBasicInfo.date?.toString().split("T")[0];
+    const formatDate = (value: string | undefined) => {
+        if (!value) return ;
+        const date = new Date(value);
 
-    const formatTime = (time?: string) => {
-        if (!time) return null;
-        return time.length === 5 ? `${time}:00` : time;
+        if (isNaN(date.getTime())) {
+            throw new Error("Invalid date");
+        }
+
+        return date.toISOString().split("T")[0];
     };
 
     const { error } = await supabase
@@ -29,9 +33,9 @@ async function createEventBasicInfo({ event, dataBasicInfo }: { event: Event, da
                 title: dataBasicInfo.title,
                 description: dataBasicInfo.description,
                 protest_type: dataBasicInfo.type,
-                date: formattedDate,
-                from_time: formatTime(dataBasicInfo.fromTime),
-                to_time: formatTime(dataBasicInfo.toTime),
+                date: formatDate(dataBasicInfo.date), // ✅ FIX
+                from_time: dataBasicInfo.fromTime,     // deja bun
+                to_time: dataBasicInfo.toTime,         // deja bun
             },
         ]);
 
@@ -47,7 +51,7 @@ async function createLocations({ event, dataBasicInfo, dataMarchLocation, dataBo
     const supabase = await createClient();
 
     const { data, error } = await supabase
-        .from('event_location')
+        .from('event_locations')
         .insert([
             {
                 event_id: event.id,
@@ -319,17 +323,22 @@ async function createEventLogistics({ event, dataLogistics }: { event: Event; da
 
 export async function createProtest(
     dataBasicInfo: DataBasicInfo,
-    dataLogistics: DataLogistics,
-    dataMedia: DataMedia,
-    dataBoycotts: DataBoycott,
+    dataGathering: DataDefaultLocation,
     dataMarchLocation: DataMarchLocation,
-    dataDefaultLocation: DataDefaultLocation
+    dataPicketLocation: DataDefaultLocation,
+    dataBoycotts: DataBoycott,
+    dataMedia: DataMedia,
+    dataLogistics: DataLogistics
 ): Promise<Event> {
     const { event } = await createEvent("protest");
 
     await createEventBasicInfo({ event, dataBasicInfo });
 
-    await createLocations( {event, dataBasicInfo, dataMarchLocation, dataBoycotts, dataDefaultLocation })
+    if (dataBasicInfo.type === 'gathering') {
+        await createLocations( {event, dataBasicInfo, dataMarchLocation, dataBoycotts, dataDefaultLocation: dataGathering })
+    } else {
+        await createLocations( {event, dataBasicInfo, dataMarchLocation, dataBoycotts, dataDefaultLocation: dataPicketLocation })
+    }
 
     await createEventMedia({ event, dataMedia });
 
