@@ -1,5 +1,3 @@
-"use client"
-
 import {Dispatch, ReactNode, SetStateAction} from "react"
 import { Badge } from "@/components/reui/badge"
 import {
@@ -32,10 +30,11 @@ type StepperFlowProps = {
         nextStep: () => void,
         prevStep: () => void
     },
-    description?: string
+    description?: string,
+    isSubmitting?: boolean
 }
 
-export function StepperUI({children, currentStep, handleNavigation, description}: StepperFlowProps) {
+export function StepperUI({children, currentStep, handleNavigation, description, isSubmitting}: StepperFlowProps) {
 
     return (
         <Stepper
@@ -137,9 +136,18 @@ export function StepperUI({children, currentStep, handleNavigation, description}
                 <Button
                     variant="outline"
                     onClick={handleNavigation.nextStep}
-                    disabled={currentStep.value === steps.length}
+                    disabled={isSubmitting}
                 >
-                    {currentStep.value === steps.length ? 'Trimite' : 'Următorul'}
+                    {isSubmitting ? (
+                        <span className="flex items-center gap-2">
+                            <LoaderCircleIcon className="animate-spin size-4" />
+                            Se trimite...
+                        </span>
+                    ) : currentStep.value === steps.length ? (
+                        'Trimite'
+                    ) : (
+                        'Următorul'
+                    )}
                 </Button>
             </div>
         </Stepper>

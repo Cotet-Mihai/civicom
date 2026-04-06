@@ -1,23 +1,25 @@
 'use client'
 
+import {useState} from "react";
+
 import {StepperUI} from "@/app/(private)/creeaza/protest/components/StepperUI";
 
 import useNavigation from "@/app/(private)/creeaza/protest/hooks/useNavigation";
 import useBasicInfo from "@/app/(private)/creeaza/protest/hooks/useBasicInfo";
 import useLocationStep from "@/app/(private)/creeaza/protest/hooks/useLocationStep";
 
-
 import useDefaultLocationStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useDefaultLocationStep";
 import useMarchStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useMarchStep";
 import useBoycottStep from "@/app/(private)/creeaza/protest/hooks/LocationSteps/useBoycottStep";
 
-
 import useVisualMedia from "@/app/(private)/creeaza/protest/hooks/useVisualMedia";
 import useLogistics from "@/app/(private)/creeaza/protest/hooks/useLogisticsStep";
 
-
+import { createProtest } from '@/app/(private)/creeaza/protest/actions/createProtest';
 
 export default function ProtestFlow() {
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
     // Hooks for every step
     const basicInfo = useBasicInfo();
     const location = useLocationStep(basicInfo.states.type.value);
@@ -32,8 +34,45 @@ export default function ProtestFlow() {
         logistics.validator
     ]
 
+    const dataBasicInfo = basicInfo.data
+    const dataLocation = location.data
+    const dataMedia = visualMedia.data
+    const dataLogistics = logistics.data
+
+    async function handleSubmit() {
+        try {
+            setIsSubmitting(true);
+
+            // await createProtest({
+            //     title: basicInfo.states.title.value,
+            //     description: basicInfo.states.description.value,
+            //     date: basicInfo.states.date.value!.toISOString(),
+            //     fromTime: basicInfo.states.fromTime.value,
+            //     toTime: basicInfo.states.toTime.value,
+            //     type: basicInfo.states.type.value,
+            // });
+
+            // ✅ success toast
+            // dacă folosești sonner / react-hot-toast:
+            // toast.success("Protest creat cu succes!");
+
+            console.log("Protest created successfully");
+
+            // ✅ redirect
+            window.location.href = "/proteste"; // sau router.push
+
+        } catch (err) {
+            console.error("Submit error:", err);
+
+            // ❌ error toast
+            // toast.error("A apărut o eroare!");
+        } finally {
+            setIsSubmitting(false);
+        }
+    }
+
     // Hook for navigation
-    const { currentStepState, handleNavigation } = useNavigation(validators);
+    const { currentStepState, handleNavigation} = useNavigation(validators, handleSubmit, isSubmitting);
 
     // Depending on the current step returns the component with its parameters and description for Stepper
     // (if a particular step does not exist, the first step is returned)
@@ -46,7 +85,6 @@ export default function ProtestFlow() {
                     description: ''
                 }
             }
-
             case 2: {
                 switch (basicInfo.states.type.value) {
                     default: {
@@ -57,7 +95,6 @@ export default function ProtestFlow() {
                             component: <Step dataStates={gathering.states} />,
                         };
                     }
-
                     case "march": {
                         const march = location as ReturnType<typeof useMarchStep>;
                         const Step = march.component;
@@ -68,7 +105,6 @@ export default function ProtestFlow() {
                             description: description
                         };
                     }
-
                     case "boycott": {
                         const boycott = location as ReturnType<typeof useBoycottStep>;
                         const Step = boycott.component;
@@ -78,23 +114,19 @@ export default function ProtestFlow() {
                         };
                     }
                 }
-
             }
-
             case 3: {
                 const Step = visualMedia.component
                 return {
                     component: <Step dataStates={visualMedia.states}/>
                 }
             }
-
             case 4: {
                 const Step = logistics.component
                 return {
                     component: <Step dataStates={logistics.states}/>
                 }
             }
-
         }
     }
 
@@ -106,6 +138,7 @@ export default function ProtestFlow() {
                 currentStep={currentStepState}
                 handleNavigation={handleNavigation}
                 description={description}
+                isSubmitting={isSubmitting}
             >
                 {component}
             </StepperUI>

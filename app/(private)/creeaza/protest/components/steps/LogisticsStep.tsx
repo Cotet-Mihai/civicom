@@ -44,21 +44,21 @@ export default function LogisticsStep({ dataStates }: LogisticsStepProps) {
                 <div className="flex gap-3 items-center">
                     <ToggleGroup
                         type="single"
-                        value={dataStates.isUnlimited.value ? "yes" : "no"}
-                        onValueChange={(v) => dataStates.isUnlimited.set(v === "yes")}
+                        value={dataStates.isLimited.value ? "yes" : "no"}
+                        onValueChange={(v) => dataStates.isLimited.set(v==='yes')}
                         className={'border'}
                     >
                         <ToggleGroupItem
-                            value="no"
+                            value="yes"
                             className={'data-[state=on]:bg-yellow-300 data-[state=on]:text-green-900'}
                         >Limitat</ToggleGroupItem>
 
                         <ToggleGroupItem
-                            value="yes"
+                            value="no"
                             className={'data-[state=on]:bg-yellow-300 data-[state=on]:text-green-900'}
                         >Nelimitat</ToggleGroupItem>
                     </ToggleGroup>
-                    {!dataStates.isUnlimited.value && (
+                    {dataStates.isLimited.value && (
                         <Input
                             type="number"
                             placeholder="Ex: 3000"

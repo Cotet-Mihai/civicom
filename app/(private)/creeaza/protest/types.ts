@@ -13,6 +13,15 @@ export type BasicInfoStates = {
     type: {value: ProtestType, set: Dispatch<SetStateAction<ProtestType>>}
 }
 
+export type DataBasicInfo = {
+    title: string,
+    description: string,
+    date: string | undefined,
+    fromTime: string,
+    toTime: string,
+    type: string
+};
+
 export type BasicInfoStepProps = {
     dataStates: BasicInfoStates
 }
@@ -20,7 +29,13 @@ export type BasicInfoStepProps = {
 export type UseBasicInfoReturn = {
     states: BasicInfoStates,
     validator: () => boolean,
-    component: ({dataStates}: BasicInfoStepProps) => JSX.Element
+    component: ({dataStates}: BasicInfoStepProps) => JSX.Element,
+    data: DataBasicInfo
+}
+
+export type DataDefaultLocation = {
+    lat: number | undefined,
+    lng: number | undefined
 }
 
 export type DefaultLocationStates = {
@@ -29,12 +44,17 @@ export type DefaultLocationStates = {
 
 export type UseDefaultLocationStepReturn = {
     states: DefaultLocationStates,
+    data: DataDefaultLocation,
     validator: () => boolean,
     component: React.ComponentType<DefaultLocationStepProps>,
 }
 
 export type DefaultLocationStepProps = {
     dataStates: DefaultLocationStates
+}
+
+export type DataMarchLocation = {
+    polylines: number[][]
 }
 
 export type MarchStates = {
@@ -47,14 +67,21 @@ export type MarchStepProps = {
 
 export type UseMarchStepReturn = {
     states: MarchStates,
+    data: DataMarchLocation,
     validator: () => boolean,
     component: React.ComponentType<MarchStepProps>,
 }
 
+export type DataBoycott = {
+    reason: string
+    method: string
+    brands: Brand[]
+};
+
 
 export type BoycottStates = {
     reason: { value: string, set: Dispatch<SetStateAction<string>>}
-    operation: { value: string, set: Dispatch<SetStateAction<string>>}
+    method: { value: string, set: Dispatch<SetStateAction<string>>}
     brands: { value: Brand[], set: Dispatch<SetStateAction<Brand[]>>}
 }
 
@@ -64,13 +91,14 @@ export type BoycottStepProps = {
 
 export type UseBoycottStepReturn = {
     states: BoycottStates,
+    data: DataBoycott,
     validator: () => boolean,
     component: React.ComponentType<BoycottStepProps>,
 }
 
 
 export type Alternative = {
-    title: string
+    name: string
     link: string
     reason: string
 }
@@ -88,10 +116,15 @@ export type BrandDialogProps = {
     initialData?: Brand | null
 }
 
+export interface DataMedia {
+    banner?: File,
+    gallery: File[]
+}
+
 export interface VisualMediaStates {
     banner: {
-        value: File | null
-        set: (value: File | null) => void
+        value?: File
+        set: (value: File) => void
     }
     gallery: {
         value: File[]
@@ -105,11 +138,11 @@ export interface VisualMediaStepProps {
 
 export interface UseVisualMediaReturn {
     states: VisualMediaStates
+    data: DataMedia
     validator: () => boolean
     component: React.ComponentType<VisualMediaStepProps>
 }
 
-// types.ts (în același folder ca celelalte types pentru protest)
 
 export interface Contact {
     firstName: string;
@@ -117,9 +150,17 @@ export interface Contact {
     mail: string;
 }
 
+export interface DataLogistics {
+    participants: number
+    isLimited: boolean
+    equipment: string[]
+    safetyRules: string
+    contacts: Contact[]
+}
+
 export interface LogisticsStepStates {
-    participants: { value: number | null; set: (value: number | null) => void };
-    isUnlimited: { value: boolean; set: (value: boolean) => void };
+    participants: { value: number | null; set: (value: number) => void };
+    isLimited: { value: boolean; set: (value: boolean) => void };
     equipment: { value: string[]; set: (value: string[]) => void };
     safetyRules: { value: string; set: (value: string) => void };
     contacts: { value: Contact[]; set: (value: Contact[]) => void };
@@ -131,6 +172,7 @@ export interface LogisticsStepProps {
 
 export interface UseLogisticsStepReturn {
     states: LogisticsStepStates;
+    data: DataLogistics;
     validator: () => boolean;
     component: React.ComponentType<LogisticsStepProps>;
 }

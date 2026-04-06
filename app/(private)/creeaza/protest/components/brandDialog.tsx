@@ -41,7 +41,7 @@ export function BrandDialog({
     const isSaveDisabled =
         !name.trim() ||
         !link.trim() ||
-        alternatives.some((alt) => !alt.title.trim() || !alt.link.trim());
+        alternatives.some((alt) => !alt.name.trim() || !alt.link.trim());
 
     useEffect(() => {
         if (open) {
@@ -58,7 +58,7 @@ export function BrandDialog({
     }
 
     function addAlternative() {
-        setAlternatives((prev) => [...prev, { title: "", link: "", reason: "" }])
+        setAlternatives((prev) => [...prev, { name: "", link: "", reason: "" }])
     }
 
     function updateAlternative(
@@ -204,9 +204,9 @@ export function BrandDialog({
                                                 <Input
                                                     id={`alt-title-${idx}`}
                                                     placeholder="Nume alternativă"
-                                                    value={alt.title}
+                                                    value={alt.name}
                                                     onChange={(e) =>
-                                                        updateAlternative(idx, "title", e.target.value)
+                                                        updateAlternative(idx, "name", e.target.value)
                                                     }
                                                 />
                                             </div>

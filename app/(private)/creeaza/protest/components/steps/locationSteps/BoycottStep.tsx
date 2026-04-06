@@ -121,8 +121,8 @@ export default function BoycottStep({dataStates}: BoycottStepProps): JSX.Element
                     <ToggleGroup
                         type="single"
                         className={'border'}
-                        value={dataStates.operation.value}
-                        onValueChange={(e) =>  dataStates.operation.set(e)}
+                        value={dataStates.method.value}
+                        onValueChange={(e) =>  dataStates.method.set(e)}
                     >
                         <ToggleGroupItem
                             value="not buying anymore"
