@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import {
     Calendar, Clock, MapPin, Users, Phone, Mail,
     Ban, Navigation, ShieldCheck, Info, Share2,
@@ -26,7 +27,7 @@ const ActionButton = ({ icon: Icon, label }) => (
     </button>
 );
 
-const ProtestPage = () => {
+export default function ProtestPage(){
     return (
         <div className="min-h-screen bg-[#fafafa] text-foreground p-4 md:p-12 font-sans selection:bg-primary/10">
             <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -35,19 +36,23 @@ const ProtestPage = () => {
                 <div className="lg:col-span-8 space-y-8">
 
                     {/* BANNER PRINCIPAL */}
-                    <div className="relative group rounded-3xl overflow-hidden border border-border shadow-xl">
+                    {/* Am mutat aspect-[21/9] pe containerul părinte și am adăugat w-full */}
+                    <div className="relative w-full aspect-[21/9] group rounded-3xl overflow-hidden border border-border shadow-xl">
                         {/* Badge finuț peste banner */}
-                        <div className="absolute top-4 left-4 z-10">
+                        <div className="absolute top-4 left-4 z-20">
                             <Badge>Protest: Marș</Badge>
                         </div>
 
-                        <img
+                        <Image
                             src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1400"
-                            className="w-full h-[450px] object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                            alt="Banner"
+                            fill
+                            priority
+                            sizes="(max-width: 1024px) 100vw, 66vw"
+                            className="object-cover transition-transform duration-700 group-hover:scale-[1.02] z-0"
+                            alt="Banner Protest"
                         />
                         {/* Gradient subtil intern pentru contrast */}
-                        <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.1)] pointer-events-none" />
+                        <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.1)] pointer-events-none z-10" />
                     </div>
 
                     {/* HEADER TEXT SECTION */}
@@ -93,11 +98,14 @@ const ProtestPage = () => {
                         </h3>
                         <div className="grid grid-cols-4 gap-3">
                             {[1, 2, 3, 4].map((i) => (
-                                <div key={i} className="aspect-[4/3] rounded-xl bg-muted overflow-hidden border border-border shadow-sm cursor-pointer group">
-                                    <img
+                                // Am adăugat 'relative' pe container pentru a permite `fill` pe Image
+                                <div key={i} className="relative aspect-[4/3] rounded-xl bg-muted overflow-hidden border border-border shadow-sm cursor-pointer group">
+                                    <Image
                                         src={`https://images.unsplash.com/photo-1621252179027-94459d278660?q=80&w=300&auto=format&fit=crop`}
-                                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                                        alt="Gallery"
+                                        fill
+                                        sizes="(max-width: 1024px) 25vw, 15vw"
+                                        className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                                        alt={`Galerie foto ${i}`}
                                     />
                                 </div>
                             ))}
@@ -168,9 +176,15 @@ const ProtestPage = () => {
 
                     {/* TRASEU */}
                     <Card className="p-1.5 bg-white">
-                        <div className="aspect-square bg-muted rounded-xl overflow-hidden relative border border-border">
-                            <img src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/26.10,44.43,12/400x400?access_token=xxx" className="w-full h-full object-cover grayscale opacity-50 hover:opacity-70 transition-opacity" alt="Map"/>
-                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="relative aspect-square bg-muted rounded-xl overflow-hidden border border-border">
+                            <Image
+                                src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/26.10,44.43,12/400x400?access_token=xxx"
+                                fill
+                                sizes="(max-width: 1024px) 100vw, 33vw"
+                                className="object-cover grayscale opacity-50 hover:opacity-70 transition-opacity z-0"
+                                alt="Map"
+                            />
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
                                 <div className="bg-white/95 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-border shadow-lg flex items-center gap-2">
                                     <MapPin size={16} className="text-primary" />
                                     <span className="text-xs font-black uppercase tracking-tight">Piața Victoriei</span>
@@ -179,12 +193,11 @@ const ProtestPage = () => {
                         </div>
                     </Card>
 
-                    {/* PERSOANE DE CONTACT (Reparat) */}
+                    {/* PERSOANE DE CONTACT */}
                     <div className="p-6 rounded-2xl bg-muted/30 border border-border space-y-5">
                         <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Persoane de contact</p>
 
                         <div className="space-y-4">
-                            {/* Un card de contact */}
                             <div className="flex items-center justify-between group">
                                 <div className="flex items-center gap-3">
                                     <div className="size-10 rounded-full bg-white border border-border flex items-center justify-center font-black text-xs text-primary shadow-sm">
@@ -195,7 +208,6 @@ const ProtestPage = () => {
                                         <a href="mailto:andrei@protest.ro" className="text-[10px] text-muted-foreground hover:text-primary transition-colors">andrei@protest.ro</a>
                                     </div>
                                 </div>
-                                {/* Acțiuni contact aliniate în dreapta */}
                                 <div className="flex gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
                                     <a href="tel:#" className="p-2 bg-white border border-border rounded-lg text-primary hover:bg-muted transition-colors shadow-sm">
                                         <Phone size={14}/>
@@ -214,5 +226,3 @@ const ProtestPage = () => {
         </div>
     );
 };
-
-export default ProtestPage;

@@ -206,7 +206,7 @@ async function createEventGallery({ event, gallery }: { event: Event, gallery: F
         const filePath = `events/protest/${event.id}/gallery-${Date.now()}-${index}-${file.name}`;
 
         return supabase.storage
-            .from("banners")
+            .from("gallery")
             .upload(filePath, file)
             .then(({ error }) => {
                 if (error) throw new Error(error.message);
