@@ -62,7 +62,7 @@ export default function VisualMediaStep({ dataStates }: VisualMediaStepProps) {
                 <CardContent>
                     <BannerUpload
                         onImageReady={handleBannerReady}
-                        className="h-64 md:h-72"
+                        className="aspect-[21/9]"
                     />
 
                     {dataStates.banner.value && (

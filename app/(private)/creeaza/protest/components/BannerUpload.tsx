@@ -74,7 +74,7 @@ export function BannerUpload({ onImageReady, className }: BannerUploadProps) {
     return (
         <div
             {...getRootProps()}
-            className={`relative w-full h-64 overflow-hidden rounded-xl border-2 transition-colors duration-200 group flex items-center justify-center bg-muted/50 ${
+            className={`relative w-full aspect-[21/9] overflow-hidden rounded-xl border-2 transition-colors duration-200 group flex items-center justify-center bg-muted/50 ${
                 isDragActive ? "border-primary bg-primary/5" : "border-dashed border-muted-foreground/30"
             } ${className || ""}`}
         >
