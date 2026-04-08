@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
                 protocol: 'https',
                 hostname: 'bslgppjjtfropjzccetj.supabase.co',
             },
+            {
+                protocol: 'https',
+                hostname: 'images.unsplash.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'api.mapbox.com',
+            }
         ],
     },
 };

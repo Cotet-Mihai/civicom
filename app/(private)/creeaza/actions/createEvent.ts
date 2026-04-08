@@ -6,6 +6,7 @@ export type Event = {
     id: string;
     type: string;
     created_by: string;
+    created_by_display_name: string;
     created_at: string;
     status: string;
 };
@@ -24,12 +25,15 @@ export async function createEvent(type: string):
         throw new Error("User not authenticated");
     }
 
+    const display_name = user.user_metadata.display_name
+
     const { data, error } = await supabase
         .from("events")
         .insert([
             {
                 type: type,
-                created_by: user.id
+                created_by: user.id,
+                created_by_display_name: display_name
             },
         ])
         .select();
