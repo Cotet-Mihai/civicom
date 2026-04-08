@@ -1,12 +1,26 @@
 import Image from "next/image";
-import {getEvent} from "@/app/(public)/eveniment/actions/getEvent";
+import {getEvent, getEventParticipantsCount, incrementEventViews} from "@/app/(public)/eveniment/actions/Event";
 import {Badge} from "@/components/ui/badge";
 import React from "react";
-import {Calendar, CalendarPlus, Camera, Clock, Eye, Info, Printer, Share2, ShieldCheck} from "lucide-react";
+import {
+    Calendar,
+    CalendarPlus,
+    Camera,
+    Clock,
+    Eye,
+    Info,
+    Mail,
+    Printer,
+    Share2,
+    ShieldCheck
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import GalleryCarouselWithModal from "@/app/(private)/creeaza/protest/components/GalleryCarouselWithModal";
 import {Card} from "@/components/ui/card";
 import {MapWithPolyline} from "@/app/(public)/components/MapWithPolyline";
+import Link from "next/link";
+import {ConfirmAttendanceButton} from "@/app/(public)/components/ConfirmAttendanceButton";
+import {AddToCalendarButton, PrintButton, ShareButton} from "@/app/(public)/components/actionButtons";
 
 type Props = {
     params: Promise<{
@@ -22,11 +36,23 @@ type Media = {
     created_at: string
 }
 
+type Contact = {
+    id: string,
+    email: string,
+    event_id: string,
+    last_name: string,
+    first_name: string
+}
+
 export default async function EventPage({ params }: Props) {
+
     const { id } = await params;
 
     const event = await getEvent(id);
     console.log(event)
+
+    await incrementEventViews(id);
+
 
     const basicInfo = event.event_basic_info[0];
     const logistics = event.event_logistics[0];
@@ -62,6 +88,7 @@ export default async function EventPage({ params }: Props) {
         return firstTwo.map(word => word.slice(0, 1)).join("");
     }
 
+    console.log(location[0][0], location[0][1])
 
     return (
         <main className={'min-h-screen text-foreground p-4 md:p-12 fonts-sans selection:bg-primary/10'}>
@@ -95,7 +122,7 @@ export default async function EventPage({ params }: Props) {
                                     <span className="flex items-center gap-1.5"><Clock size={14} className="text-primary"/>{basicInfo.from_time.slice(0, 5)} - {basicInfo.to_time.slice(0, 5)}</span>
                                 </div>
                                 <div className="flex items-center gap-1.5 opacity-80 bg-muted px-2.5 py-1 rounded-md text-xs font-bold border border-border/50">
-                                    <Eye size={14}/> <span>2,405 vizualizări</span>
+                                    <Eye size={14}/> <span>{event.views} vizualizări</span>
                                 </div>
                             </div>
 
@@ -110,20 +137,9 @@ export default async function EventPage({ params }: Props) {
                             </p>
 
                             <div className="flex flex-wrap items-center justify-end gap-2 pt-4">
-                                <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                                    <Share2 className="w-4 h-4" />
-                                    Share
-                                </Button>
-
-                                <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                                    <CalendarPlus className="w-4 h-4" />
-                                    Adaugă în Calendar
-                                </Button>
-
-                                <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                                    <Printer className="w-4 h-4" />
-                                    Print materiale
-                                </Button>
+                                <ShareButton />
+                                <AddToCalendarButton basicInfo={basicInfo} />
+                                <PrintButton />
                             </div>
                         </div>
                     </div>
@@ -132,21 +148,19 @@ export default async function EventPage({ params }: Props) {
                         <h3 className="text-xs font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                             <Camera size={14}/> Galerie Foto
                         </h3>
-                        <div className={'grid grid-cols-8'}>
+                        <div className={'grid grid-cols-1'}>
                             <GalleryCarouselWithModal gallery={gallery}/>
                         </div>
                     </section>
 
                     {/* REGULI & ECHIPAMENT */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-border">
+                    <div className="grid grid-cols-1 md:grid-cols-[3fr_1fr] gap-8 pt-8 border-t border-border">
                         <div className="space-y-3">
                             <h4 className="font-bold text-xs uppercase tracking-widest flex items-center gap-2">
-                                <ShieldCheck size={16} className="text-primary"/> Reguli Siguranță
+                                <ShieldCheck size={16} className="text-primary"/> Reguli de Siguranță
                             </h4>
                             <ul className="space-y-2 text-sm text-muted-foreground leading-relaxed">
-                                <li>• Protest pașnic, fără violență verbală.</li>
-                                <li>• Urmați instrucțiunile echipei de ordine.</li>
-                                <li>• Fără materiale pirotehnice.</li>
+                                {logistics.rules}
                             </ul>
                         </div>
                         <div className="space-y-3">
@@ -154,9 +168,9 @@ export default async function EventPage({ params }: Props) {
                                 <Info size={16} className="text-primary"/> Echipament Sugerat
                             </h4>
                             <ul className="space-y-2 text-sm text-muted-foreground leading-relaxed">
-                                {logistics.equipment.map((e: string) => {
-                                    return <li key={e}>• {e}</li>;
-                                })}
+                                {logistics.equipment.map((e: string) => (
+                                    <li key={e}>• {e}</li>
+                                ))}
                             </ul>
                         </div>
                     </div>
@@ -179,22 +193,62 @@ export default async function EventPage({ params }: Props) {
                                 <p className="text-[10px] font-black uppercase text-muted-foreground tracking-widest">Participanți estimați</p>
                                 <div className="flex items-baseline gap-1.5">
                                     <span className="text-3xl font-black italic tracking-tighter text-primary">
-                                        0 / {logistics.is_limited ? logistics.max_participants : '∞'}
+                                        {await getEventParticipantsCount(event.id)} / {logistics.is_limited ? logistics.max_participants : '∞'}
                                     </span>
                                 </div>
                             </div>
                         </div>
 
-                        <Button className={'uppercase font-bold'}>
-                            confirmă prezența
-                        </Button>
+                        <ConfirmAttendanceButton eventId={id} />
                     </Card>
 
-                    <Card className="p-1.5 bg-white">
+                    <Card className="p-1.5">
                         <div className="relative aspect-square bg-muted rounded-xl overflow-hidden border border-border">
                             <MapWithPolyline event_location_routes={location}/>
                         </div>
+                        <Button asChild
+                                className="uppercase font-bold">
+                            <Link
+                                target="_blank"
+                                href={`https://www.google.com/maps/search/?api=1&query=${location[0][0]},${location[0][1]}`}
+                            >
+                                Arată-mi punctul de start
+                            </Link>
+                        </Button>
                     </Card>
+
+                    {/* PERSOANE DE CONTACT */}
+                    <div className="p-6 rounded-2xl bg-muted/30 border border-border space-y-5">
+                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Persoane de contact</p>
+
+                        {event.event_contacts.map((contact: Contact) => (
+                            <div key={contact.email} className="flex items-center justify-between group border-b pb-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="size-10 rounded-full bg-white border border-border flex items-center justify-center font-black text-xs text-primary shadow-sm">
+                                        {getInitialsFromName(`${contact.last_name} ${contact.first_name}`)}
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-black uppercase tracking-tighter">
+                                            {contact.last_name} {contact.first_name}
+                                        </p>
+                                        <span className="text-[10px] text-muted-foreground hover:text-primary transition-colors">
+                                            {contact.email}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
+                                    <a
+                                        href={`mailto:${contact.email}`}
+                                        className="p-2 bg-white border border-border rounded-lg text-primary hover:bg-muted transition-colors shadow-sm"
+                                    >
+                                        <Mail size={14}/>
+                                    </a>
+                                </div>
+                            </div>
+                        ))}
+
+                    </div>
                 </aside>
             </div>
         </main>
