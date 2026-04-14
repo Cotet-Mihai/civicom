@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from "react";
-import {ProtestType, UseBasicInfoReturn} from "@/app/(private)/creeaza/protest/types";
+import {DataBasicInfo, ProtestType, UseBasicInfoReturn} from "@/app/(private)/creeaza/protest/types";
 import BasicInfoStep from "@/app/(private)/creeaza/protest/components/steps/BasicInfoStep";
 import {checkField, showErrorToast} from "@/app/(private)/creeaza/protest/utils";
 
@@ -34,6 +34,17 @@ export default function useBasicInfo(): UseBasicInfoReturn {
         return true;
     }
 
+    function getData(): DataBasicInfo {
+        return {
+            title: title,
+            description: description,
+            date: date?.toString(),
+            fromTime: fromTime,
+            toTime: toTime,
+            type: type
+        }
+    }
+
     return {
         states: {
             title: {value: title, set: setTitle},
@@ -43,7 +54,8 @@ export default function useBasicInfo(): UseBasicInfoReturn {
             toTime: {value: toTime, set: setToTime},
             type: {value: type, set: setType}
         },
+        data: getData(),
         validator: validateData,
-        component: BasicInfoStep
+        component: BasicInfoStep,
     }
 }

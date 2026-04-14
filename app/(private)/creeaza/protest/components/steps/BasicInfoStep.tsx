@@ -14,7 +14,7 @@ export default function BasicInfoStep({dataStates}: BasicInfoStepProps) {
         <div className="flex flex-col gap-5 w-full">
 
             <div className="flex flex-col justify-center gap-2">
-                <span>Ce tip de protest este ?</span>
+                <Label>Ce tip de protest este ?</Label>
                 <ToggleGroup
                     type="single"
                     className={'border'}
@@ -53,7 +53,7 @@ export default function BasicInfoStep({dataStates}: BasicInfoStepProps) {
             </div>
 
             <div className="flex flex-col gap-2">
-                <Label htmlFor="title">Titlu</Label>
+                <Label>Titlu</Label>
                 <Input
                     id="title"
                     placeholder="Adaugă titlul protestului"
@@ -63,7 +63,7 @@ export default function BasicInfoStep({dataStates}: BasicInfoStepProps) {
             </div>
 
             <div className="flex flex-col gap-2">
-                <Label htmlFor="description">Descriere</Label>
+                <Label>Descriere</Label>
                 <Textarea
                     id="description"
                     placeholder="Adaugă descrierea aici..."

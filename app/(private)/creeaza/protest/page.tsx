@@ -7,7 +7,7 @@ export default function Protest() {
     return (
         <div className="grid min-h-svh lg:grid-cols-[30%_70%]">
 
-            <div className="relative flex-col gap-4 p-6 md:p-10 order-2 lg:order-1 lg:block hidden">
+            <div className="hidden lg:block lg:col-span-1 relative h-screen sticky top-0">
                 <Image
                     src="/images/protest.webp"
                     alt="Crează protest"

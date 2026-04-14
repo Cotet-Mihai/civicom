@@ -16,17 +16,12 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Separator } from "@/components/ui/separator"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import {
-    Card,
-    CardContent,
-} from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import {
-    Tooltip,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
-import {Alternative, BrandDialogProps} from "@/app/(private)/creeaza/protest/types";
+import { Tooltip, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Alternative, BrandDialogProps } from "@/app/(private)/creeaza/protest/types"
+import {checkURLAccessible} from "@/app/(private)/creeaza/protest/actions/checkURL";
+import {toast} from "sonner";
 
 export function BrandDialog({
                                 open,
@@ -37,11 +32,13 @@ export function BrandDialog({
     const [name, setName] = useState("")
     const [link, setLink] = useState("")
     const [alternatives, setAlternatives] = useState<Alternative[]>([])
+    const [isCheckingURL, setIsCheckingURL] = useState(false)
 
     const isSaveDisabled =
         !name.trim() ||
         !link.trim() ||
-        alternatives.some((alt) => !alt.title.trim() || !alt.link.trim());
+        alternatives.some((alt) => !alt.name.trim() || !alt.link.trim()) ||
+        isCheckingURL;
 
     useEffect(() => {
         if (open) {
@@ -58,7 +55,7 @@ export function BrandDialog({
     }
 
     function addAlternative() {
-        setAlternatives((prev) => [...prev, { title: "", link: "", reason: "" }])
+        setAlternatives((prev) => [...prev, { name: "", link: "", reason: "" }])
     }
 
     function updateAlternative(
@@ -75,11 +72,64 @@ export function BrandDialog({
         setAlternatives((prev) => prev.filter((_, i) => i !== index))
     }
 
-    function handleSave() {
-        if (!name.trim()) return
-        onSave({ name: name.trim(), link: link.trim(), alternatives })
-        resetForm()
-        onOpenChange(false)
+    function isValidURL(url: string) {
+        try {
+            new URL(url)
+            return true
+        } catch {
+            return false
+        }
+    }
+
+    async function handleSave() {
+        if (!name.trim()) return;
+
+        const formattedLink = link.trim().startsWith("http://") || link.trim().startsWith("https://")
+            ? link.trim()
+            : `https://${link.trim()}`
+
+        if (!isValidURL(formattedLink)) {
+            toast.error("URL-ul introdus nu este valid!")
+            return
+        }
+
+        setIsCheckingURL(true);
+
+        // verific link principal
+        const mainAccessible = await checkURLAccessible(formattedLink);
+        if (!mainAccessible) {
+            setIsCheckingURL(false);
+            toast.error("Site-ul principal nu poate fi accesat!");
+            return;
+        }
+
+        // verific toate link-urile alternative
+        for (const [idx, alt] of alternatives.entries()) {
+            // completez https:// daca nu exista
+            const altLink = alt.link.trim().startsWith("http://") || alt.link.trim().startsWith("https://")
+                ? alt.link.trim()
+                : `https://${alt.link.trim()}`
+
+            if (!isValidURL(altLink)) {
+                setIsCheckingURL(false);
+                toast.error(`URL-ul alternativei ${idx + 1} nu este valid!`);
+                return;
+            }
+
+            const altAccessible = await checkURLAccessible(altLink);
+            if (!altAccessible) {
+                setIsCheckingURL(false);
+                toast.error(`Site-ul alternativei ${idx + 1} nu este valid!`);
+                return;
+            }
+
+            alt.link = altLink;
+        }
+
+        setIsCheckingURL(false);
+        onSave({ name: name.trim(), link: formattedLink, alternatives });
+        resetForm();
+        onOpenChange(false);
     }
 
     return (
@@ -94,8 +144,7 @@ export function BrandDialog({
                 <DialogContent
                     className="flex max-h-[85vh] flex-col sm:max-w-lg p-0 overflow-hidden"
                 >
-
-                <DialogHeader className="px-6 pt-6 shrink-0">
+                    <DialogHeader className="px-6 pt-6 shrink-0">
                         <DialogTitle>
                             {initialData ? "Editare brand" : "Adaugare brand"}
                         </DialogTitle>
@@ -107,8 +156,7 @@ export function BrandDialog({
                     </DialogHeader>
 
                     <ScrollArea className="flex-1 overflow-y-auto px-6">
-
-                    <div className="flex flex-col gap-5 pb-4">
+                        <div className="flex flex-col gap-5 pb-4">
                             {/* Brand Name */}
                             <div className="flex flex-col gap-2 p-1">
                                 <Label htmlFor="brand-name">
@@ -178,7 +226,10 @@ export function BrandDialog({
                                     <Card key={idx} className="relative border-border bg-muted/50">
                                         <CardContent className="flex flex-col gap-3 p-4">
                                             <div className="flex items-center justify-between">
-                                                <Badge variant="outline" className="text-xs font-semibold uppercase tracking-wider">
+                                                <Badge
+                                                    variant="outline"
+                                                    className="text-xs font-semibold uppercase tracking-wider"
+                                                >
                                                     Alternativa {idx + 1}
                                                 </Badge>
                                                 <Tooltip>
@@ -204,9 +255,9 @@ export function BrandDialog({
                                                 <Input
                                                     id={`alt-title-${idx}`}
                                                     placeholder="Nume alternativă"
-                                                    value={alt.title}
+                                                    value={alt.name}
                                                     onChange={(e) =>
-                                                        updateAlternative(idx, "title", e.target.value)
+                                                        updateAlternative(idx, "name", e.target.value)
                                                     }
                                                 />
                                             </div>
@@ -229,8 +280,8 @@ export function BrandDialog({
                                                 <Label htmlFor={`alt-reason-${idx}`}>
                                                     De ce e o alternativa buna?{" "}
                                                     <span className="font-normal text-muted-foreground">
-                            (optional)
-                          </span>
+                                                        (optional)
+                                                    </span>
                                                 </Label>
                                                 <Textarea
                                                     id={`alt-reason-${idx}`}
@@ -265,7 +316,7 @@ export function BrandDialog({
                             disabled={isSaveDisabled}
                             className="bg-yellow-300 text-green-900 hover:bg-yellow-300/60"
                         >
-                            {initialData ? "Salvează" : "Adaugă brand"}
+                            {isCheckingURL ? "Verific site..." : initialData ? "Salvează" : "Adaugă brand"}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
